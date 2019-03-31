@@ -1,3 +1,0 @@
-[INIT]
-Num=12
-Num_MiniMapa=13
