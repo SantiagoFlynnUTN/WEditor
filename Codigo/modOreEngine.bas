@@ -32,24 +32,24 @@ Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long
 Public Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
 
 Sub CargarParticulas()
-Dim StreamFile As String
-Dim LoopC As Long
-Dim i As Long
-Dim GrhListing As String
-Dim TempSet As String
-Dim ColorSet As Long
+    Dim StreamFile As String
+    Dim LoopC As Long
+    Dim i As Long
+    Dim GrhListing As String
+    Dim TempSet As String
+    Dim ColorSet As Long
    
-StreamFile = DirIndex & "Particles.ini"
-TotalStreams = Val(general_var_get(StreamFile, "INIT", "Total"))
+    StreamFile = DirIndex & "Particles.ini"
+    TotalStreams = Val(general_var_get(StreamFile, "INIT", "Total"))
  
-'resize StreamData array
-ReDim StreamData(1 To TotalStreams) As Stream
+    'resize StreamData array
+    ReDim StreamData(1 To TotalStreams) As Stream
  
     'fill StreamData array with info from Particles.ini
     For LoopC = 1 To TotalStreams
         StreamData(LoopC).Name = general_var_get(StreamFile, Val(LoopC), "Name")
         StreamData(LoopC).NumOfParticles = general_var_get(StreamFile, Val(LoopC), "NumOfParticles")
-        StreamData(LoopC).X1 = general_var_get(StreamFile, Val(LoopC), "X1")
+        StreamData(LoopC).x1 = general_var_get(StreamFile, Val(LoopC), "X1")
         StreamData(LoopC).y1 = general_var_get(StreamFile, Val(LoopC), "Y1")
         StreamData(LoopC).x2 = general_var_get(StreamFile, Val(LoopC), "X2")
         StreamData(LoopC).y2 = general_var_get(StreamFile, Val(LoopC), "Y2")

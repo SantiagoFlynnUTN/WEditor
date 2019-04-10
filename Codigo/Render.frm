@@ -120,7 +120,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Public Sub Render(Optional ByVal MiniMapa As Boolean)
-Dim nombre As String
+    Dim nombre As String
     Set s = ddevice.GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO)
     
     Dim sr As RECT
@@ -135,55 +135,55 @@ Dim nombre As String
     Picture1.Cls
     Me.Caption = "Produciendo...."
     guardobmp = True
-        Picture1.AutoSize = True
+    Picture1.AutoSize = True
     Picture1.AutoRedraw = True
     Picture3.AutoRedraw = True
     If Not MiniMapa Then
-    nombre = GetVar(App.PATH & "\Render\Render.txt", "INIT", "NUM")
+        nombre = GetVar(App.PATH & "\Render\Render.txt", "INIT", "NUM")
     Else
-    nombre = GetVar(App.PATH & "\Render\Render.txt", "INIT", "NUM_MINIMAPA")
+        nombre = GetVar(App.PATH & "\Render\Render.txt", "INIT", "NUM_MINIMAPA")
     End If
     For z = 1 To 13
-    For i = 1 To 13
+        For i = 1 To 13
 
-        If z = 1 Then
-        sr.top = 32
-        Else
-        sr.top = 0
-        End If
+            If z = 1 Then
+                sr.top = 32
+            Else
+                sr.top = 0
+            End If
         
-        If i = 1 Then
-        sr.left = 32
-        Else
-        sr.left = 0
-        End If
-        ddevice.Clear 0, ByVal 0&, D3DCLEAR_TARGET, D3DColorXRGB(0, 0, 0), 0, 0
-        If TIPOMAPAX = 0 Then
-        RenderScreen ((8 * (i - 1))) - 1, (8 * (z - 1)) - 1, 0, 0
-        ElseIf TIPOMAPAX = 1 Then
-        RenderNewMap ((8 * (i - 1))) - 1, (8 * (z - 1)) - 1, 0, 0
-        End If
+            If i = 1 Then
+                sr.left = 32
+            Else
+                sr.left = 0
+            End If
+            ddevice.Clear 0, ByVal 0&, D3DCLEAR_TARGET, D3DColorXRGB(0, 0, 0), 0, 0
+            If TIPOMAPAX = 0 Then
+                RenderScreen ((8 * (i - 1))) - 1, (8 * (z - 1)) - 1, 0, 0
+            ElseIf TIPOMAPAX = 1 Then
+                RenderNewMap ((8 * (i - 1))) - 1, (8 * (z - 1)) - 1, 0, 0
+            End If
         
-    Dim t As PALETTEENTRY
+            Dim t As PALETTEENTRY
     
     
-    d3dx.SaveSurfaceToFile App.PATH & "\Render\" & i & "_" & z & ".bmp", D3DXIFF_BMP, s, t, sr
+            d3dx.SaveSurfaceToFile App.PATH & "\Render\" & i & "_" & z & ".bmp", D3DXIFF_BMP, s, t, sr
 
-    Picture2.Cls
-    Picture2.AutoSize = True
+            Picture2.Cls
+            Picture2.AutoSize = True
     
-    Set Picture2.Picture = LoadPicture(App.PATH & "\Render\" & i & "_" & z & ".bmp")
+            Set Picture2.Picture = LoadPicture(App.PATH & "\Render\" & i & "_" & z & ".bmp")
     
 
-    Picture2.AutoSize = True
+            Picture2.AutoSize = True
     
-    Picture1.PaintPicture Picture2.Image, _
-    LastX, LastY, Picture2.ScaleWidth, Picture2.ScaleHeight, _
-    0, 0, Picture2.ScaleWidth, Picture2.ScaleHeight
+            Picture1.PaintPicture Picture2.Image, _
+                LastX, LastY, Picture2.ScaleWidth, Picture2.ScaleHeight, _
+                0, 0, Picture2.ScaleWidth, Picture2.ScaleHeight
     
-        LastX = LastX + Picture2.ScaleWidth
-    Kill App.PATH & "\Render\" & i & "_" & z & ".bmp"
-    Next i
+            LastX = LastX + Picture2.ScaleWidth
+            Kill App.PATH & "\Render\" & i & "_" & z & ".bmp"
+        Next i
 
         Me.Caption = "Produciendo... " & z & "/13"
         Me.ProgressBar1.value = Me.ProgressBar1.value + 1
@@ -213,19 +213,19 @@ Dim nombre As String
     Unload Me
 End Sub
 Public Function DameSize(ByVal nv As Long) As Long
-If nv <= 32 Then
-    DameSize = 32
-ElseIf nv <= 64 Then
-    DameSize = 64
-ElseIf nv <= 128 Then
-    DameSize = 128
-ElseIf nv <= 256 Then
-    DameSize = 256
-ElseIf nv <= 512 Then
-    DameSize = 512
-Else
-    DameSize = nv
-End If
+    If nv <= 32 Then
+        DameSize = 32
+    ElseIf nv <= 64 Then
+        DameSize = 64
+    ElseIf nv <= 128 Then
+        DameSize = 128
+    ElseIf nv <= 256 Then
+        DameSize = 256
+    ElseIf nv <= 512 Then
+        DameSize = 512
+    Else
+        DameSize = nv
+    End If
 
 
 End Function

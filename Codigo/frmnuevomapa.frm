@@ -39,21 +39,21 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
-If Combo1.ListIndex <= 0 Then
+    If Combo1.ListIndex <= 0 Then
 
-NuevoTex = 0
+        NuevoTex = 0
 
-Else
+    Else
 
-NuevoTex = Val(ReadField(2, Combo1.List(Combo1.ListIndex), Asc("[")))
-End If
-NuevoOk = True
-Unload Me
+        NuevoTex = Val(ReadField(2, Combo1.List(Combo1.ListIndex), Asc("[")))
+    End If
+    NuevoOk = True
+    Unload Me
 
 End Sub
 
 Private Sub Form_Load()
-Dim P As Long
+    Dim P As Long
     Combo1.AddItem "Ninguna"
     For P = 1 To NumTexWe
         Combo1.AddItem TexWE(P).Name & " - [" & P & "]"
