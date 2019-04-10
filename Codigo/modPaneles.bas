@@ -36,10 +36,10 @@ Option Explicit
 ' @param Activado Especifica si esta o no activado
 
 Public Sub EstSelectPanel(ByVal Numero As Byte, ByVal Activado As Boolean)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 30/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 30/05/06
+    '*************************************************
     If Activado = True Then
         frmMain.SelectPanel(Numero).GradientMode = lv_Bottom2Top
         frmMain.SelectPanel(Numero).HoverBackColor = frmMain.SelectPanel(Numero).GradientColor
@@ -100,10 +100,10 @@ End Sub
 ' @param Normal Inidica que ahi que volver todo No visible
 
 Public Sub VerFuncion(ByVal Numero As Byte, ByVal Ver As Boolean, Optional Normal As Boolean)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 24/11/08
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 24/11/08
+    '*************************************************
     If Normal = True Then
         Call VerFuncion(vMostrando, False, False)
     End If
@@ -218,9 +218,9 @@ Public Sub VerFuncion(ByVal Numero As Byte, ByVal Ver As Boolean, Optional Norma
             frmMain.cParticulas.Visible = Ver
         Case 9
             If Ver Then
-            frmMain.frmSPOTLIGHTS.Visible = True
+                frmMain.frmSPOTLIGHTS.Visible = True
             Else
-            frmMain.frmSPOTLIGHTS.Visible = False
+                frmMain.frmSPOTLIGHTS.Visible = False
             End If
         Case 10
             If Ver Then
@@ -255,10 +255,10 @@ End Sub
 ' @param Numero Indica la funcion a Filtrar
 
 Public Sub Filtrar(ByVal Numero As Byte)
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 26/05/06
-'*************************************************
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 26/05/06
+    '*************************************************
 
     Dim vMaximo As Integer
     Dim vDatos As String
@@ -266,46 +266,46 @@ Public Sub Filtrar(ByVal Numero As Byte)
     Dim vMin As Integer
     Dim i As Integer
     Dim j As Integer
-    Dim TIPO As Byte
+    Dim Tipo As Byte
     
-    TIPO = Numero
-    If Numero = 1 And frmMain.decorb.value Then TIPO = 7
-    If Numero = 3 And frmMain.decorb.value Then TIPO = 6
+    Tipo = Numero
+    If Numero = 1 And frmMain.decorb.value Then Tipo = 7
+    If Numero = 3 And frmMain.decorb.value Then Tipo = 6
     
     
     vDatos = frmMain.cFiltro(Numero).Text
     If LenB(frmMain.cFiltro(Numero).Text) > 0 Then
-    If frmMain.cFiltro(Numero).ListCount > 0 Then
-        For j = 0 To frmMain.cFiltro(Numero).ListCount - 1
-            If UCase$(frmMain.cFiltro(Numero).List(j)) = UCase$(frmMain.cFiltro(Numero).Text) Then
-                Exit For
-            End If
-        Next j
+        If frmMain.cFiltro(Numero).ListCount > 0 Then
+            For j = 0 To frmMain.cFiltro(Numero).ListCount - 1
+                If UCase$(frmMain.cFiltro(Numero).List(j)) = UCase$(frmMain.cFiltro(Numero).Text) Then
+                    Exit For
+                End If
+            Next j
         
-        If j > frmMain.cFiltro(Numero).ListCount - 1 Then 'Sino estaba borramos el mas viejo.
-            If frmMain.cFiltro(Numero).ListCount > 5 Then
-                frmMain.cFiltro(Numero).RemoveItem 0
+            If j > frmMain.cFiltro(Numero).ListCount - 1 Then 'Sino estaba borramos el mas viejo.
+                If frmMain.cFiltro(Numero).ListCount > 5 Then
+                    frmMain.cFiltro(Numero).RemoveItem 0
+                End If
+                frmMain.cFiltro(Numero).AddItem frmMain.cFiltro(Numero).Text
+            Else
+        
+                If j < (frmMain.cFiltro(Numero).ListCount - 1) Then
+                    Debug.Print (frmMain.cFiltro(Numero).ListCount - 1)
+                    For i = j To frmMain.cFiltro(Numero).ListCount - 2
+                        frmMain.cFiltro(Numero).List(i) = frmMain.cFiltro(Numero).List(i + 1)
+                    Next i
+                    Debug.Print frmMain.cFiltro(Numero).Text
+                    frmMain.cFiltro(Numero).List(frmMain.cFiltro(Numero).ListCount - 1) = vDatos
+                End If
             End If
-            frmMain.cFiltro(Numero).AddItem frmMain.cFiltro(Numero).Text
         Else
-        
-            If j < (frmMain.cFiltro(Numero).ListCount - 1) Then
-                Debug.Print (frmMain.cFiltro(Numero).ListCount - 1)
-                For i = j To frmMain.cFiltro(Numero).ListCount - 2
-                    frmMain.cFiltro(Numero).List(i) = frmMain.cFiltro(Numero).List(i + 1)
-                Next i
-                Debug.Print frmMain.cFiltro(Numero).Text
-                frmMain.cFiltro(Numero).List(frmMain.cFiltro(Numero).ListCount - 1) = vDatos
-            End If
-        End If
-    Else
             frmMain.cFiltro(Numero).AddItem frmMain.cFiltro(Numero).Text
+        End If
     End If
-    End If
-    frmMain.lListado(TIPO).Clear
+    frmMain.lListado(Tipo).Clear
     frmMain.cFiltro(Numero).Text = vDatos
     vMin = 1
-    Select Case TIPO
+    Select Case Tipo
         Case 0 ' superficie
             vMaximo = NumTexWe
         Case 1 ' NPCs
@@ -321,7 +321,7 @@ Public Sub Filtrar(ByVal Numero As Byte)
     
     For i = vMin To vMaximo
     
-        Select Case TIPO
+        Select Case Tipo
             Case 0 ' superficie
                 vDatos = TexWE(i).Name
                 NumI = i
@@ -341,7 +341,7 @@ Public Sub Filtrar(ByVal Numero As Byte)
         
         For j = 1 To Len(vDatos)
             If UCase$(mid$(vDatos & Str(i), j, Len(frmMain.cFiltro(Numero).Text))) = UCase$(frmMain.cFiltro(Numero).Text) Or LenB(frmMain.cFiltro(Numero).Text) = 0 Then
-                frmMain.lListado(TIPO).AddItem vDatos & " - #" & NumI
+                frmMain.lListado(Tipo).AddItem vDatos & " - #" & NumI
                 Exit For
             End If
         Next
@@ -349,48 +349,48 @@ Public Sub Filtrar(ByVal Numero As Byte)
 End Sub
 
 Public Function DameGrhIndex(ByVal GrhIn As Integer) As Integer
-'*************************************************
-'Author: Unkwown
-'Last modified: 20/05/06
-'*************************************************
+    '*************************************************
+    'Author: Unkwown
+    'Last modified: 20/05/06
+    '*************************************************
 
-DameGrhIndex = SupData(GrhIn).Grh
+    DameGrhIndex = SupData(GrhIn).Grh
 
-If SupData(GrhIn).Width > 0 Then
-    frmConfigSup.MOSAICO.value = vbChecked
-    frmConfigSup.mAncho.Text = SupData(GrhIn).Width
-    frmConfigSup.mLargo.Text = SupData(GrhIn).Height
-Else
-    frmConfigSup.MOSAICO.value = vbUnchecked
-    frmConfigSup.mAncho.Text = "0"
-    frmConfigSup.mLargo.Text = "0"
-End If
+    If SupData(GrhIn).Width > 0 Then
+        frmConfigSup.MOSAICO.value = vbChecked
+        frmConfigSup.mAncho.Text = SupData(GrhIn).Width
+        frmConfigSup.mLargo.Text = SupData(GrhIn).Height
+    Else
+        frmConfigSup.MOSAICO.value = vbUnchecked
+        frmConfigSup.mAncho.Text = "0"
+        frmConfigSup.mLargo.Text = "0"
+    End If
 
 
 
 End Function
 
 Public Sub fPreviewGrh(ByVal GrhIn As Integer)
-'*************************************************
-'Author: Unkwown
-'Last modified: 22/05/06
-'*************************************************
+    '*************************************************
+    'Author: Unkwown
+    'Last modified: 22/05/06
+    '*************************************************
 
-If Val(GrhIn) < 1 Then
-  frmMain.cGrh.Text = MaxGrhs
-  Exit Sub
-End If
+    If Val(GrhIn) < 1 Then
+        frmMain.cGrh.Text = MaxGrhs
+        Exit Sub
+    End If
 
-If Val(GrhIn) > MaxGrhs Then
-  frmMain.cGrh.Text = 1
-  Exit Sub
-End If
+    If Val(GrhIn) > MaxGrhs Then
+        frmMain.cGrh.Text = 1
+        Exit Sub
+    End If
 
-'Change CurrentGrh
-CurrentGrh.grh_index = GrhIn
-CurrentGrh.Started = 1
-CurrentGrh.frame_counter = 1
-CurrentGrh.frame_speed = grh_list(CurrentGrh.grh_index).frame_speed
+    'Change CurrentGrh
+    CurrentGrh.grh_index = GrhIn
+    CurrentGrh.Started = 1
+    CurrentGrh.frame_counter = 1
+    CurrentGrh.frame_speed = grh_list(CurrentGrh.grh_index).frame_speed
 
 End Sub
 
@@ -399,57 +399,57 @@ End Sub
 '
 
 Public Sub VistaPreviaDeSup()
-frmMain.PreviewGrh.Cls
-If SelTexWe = 0 Then Exit Sub
-With TexWE(SelTexWe)
-If .Ancho = 0 Or .Largo = 0 Then Exit Sub
-Dim P As Long
-Dim R As RECT
-Dim d As RECT
-If .NumIndex = 0 Then Exit Sub
-R.Bottom = .Largo
-R.Right = .Ancho
-ddevice.Clear 1, R, D3DCLEAR_TARGET, &H0, ByVal 0, 0
-For P = 1 To .NumIndex
+    frmMain.PreviewGrh.Cls
+    If SelTexWe = 0 Then Exit Sub
+    With TexWE(SelTexWe)
+        If .Ancho = 0 Or .Largo = 0 Then Exit Sub
+        Dim P As Long
+        Dim R As RECT
+        Dim d As RECT
+        If .NumIndex = 0 Then Exit Sub
+        R.Bottom = .Largo
+        R.Right = .Ancho
+        ddevice.Clear 1, R, D3DCLEAR_TARGET, &H0, ByVal 0, 0
+        For P = 1 To .NumIndex
     
-    modDXEngine.DibujareEnHwnd2 frmMain.PreviewGrh.hWnd, .Index(P).Num, R, .Index(P).X, .Index(P).Y, False
+            modDXEngine.DibujareEnHwnd2 frmMain.PreviewGrh.hWnd, .index(P).Num, R, .index(P).X, .index(P).Y, False
 
 
-Next P
+        Next P
 
 
-d.left = 0
-d.top = 0
-d.Bottom = .Largo
-d.Right = .Ancho
-ddevice.Present R, d, frmMain.PreviewGrh.hWnd, ByVal 0
+        d.left = 0
+        d.top = 0
+        d.Bottom = .Largo
+        d.Right = .Ancho
+        ddevice.Present R, d, frmMain.PreviewGrh.hWnd, ByVal 0
 
 
-If frmMain.cGrill.value Then
-frmMain.PreviewGrh.ForeColor = vbCyan
-frmMain.PreviewGrh.DrawWidth = 1
-For P = 1 To .NumIndex
+        If frmMain.cGrill.value Then
+            frmMain.PreviewGrh.ForeColor = vbCyan
+            frmMain.PreviewGrh.DrawWidth = 1
+            For P = 1 To .NumIndex
 
-    frmMain.PreviewGrh.Line (.Index(P).X * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)-(.Index(P).X * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.Index(P).X * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)-((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line ((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)-((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.Index(P).X * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-
-
-Next P
-End If
-If SelTexFrame > 0 Then
-P = SelTexFrame
-frmMain.PreviewGrh.ForeColor = vbYellow
-frmMain.PreviewGrh.DrawWidth = 2
-    frmMain.PreviewGrh.Line (.Index(P).X * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)-(.Index(P).X * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.Index(P).X * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)-((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line ((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .Index(P).Y * Screen.TwipsPerPixelY)-((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.Index(P).X * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.Index(P).X + EstaticData(NewIndexData(.Index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.Index(P).Y + EstaticData(NewIndexData(.Index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+                frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-(.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+                frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)
+                frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+                frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
 
 
+            Next P
+        End If
+        If SelTexFrame > 0 Then
+            P = SelTexFrame
+            frmMain.PreviewGrh.ForeColor = vbYellow
+            frmMain.PreviewGrh.DrawWidth = 2
+            frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-(.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+            frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)
+            frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+            frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
 
-End If
 
-End With
+
+        End If
+
+    End With
 End Sub

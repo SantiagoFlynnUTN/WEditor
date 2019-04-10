@@ -150,7 +150,7 @@ Private AgregoClave As Boolean
 Private ModificoClave As Boolean
 
 Private Sub bExit_Click()
-       If AgregoClave Then
+    If AgregoClave Then
         'Modifico clave pero no guardo el decor, raro.
         NumDecorKeys = NumDecorKeys - 1
         Select Case DecorKeys(NumDecorKeys + 1).Tipo_Clave
@@ -167,8 +167,8 @@ End Sub
 
 Public Sub Parse()
     If TipoSeleccionado = 1 Then
-        If MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.y).DecorI > 0 Then
-            With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.y)
+        If MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y).DecorI > 0 Then
+            With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y)
                 xTipo = DecorData(.DecorI).DecorType
                 xNumero = .DecorI
                 xDefault = .DecorInfo.EstadoDefault
@@ -194,7 +194,7 @@ Private Sub bNextClave_Click()
     With DecorKeys(Val(xNumClave))
         xClave = .Clave
         .X = ObjetoSeleccionado.X
-        .y = ObjetoSeleccionado.y
+        .Y = ObjetoSeleccionado.Y
         .Contenedor = 0
     End With
     
@@ -203,10 +203,10 @@ Private Sub bNextClave_Click()
 End Sub
 
 Private Sub bSave_Click()
-Dim j As Long
-        If TipoSeleccionado = 1 Then
-        If MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.y).DecorI > 0 Then
-            With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.y)
+    Dim j As Long
+    If TipoSeleccionado = 1 Then
+        If MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y).DecorI > 0 Then
+            With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y)
 
                 If .DecorInfo.Clave <> Val(xNumClave) Then
                     If AgregoClave Or ModificoClave Then
@@ -233,7 +233,7 @@ Dim j As Long
 
                                         End If
                                         .X = ObjetoSeleccionado.X
-                                        .y = ObjetoSeleccionado.y
+                                        .Y = ObjetoSeleccionado.Y
                                         .Contenedor = 0
                                         .Tipo_Objeto = 1
                                     End With
@@ -250,16 +250,16 @@ Dim j As Long
                             AgregoClave = False
                         End If
                     End If
-                    End If
-                    .DecorInfo.Clave = Val(xNumClave)
-                    .DecorInfo.EstadoDefault = Val(xDefault)
+                End If
+                .DecorInfo.Clave = Val(xNumClave)
+                .DecorInfo.EstadoDefault = Val(xDefault)
 
                 If Val(xNumero) <> .DecorI Then
                     If Val(xNumero) <= UBound(DecorData) Then
                         .DecorI = Val(xNumero)
                     End If
                 End If
-                .DecorGrh.index = DECOR_GETGRH_FROMDEFAULT(ObjetoSeleccionado.X, ObjetoSeleccionado.y)
+                .DecorGrh.index = DECOR_GETGRH_FROMDEFAULT(ObjetoSeleccionado.X, ObjetoSeleccionado.Y)
             End With
         End If
     End If

@@ -42,11 +42,11 @@ Public timer_ticks_per_frame As Single
 Public base_tile_size As Integer
 
 Public Sub Grh_Initialize(ByRef Grh As Grh, ByVal grh_index As Long, Optional ByVal alpha_blend As Boolean, Optional ByVal Angle As Single, Optional ByVal Started As Byte = 2, Optional ByVal LoopTimes As Integer = LoopAdEternum)
-'*****************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 10/07/2002
-'Sets up a grh. MUST be done before rendering
-'*****************************************************************
+    '*****************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 10/07/2002
+    'Sets up a grh. MUST be done before rendering
+    '*****************************************************************
     If grh_index <= 0 Then Exit Sub
 
     'Copy of parameters
@@ -74,11 +74,11 @@ End Sub
 
 
 Public Sub Grh_iRender(ByRef Grh As Grh, ByVal screen_x As Long, ByVal screen_Y As Long, ByRef rgb_list() As Long, Optional ByVal center As Boolean)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 2/28/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/28/2003
+    '
+    '**************************************************************
     Dim tile_width As Single
     Dim tile_height As Single
     Dim grh_index As Long
@@ -131,11 +131,11 @@ Public Sub Grh_iRender(ByRef Grh As Grh, ByVal screen_x As Long, ByVal screen_Y 
         Grh.Angle
 End Sub
 Public Sub Grh_Render(ByRef Grh As Grh, ByVal screen_x As Long, ByVal screen_Y As Long, ByRef rgb_list() As Long, Optional ByVal center As Boolean)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 2/28/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/28/2003
+    '
+    '**************************************************************
     Dim tile_width As Single
     Dim tile_height As Single
     Dim grh_index As Long
@@ -188,11 +188,11 @@ Public Sub Grh_Render(ByRef Grh As Grh, ByVal screen_x As Long, ByVal screen_Y A
         Grh.Angle
 End Sub
 Public Sub Grh_iRenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_Y As Long, ByRef rgb_list() As Long, Optional ByVal center As Boolean, Optional ByVal HalfCenter As Boolean)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 2/28/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/28/2003
+    '
+    '**************************************************************
     Dim tile_width As Single
     Dim tile_height As Single
     Dim grh_index As Long
@@ -237,9 +237,9 @@ Public Sub Grh_iRenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen
         End If
         If jth <> 1 Then
             If HalfCenter Then
-            screen_Y = screen_Y - Int(jth * base_tile_size / 2) + base_tile_size / 2
+                screen_Y = screen_Y - Int(jth * base_tile_size / 2) + base_tile_size / 2
             Else
-            screen_Y = screen_Y - Int(jth * base_tile_size) + base_tile_size
+                screen_Y = screen_Y - Int(jth * base_tile_size) + base_tile_size
             
             End If
         End If
@@ -251,16 +251,16 @@ Public Sub Grh_iRenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen
         jw, jh, _
         rgb_list, _
         jx, jy, _
-         jw, jh, _
+        jw, jh, _
         0, _
         0
 End Sub
 Public Sub Grh_RenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_Y As Long, ByRef rgb_list() As Long, Optional ByVal center As Boolean, Optional ByVal HalfCenter As Boolean)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 2/28/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/28/2003
+    '
+    '**************************************************************
     Dim tile_width As Single
     Dim tile_height As Single
     Dim grh_index As Long
@@ -305,9 +305,9 @@ Public Sub Grh_RenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_
         End If
         If jth <> 1 Then
             If HalfCenter Then
-            screen_Y = screen_Y - Int(jth * base_tile_size / 2) + base_tile_size / 2
+                screen_Y = screen_Y - Int(jth * base_tile_size / 2) + base_tile_size / 2
             Else
-             screen_Y = screen_Y - Int(jth * base_tile_size) + base_tile_size
+                screen_Y = screen_Y - Int(jth * base_tile_size) + base_tile_size
            
             End If
         End If
@@ -319,16 +319,16 @@ Public Sub Grh_RenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_
         jw, jh, _
         rgb_list, _
         jx, jy, _
-         jw, jh, _
+        jw, jh, _
         0, _
         0
 End Sub
 Public Sub Anim_iRender(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_Y As Long, ByRef rgb_list() As Long, Optional ByVal center As Boolean, Optional ByVal Anim As Boolean, Optional ByVal Grafico As Integer)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 2/28/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/28/2003
+    '
+    '**************************************************************
     Dim tile_width As Single
     Dim tile_height As Single
     Dim grh_index As Long
@@ -373,16 +373,16 @@ Public Sub Anim_iRender(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen
         jw, jh, _
         rgb_list, _
         jx, jy, _
-         jw, jh, _
+        jw, jh, _
         0, _
         0
 End Sub
 Public Sub Anim_Render(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_Y As Long, ByRef rgb_list() As Long, Optional ByVal center As Boolean, Optional ByVal Anim As Boolean, Optional ByVal Grafico As Integer)
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 2/28/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 2/28/2003
+    '
+    '**************************************************************
     Dim tile_width As Single
     Dim tile_height As Single
     Dim grh_index As Long
@@ -426,7 +426,7 @@ Public Sub Anim_Render(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_
         jw, jh, _
         rgb_list, _
         jx, jy, _
-         jw, jh, _
+        jw, jh, _
         0, _
         0
 End Sub
@@ -434,11 +434,11 @@ End Sub
 
 
 Public Function GUI_Grh_Render(ByVal grh_index As Long, X As Long, Y As Long, Optional ByVal Angle As Single, Optional ByVal alpha_blend As Boolean, Optional ByVal Color As Long) As Boolean
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 5/15/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 5/15/2003
+    '
+    '**************************************************************
     Dim temp_grh As Grh
     Dim rpg_list(3) As Long
 
@@ -468,11 +468,11 @@ Public Sub AnimSpeedCalculate(ByVal timer_elapsed_time As Single)
 End Sub
 
 Public Function Grh_Check(ByVal grh_index As Long) As Boolean
-'**************************************************************
-'Author: Aaron Perkins
-'Last Modify Date: 1/04/2003
-'
-'**************************************************************
+    '**************************************************************
+    'Author: Aaron Perkins
+    'Last Modify Date: 1/04/2003
+    '
+    '**************************************************************
     'check grh_index
     If grh_index > 0 And grh_index <= grh_count Then
         If grh_list(grh_index).Active Then
@@ -482,7 +482,7 @@ Public Function Grh_Check(ByVal grh_index As Long) As Boolean
 End Function
 
 Public Function GetMMColor(ByVal GrhIndex As Long) As Long
-GetMMColor = grh_list(GrhIndex).MiniMap_color
+    GetMMColor = grh_list(GrhIndex).MiniMap_color
 End Function
 
 

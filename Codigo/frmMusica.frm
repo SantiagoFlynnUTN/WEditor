@@ -18,25 +18,16 @@ Begin VB.Form frmMusica
       TabIndex        =   3
       Top             =   1920
       Width           =   2175
-      _ExtentX        =   3836
-      _ExtentY        =   873
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Times New Roman"
-         Size            =   9
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cFHover         =   0
-      Focus           =   0   'False
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      ImgSize         =   0
-      cBack           =   0
+      _extentx        =   3836
+      _extenty        =   873
+      capalign        =   2
+      cgradient       =   0
+      focus           =   0
+      mode            =   0
+      value           =   0
+      imgsize         =   0
+      cfhover         =   0
+      cback           =   0
    End
    Begin WorldEditor.lvButtons_H CmdEscuchar 
       Height          =   615
@@ -44,25 +35,16 @@ Begin VB.Form frmMusica
       TabIndex        =   1
       Top             =   120
       Width           =   1935
-      _ExtentX        =   3413
-      _ExtentY        =   1085
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Times New Roman"
-         Size            =   9
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cFHover         =   0
-      Focus           =   0   'False
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      ImgSize         =   0
-      cBack           =   0
+      _extentx        =   3413
+      _extenty        =   1085
+      capalign        =   2
+      cgradient       =   0
+      focus           =   0
+      mode            =   0
+      value           =   0
+      imgsize         =   0
+      cfhover         =   0
+      cback           =   0
    End
    Begin VB.FileListBox fleMusicas 
       BeginProperty Font 
@@ -87,25 +69,16 @@ Begin VB.Form frmMusica
       TabIndex        =   2
       Top             =   960
       Width           =   1935
-      _ExtentX        =   3413
-      _ExtentY        =   1085
-      CapAlign        =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "Times New Roman"
-         Size            =   9
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      cFHover         =   0
-      Focus           =   0   'False
-      cGradient       =   0
-      Mode            =   0
-      Value           =   0   'False
-      ImgSize         =   0
-      cBack           =   0
+      _extentx        =   3413
+      _extenty        =   1085
+      capalign        =   2
+      cgradient       =   0
+      focus           =   0
+      mode            =   0
+      value           =   0
+      imgsize         =   0
+      cfhover         =   0
+      cback           =   0
    End
 End
 Attribute VB_Name = "frmMusica"
@@ -141,17 +114,17 @@ Private MidiActual As String
 '
 
 Private Sub cmdAplicarYCerrar_Click()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
-On Error Resume Next
-If Len(MidiActual) >= 5 Then
-    MapInfo.Music = left(MidiActual, Len(MidiActual) - 4)
-    frmMapInfo.txtMapMusica.Text = MapInfo.Music
-    MidiActual = Empty
-End If
-Me.Hide
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
+    On Error Resume Next
+    If Len(MidiActual) >= 5 Then
+        MapInfo.Music = left(MidiActual, Len(MidiActual) - 4)
+        frmMapInfo.txtMapMusica.Text = MapInfo.Music
+        MidiActual = Empty
+    End If
+    Me.Hide
 End Sub
 
 
@@ -160,11 +133,11 @@ End Sub
 '
 
 Private Sub cmdCerrar_Click()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
-Me.Hide
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
+    Me.Hide
 End Sub
 
 ''
@@ -172,14 +145,14 @@ End Sub
 '
 
 Private Sub cmdDetener_Click()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
-Audio.StopMidi
-CmdEscuchar.Enabled = True
-cmddetener.Enabled = False
-Play = False
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
+    Audio.StopMidi
+    CmdEscuchar.Enabled = True
+    cmddetener.Enabled = False
+    Play = False
 End Sub
 
 ''
@@ -187,14 +160,14 @@ End Sub
 '
 
 Private Sub cmdEscuchar_Click()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
-Audio.PlayMIDI fleMusicas.List(fleMusicas.ListIndex)
-cmddetener.Enabled = True
-CmdEscuchar.Enabled = False
-Play = True
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
+    Audio.PlayMIDI fleMusicas.List(fleMusicas.ListIndex)
+    cmddetener.Enabled = True
+    CmdEscuchar.Enabled = False
+    Play = True
 End Sub
 
 ''
@@ -202,12 +175,12 @@ End Sub
 '
 
 Private Sub fleMusicas_Click()
-'*************************************************
-'Author: ^[GS]^
-'Last modified: 20/05/06
-'*************************************************
-MidiActual = fleMusicas.List(fleMusicas.ListIndex)
-cmdAplicarYCerrar.Enabled = True
-If Play = False Then CmdEscuchar.Enabled = True
+    '*************************************************
+    'Author: ^[GS]^
+    'Last modified: 20/05/06
+    '*************************************************
+    MidiActual = fleMusicas.List(fleMusicas.ListIndex)
+    cmdAplicarYCerrar.Enabled = True
+    If Play = False Then CmdEscuchar.Enabled = True
 End Sub
 

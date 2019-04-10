@@ -350,22 +350,22 @@ Attribute VB_Exposed = False
 Public Sub Parse()
     
     If TipoSeleccionado = 2 Then
-        With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.y)
-        xNum.Text = .NPCIndex
-        lNombre.Caption = NpcData(.NPCIndex).Name
-        bHeading.ListIndex = NpcData(.NPCIndex).Heading - 1
-        xNivel.Text = .NpcInfo.Nivel
-        If xNivel.Text = 0 Then
-            xNivel.Text = 1
-            .NpcInfo.Nivel = 1
-        End If
-        ShowStats
+        With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y)
+            xNum.Text = .NPCIndex
+            lNombre.Caption = NpcData(.NPCIndex).Name
+            bHeading.ListIndex = NpcData(.NPCIndex).Heading - 1
+            xNivel.Text = .NpcInfo.Nivel
+            If xNivel.Text = 0 Then
+                xNivel.Text = 1
+                .NpcInfo.Nivel = 1
+            End If
+            ShowStats
     
         
         
-        mRespawn.ListIndex = .NpcInfo.Respawn
-        mSamePos.ListIndex = .NpcInfo.RespawnSamePos
-        xRespawnTime.Text = .NpcInfo.RespawnTime
+            mRespawn.ListIndex = .NpcInfo.Respawn
+            mSamePos.ListIndex = .NpcInfo.RespawnSamePos
+            xRespawnTime.Text = .NpcInfo.RespawnTime
 
         End With
     End If
@@ -374,7 +374,7 @@ End Sub
 Public Sub ShowStats()
 
     If TipoSeleccionado = 2 Then
-        With NpcData(MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.y).NPCIndex)
+        With NpcData(MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y).NPCIndex)
             If Val(xNivel) <= 0 Then xNivel.Text = "1"
             lVida.Caption = (.MaxHP + (.ModHp * (Val(xNivel) - 1))) & " - (" & .MaxHP & " + " & (.ModHp * (Val(xNivel) - 1)) & ")"
             lDaño.Caption = (.MinHit + (.ModHit * (Val(xNivel) - 1))) & "/" & (.MaxHit + (.ModHit * (Val(xNivel) - 1))) & " - (" & .MinHit & "/" & .MaxHit & " + " & (.ModHp * (Val(xNivel) - 1)) & ")"
@@ -401,13 +401,13 @@ End Sub
 Private Sub csave_Click()
     If TipoSeleccionado = 2 Then
     
-        With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.y)
+        With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y)
             
             If Val(xNum) <> .NPCIndex Then
                 If Val(xNum) <= UBound(NpcData) And Val(xNum) > 0 Then
                     .NPCIndex = Val(xNum)
                     lNombre.Caption = NpcData(.NPCIndex).Name
-                    MakeChar .CHarIndex, NpcData(.NPCIndex).Body, NpcData(.NPCIndex).Head, NpcData(.NPCIndex).Heading, CInt(ObjetoSeleccionado.X), CInt(ObjetoSeleccionado.y)
+                    MakeChar .CHarIndex, NpcData(.NPCIndex).Body, NpcData(.NPCIndex).Head, NpcData(.NPCIndex).Heading, CInt(ObjetoSeleccionado.X), CInt(ObjetoSeleccionado.Y)
                     ShowStats
                 End If
             End If

@@ -83,7 +83,7 @@ Private Type SoundBuffer
     FileName As String
     looping As Boolean
     X As Byte
-    y As Byte
+    Y As Byte
     normalFq As Long
     Buffer As DirectSoundSecondaryBuffer8
 End Type
@@ -182,14 +182,14 @@ End Sub
 'Destructor. Releases all created objects assuring no memory-leaks.
  
 Private Sub Class_Terminate()
-On Local Error Resume Next
-    Dim loopc As Long
+    On Local Error Resume Next
+    Dim LoopC As Long
    
     'Stop every channel being used and destroy the buffer
-    For loopc = 1 To NumSoundBuffers
-        Call DSBuffers(loopc).Buffer.Stop
-        Set DSBuffers(loopc).Buffer = Nothing
-    Next loopc
+    For LoopC = 1 To NumSoundBuffers
+        Call DSBuffers(LoopC).Buffer.Stop
+        Set DSBuffers(LoopC).Buffer = Nothing
+    Next LoopC
    
     'Stop music
     Call Performance.StopEx(Segment, 0, DMUS_SEGF_DEFAULT)
@@ -206,12 +206,12 @@ End Sub
 ''
 'Initializes the clsAudio object.
 Public Function Initialize(ByVal hWnd As Long, ByVal sound_path As String, ByVal music_path As String) As Boolean
-On Error GoTo ErrHandler
+    On Error GoTo ErrHandler
    
     ' Prevent multiple creations
     If inited Then Exit Function
    
-     'Cargamos
+    'Cargamos
     Set dX = New DirectX8
    
     'Validate DX object
@@ -246,7 +246,7 @@ On Error GoTo ErrHandler
     inited = True
    
     Initialize = True
-Exit Function
+    Exit Function
  
 ErrHandler:
 End Function
@@ -255,12 +255,12 @@ End Function
 ' Creates and configures all DirectMusic objects.
  
 Private Function InitializedirectMusic(ByRef dX As DirectX8, ByVal hWnd As Long) As Boolean
-'***************************************************
-'Author: Juan Martín Sotuyo Dodero (Maraxus)
-'Last Modification: 16/03/04
-'Initialize DM. Returns false if music isn't supported by HW
-'***************************************************
-On Error GoTo ErrHandler
+    '***************************************************
+    'Author: Juan Martín Sotuyo Dodero (Maraxus)
+    'Last Modification: 16/03/04
+    'Initialize DM. Returns false if music isn't supported by HW
+    '***************************************************
+    On Error GoTo ErrHandler
     Dim mus_Params As DMUS_AUDIOPARAMS
     Set Loader = dX.DirectMusicLoaderCreate()
    
@@ -272,7 +272,7 @@ On Error GoTo ErrHandler
     Performance.SetMasterVolume 1
    
     InitializedirectMusic = True
-Exit Function
+    Exit Function
  
 ErrHandler:
 End Function
@@ -281,7 +281,7 @@ End Function
 ' Plays a new WAVE file.
  
 Public Function PlayWave(ByVal FileName As String, Optional ByVal srcX As Byte = 0, Optional ByVal srcY As Byte = 0, Optional ByVal LoopSound As LoopStyle = LoopStyle.Default) As Long
-On Error GoTo ErrHandler
+    On Error GoTo ErrHandler
     Dim bufferIndex As Long
    
     If Not SoundActivated Then Exit Function
@@ -302,7 +302,7 @@ On Error GoTo ErrHandler
        
         'Store position
         .X = srcX
-        .y = srcY
+        .Y = srcY
        
         'Get standard frequency
         .normalFq = .Buffer.GetFrequency()
@@ -315,7 +315,7 @@ On Error GoTo ErrHandler
             Call Update3DSound(bufferIndex, 0, 0)
         End If
     End If
-Exit Function
+    Exit Function
  
 ErrHandler:
 End Function
@@ -332,7 +332,7 @@ Private Sub Update3DSound(ByVal bufferIndex As Long, ByVal deltaX As Integer, By
    
     With DSBuffers(bufferIndex)
         distanceXOld = .X - lastPosX
-        distanceYOld = .y - lastPosY
+        distanceYOld = .Y - lastPosY
        
         distanceXNew = distanceXOld + deltaX
         distanceYNew = distanceYOld + deltaY
@@ -362,7 +362,7 @@ End Sub
 ''
 ' Updates 3D sounds based on the movement of the listener.
  
-Public Sub MoveListener(ByVal X As Integer, ByVal y As Integer)
+Public Sub MoveListener(ByVal X As Integer, ByVal Y As Integer)
     Dim i As Long
     Dim deltaX As Integer
     Dim deltaY As Integer
@@ -370,12 +370,12 @@ Public Sub MoveListener(ByVal X As Integer, ByVal y As Integer)
     If Not sEffectsActivated Then Exit Sub
    
     deltaX = X - lastPosX
-    deltaY = y - lastPosY
+    deltaY = Y - lastPosY
    
     For i = 1 To NumSoundBuffers
         If Not DSBuffers(i).Buffer Is Nothing Then
             If DSBuffers(i).Buffer.GetStatus And DSBSTATUS_PLAYING Then
-                If DSBuffers(i).X <> 0 And DSBuffers(i).y <> 0 Then
+                If DSBuffers(i).X <> 0 And DSBuffers(i).Y <> 0 Then
                     Call Update3DSound(i, deltaX, deltaY)
                 End If
             End If
@@ -383,14 +383,14 @@ Public Sub MoveListener(ByVal X As Integer, ByVal y As Integer)
     Next i
    
     lastPosX = X
-    lastPosY = y
+    lastPosY = Y
 End Sub
  
 ''
 ' Loads a new WAVE file.
  
 Private Function LoadWave(ByVal FileName As String, ByVal looping As LoopStyle) As Long
-On Error GoTo ErrHandler
+    On Error GoTo ErrHandler
     Dim bufferDesc As DSBUFFERDESC
     Dim waveFormat As WAVEFORMATEX
     Dim i As Long
@@ -467,7 +467,7 @@ On Error GoTo ErrHandler
     End With
    
     LoadWave = i
-Exit Function
+    Exit Function
  
 ErrHandler:
 End Function
@@ -537,7 +537,7 @@ End Property
 ' Plays a new MIDI file.
  
 Public Function PlayMIDI(Optional ByVal file As String = "", Optional ByVal Loops As Long = -1) As Boolean
-On Error GoTo ErrHandler
+    On Error GoTo ErrHandler
     If LenB(file) > 0 Then _
         CurrentMusicFile = file
    
@@ -560,7 +560,7 @@ On Error GoTo ErrHandler
     Set SegState = Performance.PlaySegmentEx(Segment, DMUS_SEGF_DEFAULT, 0)
    
     PlayMIDI = True
-Exit Function
+    Exit Function
  
 ErrHandler:
 End Function
@@ -569,7 +569,7 @@ End Function
 ' Loads a new MIDI file.
  
 Private Function LoadMidi(ByVal file As String) As Boolean
-On Error GoTo ErrHandler
+    On Error GoTo ErrHandler
     If Not General_File_Exist(MusicPath & file, vbArchive) Then Exit Function
    
     Call StopMidi
@@ -586,7 +586,7 @@ On Error GoTo ErrHandler
     Call Segment.SetStandardMidiFile
    
     LoadMidi = True
-Exit Function
+    Exit Function
  
 ErrHandler:
 End Function
@@ -595,11 +595,11 @@ End Function
 ' Stops playing the currently loaded MIDI file.
  
 Public Sub StopMidi()
-On Error GoTo ErrHandler
+    On Error GoTo ErrHandler
     If PlayingMusic Then
         Call Performance.StopEx(Segment, 0, DMUS_SEGF_DEFAULT)
     End If
-Exit Sub
+    Exit Sub
  
 ErrHandler:
 End Sub
