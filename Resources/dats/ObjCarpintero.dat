@@ -1,104 +1,39 @@
 [INIT]
-NumObjs=34
+NumObjs=12
 
-[OBJ1] 'Flecha
-Index=480
+[Obj1] ' BARCA
+Index=244
 
-[OBJ2] 'Flecha +1
-Index=551
+[Obj2] ' GALERA
+Index=245
 
-[OBJ3] 'Flecha +2
-Index=552
+[Obj3] ' GALEON
+Index=246
 
-[OBJ4] 'Flecha +3
-Index=553
+[Obj4] ' VARA DORADA
+Index=334
 
-[OBJ5] 'Laud Mágico
-Index=696
+[Obj5] ' BACULO ANCESTTRAL
+Index=394
 
-[OBJ6] 'Laud Élfico
-Index=1049
+[Obj6] ' FLECHA
+Index=250
 
-[OBJ7] 'Flauta Mágica
-Index=208
+[Obj7] ' FLECHA +1
+Index=287
 
-[OBJ8] 'Flauta Élfica
-Index=1050
+[Obj8] ' FLECHA +2
+Index=288
 
-[OBJ9] ' Báculo Engarzado
-Index=660
+[Obj9] ' FLECHA +3
+Index=289
 
-[OBJ10] 'Arco de Cazador
-Index=665
+[Obj10] ' FLAUTA MAGICA
+Index=278
 
-[OBJ11] 'Arco Compuesto Reforzado
-Index=664
+[Obj11] ' ARCO COMPUESTO REFORZADO
+Index=337
 
-[OBJ12] 'Arco compuesto
-Index=479
+[Obj12] ' ARCO DE LOS BOSQUES
+Index=385
 
-[OBJ13] 'Arco Simple Reforzado
-Index=663
-
-[OBJ14] 'Arco simple
-Index=478
-
-[OBJ15] 'Barca
-Index=474
-
-[OBJ16] 'Galera
-Index=475
-
-[OBJ17] 'Galeón
-Index=476
-
-[OBJ18] 'Tambor
-Index=362
-
-[OBJ19] 'Laud
-Index=469
-
-[OBJ20] 'Flauta
-Index=540
-
-[OBJ21] 'Cuchara
-Index=163
-
-[OBJ22] 'Silla
-Index=168
-
-[OBJ23] 'Silla
-Index=162
-
-[OBJ24] 'Butaca
-Index=733
-
-[OBJ25] 'Banqueta
-Index=799
-
-[OBJ26] 'Mueble Rústico 
-Index=167
-
-[OBJ27] 'Mueble Rústico
-Index=756
-
-[OBJ28] 'Sillón
-Index=748
-
-[OBJ29] 'Sillón
-Index=788
-
-[OBJ30] 'Sillón
-Index=789
-
-[OBJ31] 'Sillón Azul
-Index=790
-
-[OBJ32] 'Sillón Azul Doble
-Index=791
-
-[OBJ33] 'Armario
-Index=800
-
-[OBJ34] 'Caña de Pescar
-Index=138

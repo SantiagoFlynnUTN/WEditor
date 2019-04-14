@@ -2,5 +2,7 @@
 'que cargará el servidor
 
 [INIT]
-MapPath=\Maps\
-NumMaps=1
+NumMaps=2
+
+
+
