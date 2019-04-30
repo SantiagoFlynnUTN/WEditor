@@ -965,139 +965,150 @@ Private Sub Command1_Click()
     agraficoh = DameHeightTextura(aGrafico)
     
 End Sub
-
 Private Sub Command2_Click()
-    Dim Tmp As Integer
-    Dim P As Long
-    Dim X As Long
-    Dim Y As Long
-    Dim lx As Long
+Dim Tmp As Integer
+Dim P As Long
+Dim X As Long
+Dim Y As Long
+Dim lx As Long
 
-    Dim k As Integer
-    Dim kTmp As Integer
-    Tmp = (nfy * 16) + (nfx + 1)
-    If Selecto = False Then
-        If TexArray(Tmp) = 0 Then
+Dim k As Integer
+Dim kTmp As Integer
+Tmp = (nfy * 16) + (nfx + 1)
+If Selecto = False Then
+If TexArray(Tmp) = 0 Then
 
-            'Agregamos
-            If Val(Text2.Text) > 0 And Val(Text2.Text) < numNewIndex Then
-                If NewIndexData(Val(Text2.Text)).Estatic > 0 Then
+    'Agregamos
+    If Val(Text2.Text) > 0 And Val(Text2.Text) < numNewIndex Then
+        If NewIndexData(Val(Text2.Text)).Estatic > 0 Then
     
-                    With EstaticData(NewIndexData(Val(Text2.Text)).Estatic)
+        With EstaticData(NewIndexData(Val(Text2.Text)).Estatic)
         
-                        For Y = nfy To nfy + ((.H \ 32) - 1)
+            For Y = nfy To nfy + ((.H \ 32) - 1)
                 
-                            For X = nfx To nfx + ((.W \ 32) - 1)
-                                Tmp = (Y * 16) + (X + 1)
+                For X = nfx To nfx + ((.W \ 32) - 1)
+                    Tmp = (Y * 16) + (X + 1)
                     
-                                TexArray(Tmp) = Val(Text2.Text)
+                     TexArray(Tmp) = Val(Text2.Text)
                     
-                                TexInicialX(Tmp) = nfx * 32
-                                TexInicialY(Tmp) = nfy * 32
-                            Next X
-                        Next Y
+                    TexInicialX(Tmp) = nfx * 32
+                    TexInicialY(Tmp) = nfy * 32
+                Next X
+            Next Y
             
-                        If ((nfx + ((.W \ 32))) * 32) > tAncho Then tAncho = ((nfx + ((.W \ 32))) * 32)
-                        If ((nfy + ((.H \ 32))) * 32) > tAlto Then tAlto = ((nfy + ((.H \ 32))) * 32)
+            If ((nfx + ((.W \ 32))) * 32) > tAncho Then tAncho = ((nfx + ((.W \ 32))) * 32)
+            If ((nfy + ((.H \ 32))) * 32) > tAlto Then tAlto = ((nfy + ((.H \ 32))) * 32)
             
-                        tNumIndex = tNumIndex + 1
-                        ReDim Preserve tIndex(1 To tNumIndex)
-                        tIndex(tNumIndex).Num = Val(Text2.Text)
-                        tIndex(tNumIndex).X = nfx * 32
-                        tIndex(tNumIndex).Y = nfy * 32
+            tNumIndex = tNumIndex + 1
+            ReDim Preserve tIndex(1 To tNumIndex)
+            tIndex(tNumIndex).Num = Val(Text2.Text)
+            tIndex(tNumIndex).X = nfx * 32
+            tIndex(tNumIndex).Y = nfy * 32
             
             
-                    End With
-                ElseIf NewIndexData(Val(Text2.Text)).Dinamica > 0 Then
-                    With NewAnimationData(NewIndexData(Val(Text2.Text)).Dinamica)
-                        For Y = nfy To nfy + ((.Height \ 32) - 1)
+        End With
+        ElseIf NewIndexData(Val(Text2.Text)).Dinamica > 0 Then
+            With NewAnimationData(NewIndexData(Val(Text2.Text)).Dinamica)
+            For Y = nfy To nfy + ((.Height \ 32) - 1)
                 
-                            For X = nfx To nfx + ((.Width \ 32) - 1)
-                                Tmp = (Y * 16) + (X + 1)
-                                TexArray(Tmp) = Val(Text2.Text)
-                                TexInicialX(Tmp) = nfx * 32
-                                TexInicialY(Tmp) = nfy * 32
-                            Next X
-                        Next Y
-                        If ((nfx + ((.Width \ 32))) * 32) > tAncho Then tAncho = ((nfx + ((.Width \ 32))) * 32)
-                        If ((nfy + ((.Height \ 32))) * 32) > tAlto Then tAlto = ((nfy + ((.Height \ 32))) * 32)
+                For X = nfx To nfx + ((.Width \ 32) - 1)
+                    Tmp = (Y * 16) + (X + 1)
+                    TexArray(Tmp) = Val(Text2.Text)
+                    TexInicialX(Tmp) = nfx * 32
+                    TexInicialY(Tmp) = nfy * 32
+                Next X
+            Next Y
+            If ((nfx + ((.Width \ 32))) * 32) > tAncho Then tAncho = ((nfx + ((.Width \ 32))) * 32)
+            If ((nfy + ((.Height \ 32))) * 32) > tAlto Then tAlto = ((nfy + ((.Height \ 32))) * 32)
                 
-                        tNumIndex = tNumIndex + 1
-                        ReDim Preserve tIndex(1 To tNumIndex)
-                        tIndex(tNumIndex).Num = Val(Text2.Text)
-                        tIndex(tNumIndex).X = nfx * 32
-                        tIndex(tNumIndex).Y = nfy * 32
+            tNumIndex = tNumIndex + 1
+            ReDim Preserve tIndex(1 To tNumIndex)
+            tIndex(tNumIndex).Num = Val(Text2.Text)
+            tIndex(tNumIndex).X = nfx * 32
+            tIndex(tNumIndex).Y = nfy * 32
                 
                 
-                    End With
-                End If
-        
-        
-        
-                updatenuevo
-        
-            End If
-
-
-
-            Text3.Text = tAncho
-            Text4.Text = tAlto
-            Label7.Caption = "Num Index: " & tNumIndex
-            List1.AddItem tNumIndex & " - " & Val(Text2.Text) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).Y & "]"
+            End With
         End If
-
-    Else
-        Dim TmpS As Integer
-        If NumSel > 0 Then
-            'Check capacity.
-            For k = 1 To NumSel
-                TmpS = ((nfx + SelStartX(k)) * 32) + EstaticData(NewIndexData(SelInd(k)).Estatic).W
-                If tAncho < TmpS Then tAncho = TmpS
-                TmpS = ((nfy + SelStartY(k)) * 32) + EstaticData(NewIndexData(SelInd(k)).Estatic).H
-                If tAlto < TmpS Then tAlto = TmpS
-            Next k
-    
-            For k = 1 To NumSel
-                Tmp = ((nfy + SelStartY(k)) * 16) + (nfx + SelStartX(k) + 1)
-                If TexArray(Tmp) = 0 Then
-
-                    'Agregamos
-                    If SelInd(k) > 0 And SelInd(k) < numNewIndex Then
-                        With EstaticData(NewIndexData(SelInd(k)).Estatic)
         
-                            For Y = (nfy + SelStartY(k)) To (nfy + SelStartY(k)) + ((.H \ 32) - 1)
-                
-                                For X = (nfx + SelStartX(k)) To (nfx + SelStartX(k)) + ((.W \ 32) - 1)
-                                    Tmp = (Y * 16) + (X + 1)
-                    
-                                    TexArray(Tmp) = SelInd(k)
-                    
-                                    TexInicialX(Tmp) = (nfx + SelStartX(k)) * 32
-                                    TexInicialY(Tmp) = (nfy + SelStartY(k)) * 32
-                                Next X
-                            Next Y
-            
-                            tNumIndex = tNumIndex + 1
-                            ReDim Preserve tIndex(1 To tNumIndex)
-                            tIndex(tNumIndex).Num = SelInd(k)
-                            tIndex(tNumIndex).X = (nfx + SelStartX(k)) * 32
-                            tIndex(tNumIndex).Y = (nfy + SelStartY(k)) * 32
-            
-            
-                        End With
-                        updatenuevo
-                    End If
-
-
-
-                    Text3.Text = tAncho
-                    Text4.Text = tAlto
-                    Label7.Caption = "Num Index: " & tNumIndex
-                    List1.AddItem tNumIndex & " - " & SelInd(k) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).Y & "]"
-                End If
-            Next k
-        End If
+        
+        
+        updatenuevo
+        
     End If
+
+
+
+Text3.Text = tAncho
+Text4.Text = tAlto
+Label7.Caption = "Num Index: " & tNumIndex
+List1.AddItem tNumIndex & " - " & Val(Text2.Text) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).Y & "]"
+End If
+
+Else
+Dim TmpS As Integer
+Dim tmpLeft As Integer
+Dim tmpTop As Integer
+tmpLeft = -1
+tmpTop = -1
+If NumSel > 0 Then
+    'Check capacity.
+    For k = 1 To NumSel
+        TmpS = ((SelStartX(k) * 32))
+        If tmpLeft = -1 Or TmpS < tmpLeft Then tmpLeft = TmpS
+        TmpS = ((nfx + SelStartX(k)) * 32) + EstaticData(NewIndexData(SelInd(k)).Estatic).W
+        If tAncho < TmpS Then tAncho = TmpS
+        TmpS = ((nfy + SelStartY(k)) * 32) + EstaticData(NewIndexData(SelInd(k)).Estatic).H
+        If tAlto < TmpS Then tAlto = TmpS
+        TmpS = ((SelStartY(k)) * 32)
+        If tmpTop = -1 Or TmpS < tmpTop Then tmpTop = TmpS
+    Next k
+    
+    tAncho = tAncho - tmpLeft
+    tAlto = tAlto - tmpTop
+    
+    
+    For k = 1 To NumSel
+    Tmp = ((nfy + SelStartY(k)) * 16) + (nfx + SelStartX(k) + 1)
+If TexArray(Tmp) = 0 Then
+
+    'Agregamos
+    If SelInd(k) > 0 And SelInd(k) < numNewIndex Then
+        With EstaticData(NewIndexData(SelInd(k)).Estatic)
+        
+            For Y = (nfy + SelStartY(k)) To (nfy + SelStartY(k)) + ((.H \ 32) - 1)
+                
+                For X = (nfx + SelStartX(k)) To (nfx + SelStartX(k)) + ((.W \ 32) - 1)
+                    Tmp = (Y * 16) + (X + 1)
+                    
+                     TexArray(Tmp) = SelInd(k)
+                    
+                    TexInicialX(Tmp) = (nfx + SelStartX(k)) * 32
+                    TexInicialY(Tmp) = (nfy + SelStartY(k)) * 32
+                Next X
+            Next Y
+            
+            tNumIndex = tNumIndex + 1
+            ReDim Preserve tIndex(1 To tNumIndex)
+            tIndex(tNumIndex).Num = SelInd(k)
+            tIndex(tNumIndex).X = ((nfx + SelStartX(k)) * 32) - tmpLeft
+            tIndex(tNumIndex).Y = ((nfy + SelStartY(k)) * 32) - tmpTop
+            
+            
+        End With
+        updatenuevo
+    End If
+
+
+
+Text3.Text = tAncho
+Text4.Text = tAlto
+Label7.Caption = "Num Index: " & tNumIndex
+List1.AddItem tNumIndex & " - " & SelInd(k) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).Y & "]"
+End If
+Next k
+End If
+End If
 End Sub
 Public Sub updatenuevo()
     Nuevo.Cls
@@ -1329,7 +1340,8 @@ Private Sub Nuevo_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As
 
     Text12.Text = nfx * 32
     Text13.Text = nfy * 32
-
+    Nuevo.ForeColor = vbWhite
+    
     Nuevo.Line (((nfx * 32) * Screen.TwipsPerPixelX), ((nfy * 32) * Screen.TwipsPerPixelY))-((((nfx * 32) + W) * Screen.TwipsPerPixelX), ((nfy * 32) * Screen.TwipsPerPixelY))
     Nuevo.Line (((nfx * 32) * Screen.TwipsPerPixelX), (((nfy * 32) + H) * Screen.TwipsPerPixelY))-((((nfx * 32) + W) * Screen.TwipsPerPixelX), (((nfy * 32) + H) * Screen.TwipsPerPixelY))
     Nuevo.Line (((nfx * 32) * Screen.TwipsPerPixelX), (((nfy * 32)) * Screen.TwipsPerPixelY))-((((nfx) * 32) * Screen.TwipsPerPixelX), (((nfy * 32) + H) * Screen.TwipsPerPixelY))
