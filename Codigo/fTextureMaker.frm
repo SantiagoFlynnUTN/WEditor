@@ -10,6 +10,14 @@ Begin VB.Form fTextureMaker
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   1350
    StartUpPosition =   3  'Windows Default
+   Begin VB.CommandButton Command 
+      Caption         =   "Limpiar"
+      Height          =   375
+      Left            =   16200
+      TabIndex        =   45
+      Top             =   120
+      Width           =   1215
+   End
    Begin WorldEditor.lvButtons_H csel 
       Height          =   375
       Left            =   4080
@@ -610,97 +618,95 @@ Private Sub Actual_MouseUp(Button As Integer, Shift As Integer, X As Single, Y A
     End If
 End Sub
 Public Sub ProcesarLimites(ByVal X As Integer, ByVal Y As Integer, ByVal W As Integer, ByVal H As Integer)
-    Dim z As Long
-    Dim iC As Integer
-    Dim fC As Integer
-    Dim FF As Integer
-    Dim inF As Integer
-    Dim i As Long
-    Dim j As Long
-    Dim EncontroIndex As Boolean
-    Dim k As Long
-    Dim agw As Integer
-    agw = agraficow \ 32
+Dim z As Long
+Dim iC As Integer
+Dim fC As Integer
+Dim FF As Integer
+Dim inF As Integer
+Dim i As Long
+Dim j As Long
+Dim EncontroIndex As Boolean
+Dim k As Long
+Dim agw As Integer
+agw = agraficow \ 32
 
-    iC = (X - 1) \ 32
-    fC = (W - 1) \ 32
-    FF = (H - 1) \ 32
-    inF = (Y - 1) \ 32
-
-
+iC = (X - 1) \ 32
+fC = (W - 1) \ 32
+FF = (H - 1) \ 32
+inF = (Y - 1) \ 32
 
 
 
-    For i = iC To fC
-        For j = inF To FF
-            For z = 1 To numNewIndex
-                If NewIndexData(z).OverWriteGrafico = aGrafico Then
-                    If NewIndexData(z).Estatic > 0 Then
-                        With EstaticData(NewIndexData(z).Estatic)
-                            If (.L + .W) >= (i * 32) And .L < ((i + 1) * 32) Then
-                                If (.t + .H) > ((j) * 32) And .t < ((j + 1) * 32) Then
-                                    'Este grafico esta aca.
-                                    'Tenemos que reajustaR?
+
+For i = iC To fC
+    For j = inF To FF
+        For z = 1 To numNewIndex
+            If NewIndexData(z).OverWriteGrafico = aGrafico Then
+                If NewIndexData(z).Estatic > 0 Then
+                    With EstaticData(NewIndexData(z).Estatic)
+                        If (.L + .W) > (i * 32) And .L < ((i + 1) * 32) Then
+                            If (.t + .H) > ((j) * 32) And .t < ((j + 1) * 32) Then
+                                'Este grafico esta aca.
+                                'Tenemos que reajustaR?
                                 
-                                    If NumSel > 0 Then
-                                        For k = 1 To NumSel
-                                            If SelInd(k) = z Then Exit For
+                                If NumSel > 0 Then
+                                    For k = 1 To NumSel
+                                        If SelInd(k) = z Then Exit For
                                         
-                                        Next k
-                                    Else
-                                        k = 1
-                                    End If
-                                    If k > NumSel Then
-                                        NumSel = k
-                                        ReDim Preserve SelInd(1 To k)
-                                        ReDim Preserve SelStartX(1 To k)
-                                        ReDim Preserve SelStartY(1 To k)
-                                        SelInd(k) = z
-                                        SelStartX(k) = (.L \ 32)
-                                        SelStartY(k) = (.t \ 32)
-                                    End If
+                                    Next k
+                                Else
+                                    k = 1
+                                End If
+                                If k > NumSel Then
+                                    NumSel = k
+                                    ReDim Preserve SelInd(1 To k)
+                                    ReDim Preserve SelStartX(1 To k)
+                                    ReDim Preserve SelStartY(1 To k)
+                                    SelInd(k) = z
+                                    SelStartX(k) = (.L \ 32)
+                                    SelStartY(k) = (.t \ 32)
+                                End If
                                     
                                 
-                                    If ifX > .L Or ifX = -1 Then
-                                        ifX = .L
-                                        iiFx = ifX * Screen.TwipsPerPixelX
-                                    End If
-                                    If ifX < (.L + .W) Or ifX = -1 Then
-                                        lifX = .L + .W
-                                        liiFx = lifX * Screen.TwipsPerPixelX
-                                    End If
-                                
-                                    If ifY > .t Or ifY = -1 Then
-                                        ifY = .t
-                                        iiFy = ifY * Screen.TwipsPerPixelY
-                                    End If
-                                    If ifY < (.t + .H) Or lifY = -1 Then
-                                        lifY = .t + .H
-                                        liiFy = lifY * Screen.TwipsPerPixelY
-                                    End If
-                                
-                                    EncontroIndex = True
-                                    Exit For
-                            
+                                If ifX > .L Or ifX = -1 Then
+                                    ifX = .L
+                                    iiFx = ifX * Screen.TwipsPerPixelX
                                 End If
+                                If lifX < (.L + .W) Or lifX = -1 Then
+                                    lifX = .L + .W
+                                    liiFx = lifX * Screen.TwipsPerPixelX
+                                End If
+                                
+                                If ifY > .t Or ifY = -1 Then
+                                    ifY = .t
+                                    iiFy = ifY * Screen.TwipsPerPixelY
+                                End If
+                                If lifY < (.t + .H) Or lifY = -1 Then
+                                    lifY = .t + .H
+                                    liiFy = lifY * Screen.TwipsPerPixelY
+                                End If
+                                
+                                EncontroIndex = True
+                                Exit For
+                            
                             End If
-                        End With
-                    End If
+                        End If
+                    End With
                 End If
-            Next z
-        Next j
-    Next i
-
-    If EncontroIndex = False Then
-        lifY = 0
-        liiFy = 0
-        lifX = 0
-        liiFx = 0
-        ifX = 0
-        iiFx = 0
-        ifY = 0
-        iiFy = 0
-    End If
+            End If
+        Next z
+    Next j
+Next i
+If EncontroIndex = False Then
+    lifY = 0
+    liiFy = 0
+    lifX = 0
+    liiFx = 0
+    ifX = 0
+    iiFx = 0
+    ifY = 0
+    iiFy = 0
+End If
 
 
 End Sub
@@ -926,6 +932,17 @@ Private Sub Combo1_Click()
     Text14 = TexWE(TexAc).Name
     
     updatenuevo
+End Sub
+
+Private Sub Command_Click()
+Erase tIndex
+tNumIndex = 0
+Erase TexInicialX
+Erase TexInicialY
+Erase TexArray
+List1.Clear
+Nuevo.Cls
+
 End Sub
 
 Private Sub Command1_Click()
