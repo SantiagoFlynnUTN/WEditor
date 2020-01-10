@@ -16,7 +16,7 @@
 '  NpcReyCastillo = 14
 
 [INIT]
-NumNPCs=4
+NumNPCs=6
 
 [NPC1] 'NPC
 Name=Doroteo
@@ -62,6 +62,24 @@ Quests3=12
 Name=Padre Valyst
 NpcType=1
 Desc=Hola hijo mío, soy el Sacerdote de este pueblo.
+Head=14
+Body=11
+Heading=3
+Movement=1
+
+[NPC5] ' Viajero
+Name=Viajero
+NpcType=6
+Desc=Elige un destino a viajar.
+Head=14
+Body=11
+Heading=3
+Movement=1
+
+[NPC6] ' Hechizero
+Name=Snape
+NpcType=12
+Desc=Tengo los hechizos mas poderosos de estas tierras
 Head=14
 Body=11
 Heading=3
