@@ -16,7 +16,7 @@
 '  NpcReyCastillo = 14
 
 [INIT]
-NumNPCs=6
+NumNPCs=9
 
 [NPC1] 'NPC
 Name=Doroteo
@@ -39,8 +39,23 @@ Movement=1
 Comercia=1
 ReSpawn=0
 TipoItems=1
-NROITEMS=1
+NROITEMS=16
 Obj1=1-100
+Obj2=39-100
+Obj3=123-100
+Obj4=2-100
+Obj5=40-100
+Obj6=124-100
+Obj7=3-100
+Obj8=105-100
+Obj9=41-100
+Obj10=5-100
+Obj11=4-100
+Obj12=125-100
+Obj13=6-100
+Obj14=42-100
+Obj15=107-100
+Obj16=126-100
 MenuIndex=3
 
 [NPC3] 'Quest de Inthak
@@ -82,5 +97,87 @@ NpcType=12
 Desc=Tengo los hechizos mas poderosos de estas tierras
 Head=14
 Body=11
+Comercia=1
+NROITEMS=15
+Obj1=221-100
+Obj2=222-100
+Obj3=223-100
+Obj4=224-100
+Obj5=225-100
+Obj6=226-100
+Obj7=227-100
+Obj8=228-100
+Obj9=229-100
+Obj10=230-100
+Obj11=231-100
+Obj12=232-100
+Obj13=233-100
+Obj14=234-100
+Obj15=235-100
 Heading=3
 Movement=1
+
+[NPC7] ' Sacerdote
+Name=Snape
+NpcType=12
+Desc=Tengo los hechizos mas poderosos de estas tierras
+Head=14
+Body=11
+Comercia=1
+NROITEMS=15
+Obj1=236-100
+Obj2=237-100
+Obj3=238-100
+Obj4=239-100
+Obj5=240-100
+Obj6=241-100
+Obj7=242-100
+Obj8=243-100
+Obj9=244-100
+Obj10=245-100
+Obj11=246-100
+Obj12=247-100
+Obj13=248-100
+Obj14=249-100
+Obj15=250-100
+Heading=3
+Movement=1
+
+[NPC8] ' Sacerdote
+Name=Snape
+NpcType=12
+Desc=Tengo los hechizos mas poderosos de estas tierras
+Head=14
+Body=11
+Comercia=1
+NROITEMS=9
+Obj1=251-100
+Obj2=252-100
+Obj3=253-100
+Obj4=254-100
+Obj5=255-100
+Obj6=256-100
+Obj7=257-100
+Obj8=258-100
+Obj9=259-100
+Heading=3
+Movement=1
+
+[NPC9] ' Sacerdote
+Name=Vendedora de Pociones
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores pociones de estas comarcas.
+Head=7
+Body=11
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=5
+Obj1=97-10000
+Obj2=98-10000
+Obj3=99-10000
+Obj4=100-10000
+Obj5=96-10000
+MenuIndex=3
