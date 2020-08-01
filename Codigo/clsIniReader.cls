@@ -93,11 +93,11 @@ Private MainNodes As Long
 '
 
 Private Sub Class_Initialize()
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    '
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'
+'**************************************************************
 End Sub
 
 ''
@@ -105,11 +105,11 @@ End Sub
 '
 
 Private Sub Class_Terminate()
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    '
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'
+'**************************************************************
     Dim i As Long
     
     'Clean up
@@ -130,11 +130,11 @@ End Sub
 '
 
 Public Sub Initialize(ByVal file As String)
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    'Opens the requested file and loads it's data into memory
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'Opens the requested file and loads it's data into memory
+'**************************************************************
     Dim handle As Integer
     Dim Text As String
     Dim Pos As Long
@@ -206,12 +206,12 @@ End Sub
 '
 
 Private Sub SortChildNodes(ByRef Node As MainNode, ByVal first As Integer, ByVal last As Integer)
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    'Sorts the list of values in a given MainNode using quicksort,
-    'this allows the use of Binary Search for faster searches
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'Sorts the list of values in a given MainNode using quicksort,
+'this allows the use of Binary Search for faster searches
+'**************************************************************
     Dim min As Integer      'First item in the list
     Dim max As Integer      'Last item in the list
     Dim comp As String      'Item used to compare
@@ -252,12 +252,12 @@ End Sub
 '
 
 Private Sub SortMainNodes(ByVal first As Integer, ByVal last As Integer)
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    'Sorts the MainNodes list using quicksort,
-    'this allows the use of Binary Search for faster searches
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'Sorts the MainNodes list using quicksort,
+'this allows the use of Binary Search for faster searches
+'**************************************************************
     Dim min As Integer      'First item in the list
     Dim max As Integer      'Last item in the list
     Dim comp As String      'Item used to compare
@@ -297,11 +297,11 @@ End Sub
 '
 
 Public Function GetValue(ByVal Main As String, ByVal Key As String) As String
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    'Returns a value if the key and main node exist, or a nullstring otherwise
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'Returns a value if the key and main node exist, or a nullstring otherwise
+'**************************************************************
     Dim i As Long
     Dim j As Long
     
@@ -326,12 +326,12 @@ End Function
 '
 
 Private Function FindKey(ByRef Node As MainNode, ByVal Key As String) As Long
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    'Returns the index of the value which key matches the requested one,
-    'or the negation of the position were it should be if not found
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'Returns the index of the value which key matches the requested one,
+'or the negation of the position were it should be if not found
+'**************************************************************
     Dim min As Long
     Dim max As Long
     Dim mid As Long
@@ -366,12 +366,12 @@ End Function
 '
 
 Private Function FindMain(ByVal Name As String) As Long
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/01/2006
-    'Returns the index of the MainNode which name matches the requested one,
-    'or the negation of the position were it should be if not found
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/01/2006
+'Returns the index of the MainNode which name matches the requested one,
+'or the negation of the position were it should be if not found
+'**************************************************************
     Dim min As Long
     Dim max As Long
     Dim mid As Long

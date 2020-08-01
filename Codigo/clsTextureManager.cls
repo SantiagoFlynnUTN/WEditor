@@ -82,24 +82,24 @@ Public Function GetTexture(ByVal file_name As Integer) As Direct3DTexture8
         If MaxEntries = texture_count Then
             'Sacamos el que hace más que no usamos, y utilizamos el slot
             lKeys(file_name) = Load_Texture(file_name, BorraMenosUsado())
-            Set GetTexture = texture_list(index).d3dtexture
+            Set GetTexture = texture_list(Index).d3dtexture
         Else
             lKeys(file_name) = Load_Texture(file_name)
             Set GetTexture = texture_list(lKeys(file_name)).d3dtexture
         End If
     End If
-    Exit Function
+Exit Function
 ErrorHandler:
     Debug.Print "GetTexture Error & err.description "
 End Function
 
 Public Function Load_Texture(ByVal file_name As Integer, Optional ByVal texture_index As Integer = -1, Optional ByVal borrable As Byte = 1) As Integer
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero
-    'Last Modify Date: 5/04/2005
-    '
-    '**************************************************************
-    'On Error GoTo ErrHandler
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero
+'Last Modify Date: 5/04/2005
+'
+'**************************************************************
+'On Error GoTo ErrHandler
     Dim texture_info As D3DXIMAGE_INFO_A
       
     If texture_index = -1 Then
@@ -127,7 +127,7 @@ Public Function Load_Texture(ByVal file_name As Integer, Optional ByVal texture_
     
     'Devolvemos el ìndice en que lo cargamos
     Load_Texture = texture_index
-    Exit Function
+Exit Function
 
 ErrHandler:
 
@@ -176,29 +176,29 @@ End Function
 
 'TODO: No estoy muy seguro de que esto deba quedar aca (Blizzard)
 Private Sub Texture_Load_From_File(Texture As Direct3DTexture8, ByVal file As String, ByRef texture_info As D3DXIMAGE_INFO_A)
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '
-    '*************************************************************+
-    On Error GoTo ErrHandler
-    Dim data() As Byte
-    Dim Filn As Integer
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'
+'*************************************************************+
+On Error GoTo ErrHandler
+Dim data() As Byte
+Dim Filn As Integer
     Filn = Val(left$(file, Len(file) - 4))
     If Filn >= 4000 And Filn < 5000 Then
-        file = App.PATH & "\RESOURCES\GRH_MAP\" & file
-        Set Texture = d3dx.CreateTextureFromFileEx(ddevice, file, D3DX_DEFAULT, _
+    file = App.PATH & "\RESOURCES\GRH_MAP\" & file
+            Set Texture = d3dx.CreateTextureFromFileEx(ddevice, file, D3DX_DEFAULT, _
             D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, _
             D3DX_FILTER_POINT, D3DX_FILTER_POINT, COLOR_KEY, texture_info, ByVal 0)
     Else
         If FileExist(DirGraficos & file, vbNormal) Then
             Set Texture = d3dx.CreateTextureFromFileEx(ddevice, DirGraficos & file, D3DX_DEFAULT, _
-                D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, _
-                D3DX_FILTER_POINT, D3DX_FILTER_POINT, COLOR_KEY, texture_info, ByVal 0)
+            D3DX_DEFAULT, D3DX_DEFAULT, 0, D3DFMT_UNKNOWN, D3DPOOL_MANAGED, _
+            D3DX_FILTER_POINT, D3DX_FILTER_POINT, COLOR_KEY, texture_info, ByVal 0)
         Else
             ExtractGraphic Val(file), data
             Set Texture = d3dx.CreateTextureFromFileInMemoryEx(ddevice, data(0), CLng(UBound(data) + 1), 0, 0, 3, 0, D3DFMT_A8R8G8B8 _
-                , D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, COLOR_KEY, texture_info, ByVal 0)
+            , D3DPOOL_MANAGED, D3DX_FILTER_NONE, D3DX_FILTER_NONE, COLOR_KEY, texture_info, ByVal 0)
 
         
         End If

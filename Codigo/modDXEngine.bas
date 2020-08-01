@@ -35,6 +35,7 @@ Public Type tNewAnimation
     OffsetX As Integer
     OffsetY As Integer
     Initial As Integer
+    TipoAnimacion As Byte
 End Type
 
 
@@ -93,7 +94,7 @@ Public SPOT_LIGHTS() As tSPOT_LIGHTS
 Public Num_SPOTLIGHTS As Integer
 'SISTEMA DE INTERIORES.
 
-Public s As Direct3DSurface8
+Public S As Direct3DSurface8
 Public ambient_light() As Long
 Public base_light As Long
 Public day_r_old As Byte
@@ -217,7 +218,7 @@ Public Type TLVERTEX
 End Type
 
 Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" ( _
-    ByRef destination As Any, ByRef Source As Any, ByVal numbytes As Long)
+ByRef destination As Any, ByRef Source As Any, ByVal numbytes As Long)
 Public Const D3DGOLD As Long = -2645468
 Public Const D3DWHITE As Long = -1
 Public Const D3DRED As Long = -65536
@@ -296,7 +297,7 @@ End Enum
 'Variables
 '***************************
 'Major DX Objects
-Public dX As DirectX8
+Public dx As DirectX8
 Public d3d As Direct3D8
 Public ddevice As Direct3DDevice8
 Public d3dx As D3DX8
@@ -413,34 +414,34 @@ Public Declare Function StretchBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X A
 Public Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
 Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
 Public Declare Function GetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long) As Long
-Function GetVar(ByVal file As String, ByVal Main As String, ByVal Var As String) As String
-    '*****************************************************************
-    'Gets a Var from a text file
-    '*****************************************************************
+ Function GetVar(ByVal file As String, ByVal Main As String, ByVal Var As String) As String
+      '*****************************************************************
+      'Gets a Var from a text file
+      '*****************************************************************
 
-    Dim sSpaces As String ' This will hold the input that the program will retrieve
+      Dim sSpaces As String ' This will hold the input that the program will retrieve
     
-    sSpaces = Space$(500) ' This tells the computer how long the longest string can be. If you want, you can change the number 100 to any number you wish
+      sSpaces = Space$(500) ' This tells the computer how long the longest string can be. If you want, you can change the number 100 to any number you wish
     
-    GetPrivateProfileString Main, Var, vbNullString, sSpaces, Len(sSpaces), file
+      GetPrivateProfileString Main, Var, vbNullString, sSpaces, Len(sSpaces), file
     
-    GetVar = RTrim$(sSpaces)
-    GetVar = left$(GetVar, Len(GetVar) - 1)
+      GetVar = RTrim$(sSpaces)
+      GetVar = left$(GetVar, Len(GetVar) - 1)
 End Function
 Sub CargarParticulas()
  
-    Dim StreamFile As String
-    Dim LoopC As Long
-    Dim i As Long
-    Dim GrhListing As String
-    Dim TempSet As String
-    Dim ColorSet As Long
+Dim StreamFile As String
+Dim LoopC As Long
+Dim i As Long
+Dim GrhListing As String
+Dim TempSet As String
+Dim ColorSet As Long
    
-    StreamFile = App.PATH & "\Resources\INIT\Particles.ini"
-    TotalStreams = Val(GetVar(StreamFile, "INIT", "Total"))
+StreamFile = App.PATH & "\Resources\INIT\Particles.ini"
+TotalStreams = Val(GetVar(StreamFile, "INIT", "Total"))
  
-    'resize StreamData array
-    ReDim StreamData(1 To TotalStreams) As Stream
+'resize StreamData array
+ReDim StreamData(1 To TotalStreams) As Stream
  
     'fill StreamData array with info from Particles.ini
     For LoopC = 1 To TotalStreams
@@ -497,76 +498,76 @@ End Sub
  
 Public Function General_Particle_Create(ByVal ParticulaInd As Long, ByVal X As Integer, ByVal Y As Integer, Optional ByVal particle_life As Long = 0) As Long
 
-    Dim rgb_list(0 To 3) As Long
-    rgb_list(0) = RGB(StreamData(ParticulaInd).colortint(0).R, StreamData(ParticulaInd).colortint(0).G, StreamData(ParticulaInd).colortint(0).B)
-    rgb_list(1) = RGB(StreamData(ParticulaInd).colortint(1).R, StreamData(ParticulaInd).colortint(1).G, StreamData(ParticulaInd).colortint(1).B)
-    rgb_list(2) = RGB(StreamData(ParticulaInd).colortint(2).R, StreamData(ParticulaInd).colortint(2).G, StreamData(ParticulaInd).colortint(2).B)
-    rgb_list(3) = RGB(StreamData(ParticulaInd).colortint(3).R, StreamData(ParticulaInd).colortint(3).G, StreamData(ParticulaInd).colortint(3).B)
+Dim rgb_list(0 To 3) As Long
+rgb_list(0) = RGB(StreamData(ParticulaInd).colortint(0).R, StreamData(ParticulaInd).colortint(0).G, StreamData(ParticulaInd).colortint(0).B)
+rgb_list(1) = RGB(StreamData(ParticulaInd).colortint(1).R, StreamData(ParticulaInd).colortint(1).G, StreamData(ParticulaInd).colortint(1).B)
+rgb_list(2) = RGB(StreamData(ParticulaInd).colortint(2).R, StreamData(ParticulaInd).colortint(2).G, StreamData(ParticulaInd).colortint(2).B)
+rgb_list(3) = RGB(StreamData(ParticulaInd).colortint(3).R, StreamData(ParticulaInd).colortint(3).G, StreamData(ParticulaInd).colortint(3).B)
  
-    General_Particle_Create = Particle_Group_Create(X, Y, StreamData(ParticulaInd).grh_list, rgb_list(), StreamData(ParticulaInd).NumOfParticles, ParticulaInd, _
-        StreamData(ParticulaInd).AlphaBlend, IIf(particle_life = 0, StreamData(ParticulaInd).life_counter, particle_life), StreamData(ParticulaInd).Speed, , StreamData(ParticulaInd).x1, StreamData(ParticulaInd).y1, StreamData(ParticulaInd).Angle, _
-        StreamData(ParticulaInd).vecx1, StreamData(ParticulaInd).vecx2, StreamData(ParticulaInd).vecy1, StreamData(ParticulaInd).vecy2, _
-        StreamData(ParticulaInd).life1, StreamData(ParticulaInd).life2, StreamData(ParticulaInd).friction, StreamData(ParticulaInd).spin_speedL, _
-        StreamData(ParticulaInd).gravity, StreamData(ParticulaInd).grav_strength, StreamData(ParticulaInd).bounce_strength, StreamData(ParticulaInd).x2, _
-        StreamData(ParticulaInd).y2, StreamData(ParticulaInd).XMove, StreamData(ParticulaInd).move_x1, StreamData(ParticulaInd).move_x2, StreamData(ParticulaInd).move_y1, _
-        StreamData(ParticulaInd).move_y2, StreamData(ParticulaInd).YMove, StreamData(ParticulaInd).spin_speedH, StreamData(ParticulaInd).Spin, StreamData(ParticulaInd).grh_resize, StreamData(ParticulaInd).grh_resizex, StreamData(ParticulaInd).grh_resizey)
+General_Particle_Create = Particle_Group_Create(X, Y, StreamData(ParticulaInd).grh_list, rgb_list(), StreamData(ParticulaInd).NumOfParticles, ParticulaInd, _
+    StreamData(ParticulaInd).AlphaBlend, IIf(particle_life = 0, StreamData(ParticulaInd).life_counter, particle_life), StreamData(ParticulaInd).Speed, , StreamData(ParticulaInd).x1, StreamData(ParticulaInd).y1, StreamData(ParticulaInd).Angle, _
+    StreamData(ParticulaInd).vecx1, StreamData(ParticulaInd).vecx2, StreamData(ParticulaInd).vecy1, StreamData(ParticulaInd).vecy2, _
+    StreamData(ParticulaInd).life1, StreamData(ParticulaInd).life2, StreamData(ParticulaInd).friction, StreamData(ParticulaInd).spin_speedL, _
+    StreamData(ParticulaInd).gravity, StreamData(ParticulaInd).grav_strength, StreamData(ParticulaInd).bounce_strength, StreamData(ParticulaInd).x2, _
+    StreamData(ParticulaInd).y2, StreamData(ParticulaInd).XMove, StreamData(ParticulaInd).move_x1, StreamData(ParticulaInd).move_x2, StreamData(ParticulaInd).move_y1, _
+    StreamData(ParticulaInd).move_y2, StreamData(ParticulaInd).YMove, StreamData(ParticulaInd).spin_speedH, StreamData(ParticulaInd).Spin, StreamData(ParticulaInd).grh_resize, StreamData(ParticulaInd).grh_resizex, StreamData(ParticulaInd).grh_resizey)
  
 End Function
 Function ReadField(ByVal Pos As Integer, _
-    ByRef Text As String, _
-    ByVal SepASCII As Byte) As String
-    '*****************************************************************
-    'Gets a field from a delimited string
-    'Author: Juan Martín Sotuyo Dodero (Maraxus)
-    'Last Modify Date: 11/15/2004
-    '*****************************************************************
+                   ByRef Text As String, _
+                   ByVal SepASCII As Byte) As String
+      '*****************************************************************
+      'Gets a field from a delimited string
+      'Author: Juan Martín Sotuyo Dodero (Maraxus)
+      'Last Modify Date: 11/15/2004
+      '*****************************************************************
 
-    Dim i          As Long
-    Dim lastPos    As Long
-    Dim CurrentPos As Long
-    Dim delimiter  As String * 1
+      Dim i          As Long
+      Dim lastPos    As Long
+      Dim CurrentPos As Long
+      Dim delimiter  As String * 1
     
-    delimiter = Chr$(SepASCII)
+      delimiter = Chr$(SepASCII)
     
-    For i = 1 To Pos
-        lastPos = CurrentPos
-        CurrentPos = InStr(lastPos + 1, Text, delimiter, vbBinaryCompare)
+      For i = 1 To Pos
+            lastPos = CurrentPos
+            CurrentPos = InStr(lastPos + 1, Text, delimiter, vbBinaryCompare)
 
-    Next i
+      Next i
     
-    If CurrentPos = 0 Then
-        ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
-    Else
-        ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
-    End If
+      If CurrentPos = 0 Then
+            ReadField = mid$(Text, lastPos + 1, Len(Text) - lastPos)
+      Else
+            ReadField = mid$(Text, lastPos + 1, CurrentPos - lastPos - 1)
+      End If
 
 End Function
 
 Public Function General_Char_Particle_Create(ByVal ParticulaInd As Long, ByVal char_index As Integer, Optional ByVal particle_life As Long = 0) As Long
  
-    Dim rgb_list(0 To 3) As Long
-    rgb_list(0) = RGB(StreamData(ParticulaInd).colortint(0).R, StreamData(ParticulaInd).colortint(0).G, StreamData(ParticulaInd).colortint(0).B)
-    rgb_list(1) = RGB(StreamData(ParticulaInd).colortint(1).R, StreamData(ParticulaInd).colortint(1).G, StreamData(ParticulaInd).colortint(1).B)
-    rgb_list(2) = RGB(StreamData(ParticulaInd).colortint(2).R, StreamData(ParticulaInd).colortint(2).G, StreamData(ParticulaInd).colortint(2).B)
-    rgb_list(3) = RGB(StreamData(ParticulaInd).colortint(3).R, StreamData(ParticulaInd).colortint(3).G, StreamData(ParticulaInd).colortint(3).B)
+Dim rgb_list(0 To 3) As Long
+rgb_list(0) = RGB(StreamData(ParticulaInd).colortint(0).R, StreamData(ParticulaInd).colortint(0).G, StreamData(ParticulaInd).colortint(0).B)
+rgb_list(1) = RGB(StreamData(ParticulaInd).colortint(1).R, StreamData(ParticulaInd).colortint(1).G, StreamData(ParticulaInd).colortint(1).B)
+rgb_list(2) = RGB(StreamData(ParticulaInd).colortint(2).R, StreamData(ParticulaInd).colortint(2).G, StreamData(ParticulaInd).colortint(2).B)
+rgb_list(3) = RGB(StreamData(ParticulaInd).colortint(3).R, StreamData(ParticulaInd).colortint(3).G, StreamData(ParticulaInd).colortint(3).B)
  
-    General_Char_Particle_Create = Char_Particle_Group_Create(char_index, StreamData(ParticulaInd).grh_list, rgb_list(), StreamData(ParticulaInd).NumOfParticles, ParticulaInd, _
-        StreamData(ParticulaInd).AlphaBlend, IIf(particle_life = 0, StreamData(ParticulaInd).life_counter, particle_life), StreamData(ParticulaInd).Speed, , StreamData(ParticulaInd).x1, StreamData(ParticulaInd).y1, StreamData(ParticulaInd).Angle, _
-        StreamData(ParticulaInd).vecx1, StreamData(ParticulaInd).vecx2, StreamData(ParticulaInd).vecy1, StreamData(ParticulaInd).vecy2, _
-        StreamData(ParticulaInd).life1, StreamData(ParticulaInd).life2, StreamData(ParticulaInd).friction, StreamData(ParticulaInd).spin_speedL, _
-        StreamData(ParticulaInd).gravity, StreamData(ParticulaInd).grav_strength, StreamData(ParticulaInd).bounce_strength, StreamData(ParticulaInd).x2, _
-        StreamData(ParticulaInd).y2, StreamData(ParticulaInd).XMove, StreamData(ParticulaInd).move_x1, StreamData(ParticulaInd).move_x2, StreamData(ParticulaInd).move_y1, _
-        StreamData(ParticulaInd).move_y2, StreamData(ParticulaInd).YMove, StreamData(ParticulaInd).spin_speedH, StreamData(ParticulaInd).Spin, StreamData(ParticulaInd).grh_resize, StreamData(ParticulaInd).grh_resizex, StreamData(ParticulaInd).grh_resizey)
+General_Char_Particle_Create = Char_Particle_Group_Create(char_index, StreamData(ParticulaInd).grh_list, rgb_list(), StreamData(ParticulaInd).NumOfParticles, ParticulaInd, _
+    StreamData(ParticulaInd).AlphaBlend, IIf(particle_life = 0, StreamData(ParticulaInd).life_counter, particle_life), StreamData(ParticulaInd).Speed, , StreamData(ParticulaInd).x1, StreamData(ParticulaInd).y1, StreamData(ParticulaInd).Angle, _
+    StreamData(ParticulaInd).vecx1, StreamData(ParticulaInd).vecx2, StreamData(ParticulaInd).vecy1, StreamData(ParticulaInd).vecy2, _
+    StreamData(ParticulaInd).life1, StreamData(ParticulaInd).life2, StreamData(ParticulaInd).friction, StreamData(ParticulaInd).spin_speedL, _
+    StreamData(ParticulaInd).gravity, StreamData(ParticulaInd).grav_strength, StreamData(ParticulaInd).bounce_strength, StreamData(ParticulaInd).x2, _
+    StreamData(ParticulaInd).y2, StreamData(ParticulaInd).XMove, StreamData(ParticulaInd).move_x1, StreamData(ParticulaInd).move_x2, StreamData(ParticulaInd).move_y1, _
+    StreamData(ParticulaInd).move_y2, StreamData(ParticulaInd).YMove, StreamData(ParticulaInd).spin_speedH, StreamData(ParticulaInd).Spin, StreamData(ParticulaInd).grh_resize, StreamData(ParticulaInd).grh_resizex, StreamData(ParticulaInd).grh_resizey)
  
 End Function
  
 '----------------------------------------PARTICULAS---------------------------------
 Public Sub Convert_Heading_to_Direction(ByVal Heading As Long, ByRef direction_x As Integer, ByRef direction_y As Integer)
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'
+'**************************************************************
     Dim addy As Long
     Dim addx As Long
    
@@ -592,12 +593,12 @@ End Sub
  
  
 Public Function Particle_Group_Next_Open() As Long
-    '*****************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '
-    '*****************************************************************
-    On Error GoTo ErrorHandler:
+'*****************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'
+'*****************************************************************
+On Error GoTo ErrorHandler:
     Dim LoopC As Long
    
     LoopC = 1
@@ -610,48 +611,48 @@ Public Function Particle_Group_Next_Open() As Long
     Loop
    
     Particle_Group_Next_Open = LoopC
-    Exit Function
+Exit Function
 ErrorHandler:
     Particle_Group_Next_Open = 1
 End Function
 Public Function Particle_Group_Create(ByVal map_x As Integer, ByVal map_y As Integer, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
-    Optional ByVal particle_count As Long = 20, Optional ByVal stream_type As Long = 1, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
-    Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
-    Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
-    Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
-    Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
-    Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
-    Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
-    Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
-    Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
-    Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
-    Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
-    Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
-    Optional grh_resizex As Integer, Optional grh_resizey As Integer) As Long
+                                        Optional ByVal particle_count As Long = 20, Optional ByVal stream_type As Long = 1, _
+                                        Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
+                                        Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
+                                        Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
+                                        Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
+                                        Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
+                                        Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
+                                        Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
+                                        Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
+                                        Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
+                                        Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
+                                        Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
+                                        Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
+                                        Optional grh_resizex As Integer, Optional grh_resizey As Integer) As Long
    
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 12/15/2002
-    'Returns the particle_group_index if successful, else 0
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 12/15/2002
+'Returns the particle_group_index if successful, else 0
+'**************************************************************
     If (map_x <> -1) And (map_y <> -1) Then
-        If Map_Particle_Group_Get(map_x, map_y) = 0 Then
-            Particle_Group_Create = Particle_Group_Next_Open
-            Particle_Group_Make Particle_Group_Create, map_x, map_y, particle_count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, id, x1, y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, Spin, grh_resize, grh_resizex, grh_resizey
-        Else
-            Particle_Group_Create = Particle_Group_Next_Open
-            Particle_Group_Make Particle_Group_Create, map_x, map_y, particle_count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, id, x1, y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, Spin, grh_resize, grh_resizex, grh_resizey
-        End If
+    If Map_Particle_Group_Get(map_x, map_y) = 0 Then
+        Particle_Group_Create = Particle_Group_Next_Open
+        Particle_Group_Make Particle_Group_Create, map_x, map_y, particle_count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, id, x1, y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, Spin, grh_resize, grh_resizex, grh_resizey
+    Else
+        Particle_Group_Create = Particle_Group_Next_Open
+        Particle_Group_Make Particle_Group_Create, map_x, map_y, particle_count, stream_type, grh_index_list(), rgb_list(), alpha_blend, alive_counter, frame_speed, id, x1, y1, Angle, vecx1, vecx2, vecy1, vecy2, life1, life2, fric, spin_speedL, gravity, grav_strength, bounce_strength, x2, y2, XMove, move_x1, move_x2, move_y1, move_y2, YMove, spin_speedH, Spin, grh_resize, grh_resizex, grh_resizey
+    End If
     End If
 End Function
  
 Public Function Particle_Group_Remove(ByVal particle_group_index As Long) As Boolean
-    '*****************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 1/04/2003
-    '
-    '*****************************************************************
+'*****************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 1/04/2003
+'
+'*****************************************************************
     'Make sure it's a legal index
     If Particle_Group_Check(particle_group_index) Then
         Particle_Group_Destroy particle_group_index
@@ -660,11 +661,11 @@ Public Function Particle_Group_Remove(ByVal particle_group_index As Long) As Boo
 End Function
  
 Public Function Particle_Group_Remove_All() As Boolean
-    '*****************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 1/04/2003
-    '
-    '*****************************************************************
+'*****************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 1/04/2003
+'
+'*****************************************************************
     Dim index As Long
    
     For index = 1 To particle_group_last
@@ -678,12 +679,12 @@ Public Function Particle_Group_Remove_All() As Boolean
 End Function
  
 Public Function Particle_Group_Find(ByVal id As Long) As Long
-    '*****************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 1/04/2003
-    'Find the index related to the handle
-    '*****************************************************************
-    On Error GoTo ErrorHandler:
+'*****************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 1/04/2003
+'Find the index related to the handle
+'*****************************************************************
+On Error GoTo ErrorHandler:
     Dim LoopC As Long
    
     LoopC = 1
@@ -696,31 +697,31 @@ Public Function Particle_Group_Find(ByVal id As Long) As Long
     Loop
    
     Particle_Group_Find = LoopC
-    Exit Function
+Exit Function
 ErrorHandler:
     Particle_Group_Find = 0
 End Function
  
 Public Sub Particle_Group_Make(ByVal particle_group_index As Long, ByVal map_x As Integer, ByVal map_y As Integer, _
-    ByVal particle_count As Long, ByVal stream_type As Long, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
-    Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
-    Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
-    Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
-    Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
-    Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
-    Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
-    Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
-    Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
-    Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
-    Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
-    Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
-    Optional grh_resizex As Integer, Optional grh_resizey As Integer)
-    '*****************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    'Makes a new particle effect
-    '*****************************************************************
+                                ByVal particle_count As Long, ByVal stream_type As Long, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
+                                Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
+                                Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
+                                Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
+                                Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
+                                Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
+                                Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
+                                Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
+                                Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
+                                Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
+                                Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
+                                Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
+                                Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
+                                Optional grh_resizex As Integer, Optional grh_resizey As Integer)
+'*****************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'Makes a new particle effect
+'*****************************************************************
     'Update array size
     If particle_group_index > particle_group_last Then
         particle_group_last = particle_group_index
@@ -803,103 +804,103 @@ Public Sub Particle_Group_Make(ByVal particle_group_index As Long, ByVal map_x A
 End Sub
  
 Public Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As Integer, ByVal screen_Y As Integer, _
-    ByVal grh_index As Long, ByRef rgb_list() As Long, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal no_move As Boolean, _
-    Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
-    Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
-    Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
-    Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
-    Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
-    Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
-    Optional ByVal bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
-    Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
-    Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
-    Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean)
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 4/24/2003
-    '
-    '**************************************************************
+                            ByVal grh_index As Long, ByRef rgb_list() As Long, _
+                            Optional ByVal alpha_blend As Boolean, Optional ByVal no_move As Boolean, _
+                            Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
+                            Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
+                            Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
+                            Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
+                            Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
+                            Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
+                            Optional ByVal bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
+                            Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
+                            Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
+                            Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean)
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 4/24/2003
+'
+'**************************************************************
     If no_move = False Then
-        If temp_particle.alive_counter = 0 Then
+                If temp_particle.alive_counter = 0 Then
 
-            temp_particle.index = grh_index
-            temp_particle.X = RandomNumber(x1, x2)
-            temp_particle.Y = RandomNumber(y1, y2)
-            temp_particle.vector_x = RandomNumber(vecx1, vecx2)
-            temp_particle.vector_y = RandomNumber(vecy1, vecy2)
-            temp_particle.AngleC = Angle
-            temp_particle.alive_counter = RandomNumber(life1, life2)
-            temp_particle.friction = fric
-        Else
-            'Continue old particle
-            'Do gravity
-            If gravity = True Then
-                temp_particle.vector_y = temp_particle.vector_y + grav_strength
-                If temp_particle.Y > 0 Then
-                    'bounce
-                    temp_particle.vector_y = bounce_strength
-                End If
-            End If
-            'Do rotation
-            If Spin = True Then temp_particle.AngleC = temp_particle.AngleC + (RandomNumber(spin_speedL, spin_speedH) / 100)
-            If temp_particle.AngleC >= 360 Then
-                temp_particle.AngleC = 0
-            End If
+                    temp_particle.index = grh_index
+                    temp_particle.X = RandomNumber(x1, x2)
+                    temp_particle.Y = RandomNumber(y1, y2)
+                    temp_particle.vector_x = RandomNumber(vecx1, vecx2)
+                    temp_particle.vector_y = RandomNumber(vecy1, vecy2)
+                    temp_particle.AngleC = Angle
+                    temp_particle.alive_counter = RandomNumber(life1, life2)
+                    temp_particle.friction = fric
+                Else
+                    'Continue old particle
+                    'Do gravity
+                    If gravity = True Then
+                        temp_particle.vector_y = temp_particle.vector_y + grav_strength
+                        If temp_particle.Y > 0 Then
+                            'bounce
+                            temp_particle.vector_y = bounce_strength
+                        End If
+                    End If
+                    'Do rotation
+                   If Spin = True Then temp_particle.AngleC = temp_particle.AngleC + (RandomNumber(spin_speedL, spin_speedH) / 100)
+                    If temp_particle.AngleC >= 360 Then
+                        temp_particle.AngleC = 0
+                    End If
                                
-            If XMove = True Then temp_particle.vector_x = RandomNumber(move_x1, move_x2)
-            If YMove = True Then temp_particle.vector_y = RandomNumber(move_y1, move_y2)
-        End If
+                    If XMove = True Then temp_particle.vector_x = RandomNumber(move_x1, move_x2)
+                    If YMove = True Then temp_particle.vector_y = RandomNumber(move_y1, move_y2)
+                End If
  
         'Add in vector
         temp_particle.X = temp_particle.X + (temp_particle.vector_x \ temp_particle.friction)
         temp_particle.Y = temp_particle.Y + (temp_particle.vector_y \ temp_particle.friction)
    
         'decrement counter
-        temp_particle.alive_counter = temp_particle.alive_counter - 1
+         temp_particle.alive_counter = temp_particle.alive_counter - 1
     End If
 
     'Draw it
     If grh_resize = True Then
         If temp_particle.index Then
-            Draw_NewIndex2 temp_particle.index, temp_particle.fC, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
+              Draw_NewIndex2 temp_particle.index, temp_particle.fC, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
               
         End If
     Else
-        'Draw it
-        If temp_particle.index Then
-            Draw_NewIndex2 temp_particle.index, temp_particle.fC, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
+    'Draw it
+    If temp_particle.index Then
+        Draw_NewIndex2 temp_particle.index, temp_particle.fC, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
                                     
-        End If
     End If
-End Sub
-Private Function OverWriteAlpha(ByVal Color As Long, ByVal Alpha As Byte) As Long
-    Dim Dest(3) As Byte
-    CopyMemory Dest(0), Color, 4
+    End If
+    End Sub
+    Private Function OverWriteAlpha(ByVal Color As Long, ByVal Alpha As Byte) As Long
+Dim Dest(3) As Byte
+CopyMemory Dest(0), Color, 4
 
-    OverWriteAlpha = D3DColorARGB(Alpha, Dest(2), Dest(1), Dest(0))
+OverWriteAlpha = D3DColorARGB(Alpha, Dest(2), Dest(1), Dest(0))
 
 End Function
-Public Function PasoTiempo(Optional ByRef Counter As Long = -1) As Long
-    Static Contador As Long
-    Dim tl As Long
-    tl = GetTickCount
-    If Counter <> -1 Then
-        If Counter = 0 Then
-            PasoTiempo = 0
-        Else
-            PasoTiempo = tl - Counter
-        End If
-        Counter = tl
+    Public Function PasoTiempo(Optional ByRef Counter As Long = -1) As Long
+Static Contador As Long
+Dim tl As Long
+tl = GetTickCount
+If Counter <> -1 Then
+    If Counter = 0 Then
+        PasoTiempo = 0
     Else
-        PasoTiempo = Contador - tl
-        Contador = tl
-    
+        PasoTiempo = tl - Counter
     End If
+    Counter = tl
+Else
+    PasoTiempo = Contador - tl
+    Contador = tl
+    
+End If
 
 
 End Function
-Private Sub Draw_NewIndex2(ByVal nIndex As Integer, ByRef fC As Single, ByVal X As Integer, ByVal Y As Integer, ByVal center As Byte, ByVal Animate As Byte, ByRef Color() As Long, Optional ByVal alpha_blend As Byte, Optional ByVal NeglectNegro As Boolean, Optional ByVal Angle As Single)
+ Private Sub Draw_NewIndex2(ByVal nIndex As Integer, ByRef fC As Single, ByVal X As Integer, ByVal Y As Integer, ByVal center As Byte, ByVal Animate As Byte, ByRef Color() As Long, Optional ByVal alpha_blend As Byte, Optional ByVal NeglectNegro As Boolean, Optional ByVal Angle As Single)
 
     Dim ci As Integer
     Dim jL As Integer
@@ -913,13 +914,13 @@ Private Sub Draw_NewIndex2(ByVal nIndex As Integer, ByRef fC As Single, ByVal X 
     If NewIndexData(nIndex).Dinamica > 0 Then
         With NewAnimationData(NewIndexData(nIndex).Dinamica)
             If Animate Then
-                fC = fC + ((MEE * 0.002) * .NumFrames * .Velocidad)
-                ci = fC
-                If ci > .NumFrames Then
-                    ci = ci Mod .NumFrames
-                ElseIf ci <= 0 Then
-                    ci = 1
-                End If
+            fC = fC + ((MEE * 0.002) * .NumFrames * .Velocidad)
+            ci = fC
+            If ci > .NumFrames Then
+                ci = ci Mod .NumFrames
+            ElseIf ci <= 0 Then
+                ci = 1
+            End If
             Else
                 If fC < 0 Then
                     fC = 1
@@ -1014,15 +1015,15 @@ Private Sub Draw_NewIndex2(ByVal nIndex As Integer, ByRef fC As Single, ByVal X 
 
         Else
             ddevice.SetRenderState D3DRS_DESTBLEND, 2
-            ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-            'D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+                        ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+        'D3DDevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
         End If
 
     End If
     
     'Draw the triangles that make up our square Textures
 
-    ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
+            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, temp_verts(0), Len(temp_verts(0))
 
     
     If alpha_blend > 0 Or NeglectNegro Then
@@ -1040,28 +1041,28 @@ Private Sub Draw_NewIndex2(ByVal nIndex As Integer, ByRef fC As Single, ByVal X 
 
 End Sub
 Public Sub Particle_Group_Render(ByVal particle_group_index As Long, ByVal screen_x As Integer, ByVal screen_Y As Integer)
-    '*****************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 12/15/2002
-    'Renders a particle stream at a paticular screen point
-    '*****************************************************************
+'*****************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 12/15/2002
+'Renders a particle stream at a paticular screen point
+'*****************************************************************
     Dim LoopC As Long
     Dim temp_rgb(0 To 3) As Long
     Dim no_move As Boolean
    
     'Set colors
-    '    If UserMinHP = 0 Then
-    '        temp_rgb(0) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
-    '        temp_rgb(1) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
-    '        temp_rgb(2) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
-    '        temp_rgb(3) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
-    '    Else
-    temp_rgb(0) = particle_group_list(particle_group_index).rgb_list(0)
-    temp_rgb(1) = particle_group_list(particle_group_index).rgb_list(1)
-    temp_rgb(2) = particle_group_list(particle_group_index).rgb_list(2)
-    temp_rgb(3) = particle_group_list(particle_group_index).rgb_list(3)
-    '    End If
-    '
+'    If UserMinHP = 0 Then
+'        temp_rgb(0) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
+'        temp_rgb(1) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
+'        temp_rgb(2) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
+'        temp_rgb(3) = D3DColorARGB(particle_group_list(particle_group_index).alpha_blend, 255, 255, 255)
+'    Else
+        temp_rgb(0) = particle_group_list(particle_group_index).rgb_list(0)
+        temp_rgb(1) = particle_group_list(particle_group_index).rgb_list(1)
+        temp_rgb(2) = particle_group_list(particle_group_index).rgb_list(2)
+        temp_rgb(3) = particle_group_list(particle_group_index).rgb_list(3)
+'    End If
+'
     If particle_group_list(particle_group_index).alive_counter Then
    
         'See if it is time to move a particle
@@ -1079,22 +1080,22 @@ Public Sub Particle_Group_Render(ByVal particle_group_index As Long, ByVal scree
        
             'Render particle
             Particle_Render particle_group_list(particle_group_index).particle_stream(LoopC), _
-                screen_x, screen_Y, _
-                particle_group_list(particle_group_index).grh_index_list(Round(RandomNumber(1, particle_group_list(particle_group_index).grh_index_count), 0)), _
-                temp_rgb(), _
-                particle_group_list(particle_group_index).alpha_blend, no_move, _
-                particle_group_list(particle_group_index).x1, particle_group_list(particle_group_index).y1, particle_group_list(particle_group_index).Angle, _
-                particle_group_list(particle_group_index).vecx1, particle_group_list(particle_group_index).vecx2, _
-                particle_group_list(particle_group_index).vecy1, particle_group_list(particle_group_index).vecy2, _
-                particle_group_list(particle_group_index).life1, particle_group_list(particle_group_index).life2, _
-                particle_group_list(particle_group_index).fric, particle_group_list(particle_group_index).spin_speedL, _
-                particle_group_list(particle_group_index).gravity, particle_group_list(particle_group_index).grav_strength, _
-                particle_group_list(particle_group_index).bounce_strength, particle_group_list(particle_group_index).x2, _
-                particle_group_list(particle_group_index).y2, particle_group_list(particle_group_index).XMove, _
-                particle_group_list(particle_group_index).move_x1, particle_group_list(particle_group_index).move_x2, _
-                particle_group_list(particle_group_index).move_y1, particle_group_list(particle_group_index).move_y2, _
-                particle_group_list(particle_group_index).YMove, particle_group_list(particle_group_index).spin_speedH, _
-                particle_group_list(particle_group_index).Spin, particle_group_list(particle_group_index).grh_resize
+                            screen_x, screen_Y, _
+                            particle_group_list(particle_group_index).grh_index_list(Round(RandomNumber(1, particle_group_list(particle_group_index).grh_index_count), 0)), _
+                            temp_rgb(), _
+                            particle_group_list(particle_group_index).alpha_blend, no_move, _
+                            particle_group_list(particle_group_index).x1, particle_group_list(particle_group_index).y1, particle_group_list(particle_group_index).Angle, _
+                            particle_group_list(particle_group_index).vecx1, particle_group_list(particle_group_index).vecx2, _
+                            particle_group_list(particle_group_index).vecy1, particle_group_list(particle_group_index).vecy2, _
+                            particle_group_list(particle_group_index).life1, particle_group_list(particle_group_index).life2, _
+                            particle_group_list(particle_group_index).fric, particle_group_list(particle_group_index).spin_speedL, _
+                            particle_group_list(particle_group_index).gravity, particle_group_list(particle_group_index).grav_strength, _
+                            particle_group_list(particle_group_index).bounce_strength, particle_group_list(particle_group_index).x2, _
+                            particle_group_list(particle_group_index).y2, particle_group_list(particle_group_index).XMove, _
+                            particle_group_list(particle_group_index).move_x1, particle_group_list(particle_group_index).move_x2, _
+                            particle_group_list(particle_group_index).move_y1, particle_group_list(particle_group_index).move_y2, _
+                            particle_group_list(particle_group_index).YMove, particle_group_list(particle_group_index).spin_speedH, _
+                            particle_group_list(particle_group_index).Spin, particle_group_list(particle_group_index).grh_resize
                            
         Next LoopC
        
@@ -1111,30 +1112,30 @@ Public Sub Particle_Group_Render(ByVal particle_group_index As Long, ByVal scree
         If particle_group_list(particle_group_index).particle_count <= 0 Then Particle_Group_Destroy particle_group_index
     End If
 End Sub
-Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
-    'Initialize randomizer
-    Randomize timer
+ Public Function RandomNumber(ByVal LowerBound As Long, ByVal UpperBound As Long) As Long
+      'Initialize randomizer
+      Randomize timer
     
-    'Generate random number
-    RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
+      'Generate random number
+      RandomNumber = (UpperBound - LowerBound) * Rnd + LowerBound
 End Function
 Public Function Particle_Type_Get(ByVal particle_index As Long) As Long
-    '*****************************************************************
-    'Author: Juan Martín Sotuyo Dodero ([email=juansotuyo@hotmail.com]juansotuyo@hotmail.com[/email])
-    'Last Modify Date: 8/27/2003
-    'Returns the stream type of a particle stream
-    '*****************************************************************
+'*****************************************************************
+'Author: Juan Martín Sotuyo Dodero ([email=juansotuyo@hotmail.com]juansotuyo@hotmail.com[/email])
+'Last Modify Date: 8/27/2003
+'Returns the stream type of a particle stream
+'*****************************************************************
     If Particle_Group_Check(particle_index) Then
         Particle_Type_Get = particle_group_list(particle_index).stream_type
     End If
 End Function
  
 Public Function Particle_Group_Check(ByVal particle_group_index As Long) As Boolean
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 1/04/2003
-    '
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 1/04/2003
+'
+'**************************************************************
     'check index
     If particle_group_index > 0 And particle_group_index <= particle_group_last Then
         If particle_group_list(particle_group_index).Active Then
@@ -1144,11 +1145,11 @@ Public Function Particle_Group_Check(ByVal particle_group_index As Long) As Bool
 End Function
  
 Public Function Particle_Group_Map_Pos_Set(ByVal particle_group_index As Long, ByVal map_x As Long, ByVal map_y As Long) As Boolean
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 5/27/2003
-    'Returns true if successful, else false
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 5/27/2003
+'Returns true if successful, else false
+'**************************************************************
     'Make sure it's a legal index
     If Particle_Group_Check(particle_group_index) Then
         'Make sure it's a legal move
@@ -1163,11 +1164,11 @@ Public Function Particle_Group_Map_Pos_Set(ByVal particle_group_index As Long, B
 End Function
  
 Public Function Particle_Group_Move(ByVal particle_group_index As Long, ByVal Heading As Long) As Boolean
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 5/27/2003
-    'Returns true if successful, else false
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 5/27/2003
+'Returns true if successful, else false
+'**************************************************************
     Dim map_x As Long
     Dim map_y As Long
     Dim nX As Integer
@@ -1202,11 +1203,11 @@ Public Function Particle_Group_Move(ByVal particle_group_index As Long, ByVal He
 End Function
  
 Public Sub Particle_Group_Destroy(ByVal particle_group_index As Long)
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'
+'**************************************************************
     Dim temp As particle_group
     Dim i As Integer
    
@@ -1231,28 +1232,28 @@ Public Sub Particle_Group_Destroy(ByVal particle_group_index As Long)
 End Sub
  
 Public Sub Char_Particle_Group_Make(ByVal particle_group_index As Long, ByVal char_index As Integer, ByVal particle_char_index As Integer, _
-    ByVal particle_count As Long, ByVal stream_type As Long, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
-    Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
-    Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
-    Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
-    Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
-    Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
-    Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
-    Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
-    Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
-    Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
-    Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
-    Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
-    Optional grh_resizex As Integer, Optional grh_resizey As Integer)
+                                ByVal particle_count As Long, ByVal stream_type As Long, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
+                                Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
+                                Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
+                                Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
+                                Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
+                                Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
+                                Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
+                                Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
+                                Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
+                                Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
+                                Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
+                                Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
+                                Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
+                                Optional grh_resizex As Integer, Optional grh_resizey As Integer)
                                
-    '*****************************************************************
-    'Author: Aaron Perkins
-    'Modified by: Ryan Cain (Onezero)
-    'Last Modify Date: 5/15/2003
-    'Makes a new particle effect
-    'Modified by Juan Martín Sotuyo Dodero
-    '*****************************************************************
+'*****************************************************************
+'Author: Aaron Perkins
+'Modified by: Ryan Cain (Onezero)
+'Last Modify Date: 5/15/2003
+'Makes a new particle effect
+'Modified by Juan Martín Sotuyo Dodero
+'*****************************************************************
     'Update array size
     If particle_group_index > particle_group_last Then
         particle_group_last = particle_group_index
@@ -1336,23 +1337,23 @@ Public Sub Char_Particle_Group_Make(ByVal particle_group_index As Long, ByVal ch
 End Sub
  
 Public Function Char_Particle_Group_Create(ByVal char_index As Integer, ByRef grh_index_list() As Long, ByRef rgb_list() As Long, _
-    Optional ByVal particle_count As Long = 20, Optional ByVal stream_type As Long = 1, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
-    Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
-    Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
-    Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
-    Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
-    Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
-    Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
-    Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
-    Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
-    Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
-    Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
-    Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
-    Optional grh_resizex As Integer, Optional grh_resizey As Integer) As Long
-    '**************************************************************
-    'Author: Augusto José Rando
-    '**************************************************************
+                                        Optional ByVal particle_count As Long = 20, Optional ByVal stream_type As Long = 1, _
+                                        Optional ByVal alpha_blend As Boolean, Optional ByVal alive_counter As Long = -1, _
+                                        Optional ByVal frame_speed As Single = 0.5, Optional ByVal id As Long, _
+                                        Optional ByVal x1 As Integer, Optional ByVal y1 As Integer, Optional ByVal Angle As Integer, _
+                                        Optional ByVal vecx1 As Integer, Optional ByVal vecx2 As Integer, _
+                                        Optional ByVal vecy1 As Integer, Optional ByVal vecy2 As Integer, _
+                                        Optional ByVal life1 As Integer, Optional ByVal life2 As Integer, _
+                                        Optional ByVal fric As Integer, Optional ByVal spin_speedL As Single, _
+                                        Optional ByVal gravity As Boolean, Optional grav_strength As Long, _
+                                        Optional bounce_strength As Long, Optional ByVal x2 As Integer, Optional ByVal y2 As Integer, _
+                                        Optional ByVal XMove As Boolean, Optional ByVal move_x1 As Integer, Optional ByVal move_x2 As Integer, _
+                                        Optional ByVal move_y1 As Integer, Optional ByVal move_y2 As Integer, Optional ByVal YMove As Boolean, _
+                                        Optional ByVal spin_speedH As Single, Optional ByVal Spin As Boolean, Optional grh_resize As Boolean, _
+                                        Optional grh_resizex As Integer, Optional grh_resizey As Integer) As Long
+'**************************************************************
+'Author: Augusto José Rando
+'**************************************************************
     Dim char_part_free_index As Integer
    
     'If Char_Particle_Group_Find(char_index, stream_type) Then Exit Function ' hay que ver si dejar o sacar esto...
@@ -1368,29 +1369,29 @@ Public Function Char_Particle_Group_Create(ByVal char_index As Integer, ByRef gr
 End Function
  
 Public Function Char_Particle_Group_Find(ByVal char_index As Integer, ByVal stream_type As Long) As Integer
-    '*****************************************************************
-    'Author: Augusto José Rando
-    'Modified: returns slot or -1
-    '*****************************************************************
+'*****************************************************************
+'Author: Augusto José Rando
+'Modified: returns slot or -1
+'*****************************************************************
  
-    Dim i As Integer
+Dim i As Integer
  
-    For i = 1 To CharList(char_index).particle_count
-        If particle_group_list(CharList(char_index).particle_group(i)).stream_type = stream_type Then
-            Char_Particle_Group_Find = CharList(char_index).particle_group(i)
-            Exit Function
-        End If
-    Next i
+For i = 1 To CharList(char_index).particle_count
+    If particle_group_list(CharList(char_index).particle_group(i)).stream_type = stream_type Then
+        Char_Particle_Group_Find = CharList(char_index).particle_group(i)
+        Exit Function
+    End If
+Next i
  
-    Char_Particle_Group_Find = -1
+Char_Particle_Group_Find = -1
  
 End Function
  
 Public Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As Integer
-    '*****************************************************************
-    'Author: Augusto José Rando
-    '*****************************************************************
-    On Error GoTo ErrorHandler:
+'*****************************************************************
+'Author: Augusto José Rando
+'*****************************************************************
+On Error GoTo ErrorHandler:
     Dim LoopC As Long
    
     LoopC = 1
@@ -1406,7 +1407,7 @@ Public Function Char_Particle_Group_Next_Open(ByVal char_index As Integer) As In
    
     Char_Particle_Group_Next_Open = LoopC
  
-    Exit Function
+Exit Function
  
 ErrorHandler:
     CharList(char_index).particle_count = 1
@@ -1416,9 +1417,9 @@ ErrorHandler:
 End Function
  
 Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, ByVal stream_type As Long)
-    '**************************************************************
-    'Author: Augusto José Rando
-    '**************************************************************
+'**************************************************************
+'Author: Augusto José Rando
+'**************************************************************
     Dim char_part_index As Integer
    
     If Char_Check(char_index) Then
@@ -1430,9 +1431,9 @@ Public Function Char_Particle_Group_Remove(ByVal char_index As Integer, ByVal st
 End Function
  
 Public Function Char_Particle_Group_Remove_All(ByVal char_index As Integer)
-    '**************************************************************
-    'Author: Augusto José Rando
-    '**************************************************************
+'**************************************************************
+'Author: Augusto José Rando
+'**************************************************************
     Dim i As Integer
    
     If Char_Check(char_index) Then
@@ -1453,11 +1454,11 @@ Public Function Map_Particle_Group_Get(ByVal map_x As Integer, ByVal map_y As In
 End Function
  
 Public Sub Grh_Render_Advance(ByRef Grh As Grh, ByVal screen_x As Integer, ByVal screen_Y As Integer, ByRef rgb_list() As Long, Optional ByVal alpha_blend As Boolean = False)
-    '**************************************************************
-    'Author: Juan Martín Sotuyo Dodero ([email=juansotuyo@hotmail.com]juansotuyo@hotmail.com[/email])
-    'Last Modify Date: 11/19/2003
-    'Similar to Grh_Render, but let´s you resize the Grh
-    '**************************************************************
+'**************************************************************
+'Author: Juan Martín Sotuyo Dodero ([email=juansotuyo@hotmail.com]juansotuyo@hotmail.com[/email])
+'Last Modify Date: 11/19/2003
+'Similar to Grh_Render, but let´s you resize the Grh
+'**************************************************************
     Dim grh_index As Long
    
     'Animation
@@ -1467,7 +1468,7 @@ Public Sub Grh_Render_Advance(ByRef Grh As Grh, ByVal screen_x As Integer, ByVal
             'If Grh.noloop Then
             '    Grh.FrameCounter = GrhData(Grh.GrhIndex).NumFrames
             'Else
-            Grh.frame_counter = 1
+                Grh.frame_counter = 1
             'End If
         End If
     End If
@@ -1503,13 +1504,13 @@ Public Function Char_Check(ByVal char_index As Integer) As Boolean
 End Function
  
 Public Sub Grh_Render(ByRef Grh As Grh, ByVal screen_x As Integer, ByVal screen_Y As Integer, ByRef rgb_list() As Long, Optional ByVal h_centered As Boolean = True, Optional ByVal v_centered As Boolean = True, Optional ByVal alpha_blend As Boolean = False)
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 2/28/2003
-    'Modified by Juan Martín Sotuyo Dodero
-    'Added centering
-    '**************************************************************
-    On Error Resume Next
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 2/28/2003
+'Modified by Juan Martín Sotuyo Dodero
+'Added centering
+'**************************************************************
+On Error Resume Next
  
     Dim grh_index As Long
    
@@ -1563,7 +1564,7 @@ End Sub
 
 'Initialization
 Public Function DXEngine_Initialize(ByVal f_hwnd As Long, ByVal s_hwnd As Long, ByVal windowed As Boolean)
-    'On Error GoTo errhandler
+'On Error GoTo errhandler
     Dim d3dcaps As D3DCAPS8
     Dim d3ddm As D3DDISPLAYMODE
     
@@ -1576,9 +1577,9 @@ Public Function DXEngine_Initialize(ByVal f_hwnd As Long, ByVal s_hwnd As Long, 
     '*******************************
     'Initialize root DirectX8 objects
     '*******************************
-    Set dX = New DirectX8
+    Set dx = New DirectX8
     'Create the Direct3D object
-    Set d3d = dX.Direct3DCreate
+    Set d3d = dx.Direct3DCreate
     'Create helper class
     Set d3dx = New D3DX8
     
@@ -1631,7 +1632,7 @@ Public Function DXEngine_Initialize(ByVal f_hwnd As Long, ByVal s_hwnd As Long, 
     
     
 
-    Font_Make "Verdana", 8, False, False
+      Font_Make "Verdana", 8, False, False
 
     'CargarParticulas
     Exit Function
@@ -1640,7 +1641,7 @@ ErrHandler:
 End Function
 
 Public Function DXEngine_BeginRender() As Boolean
-    On Error GoTo ErrorHandler:
+On Error GoTo ErrorHandler:
     DXEngine_BeginRender = True
     
     'Check if we have the device
@@ -1671,14 +1672,14 @@ Public Function DXEngine_BeginRender() As Boolean
     '*******************************
     
     engine_render_started = True
-    Exit Function
+Exit Function
 ErrorHandler:
     DXEngine_BeginRender = False
     MsgBox "Error in Engine_Render_Start: " & Err.Number & ": " & Err.Description
 End Function
 
 Public Function DXEngine_EndRender() As Boolean
-    On Error GoTo ErrorHandler:
+On Error GoTo ErrorHandler:
     DXEngine_EndRender = True
 
     If engine_render_started = False Then
@@ -1710,30 +1711,30 @@ Public Function DXEngine_EndRender() As Boolean
     
     
     engine_render_started = False
-    Exit Function
+Exit Function
 ErrorHandler:
     DXEngine_EndRender = False
     MsgBox "Error in Engine_Render_End: " & Err.Number & ": " & Err.Description
-End Function
+  End Function
 
 Private Sub Device_Clear()
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'
+'**************************************************************
     'Clear the back buffer
     ddevice.Clear 0, ByVal 0&, D3DCLEAR_TARGET, 0, 1#, 0
 End Sub
 
 Private Function Device_Reset() As Long
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    'Resets the device
-    '**************************************************************
-    On Error GoTo ErrHandler:
-    'On Error Resume Next
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'Resets the device
+'**************************************************************
+On Error GoTo ErrHandler:
+'On Error Resume Next
 
     'Be sure the scene is finished
     ddevice.EndScene
@@ -1742,17 +1743,17 @@ Private Function Device_Reset() As Long
     
     DeviceRenderStates
        
-    Exit Function
+Exit Function
 ErrHandler:
     Device_Reset = Err.Number
 End Function
 Public Sub DXEngine_TextureRenderAdvance(ByVal texture_index As Long, ByVal dest_x As Long, ByVal dest_y As Long, ByVal Src_X As Long, ByVal Src_Y As Long, _
-    ByVal dest_width As Long, ByVal dest_height As Long, ByVal src_width As Long, ByVal src_height As Long, ByRef rgb_list() As Long, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal Angle As Single)
-    '**************************************************************
-    'This sub allow texture resizing
-    '
-    '**************************************************************
+                                             ByVal dest_width As Long, ByVal dest_height As Long, ByVal src_width As Long, ByVal src_height As Long, ByRef rgb_list() As Long, _
+                                            Optional ByVal alpha_blend As Boolean, Optional ByVal Angle As Single)
+'**************************************************************
+'This sub allow texture resizing
+'
+'**************************************************************
 
     
     Dim src_rect As RECT
@@ -1798,7 +1799,7 @@ Public Sub DXEngine_TextureRenderAdvance(ByVal texture_index As Long, ByVal dest
     ddevice.SetTexture 0, Texture
     
     If alpha_blend Then
-        'Set Rendering for alphablending
+       'Set Rendering for alphablending
         ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
         ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
         ddevice.SetRenderState D3DRS_COLORVERTEX, 1
@@ -1815,189 +1816,189 @@ Public Sub DXEngine_TextureRenderAdvance(ByVal texture_index As Long, ByVal dest
 End Sub
 Public Sub setup_ambient()
 
-    'Noche 87, 61, 43
-    luz_dia(0).R = 45
-    luz_dia(0).G = 55
-    luz_dia(0).B = 70
+'Noche 87, 61, 43
+luz_dia(0).R = 45
+luz_dia(0).G = 55
+luz_dia(0).B = 70
 
-    luz_dia(1).R = 45
-    luz_dia(1).G = 55
-    luz_dia(1).B = 70
+luz_dia(1).R = 45
+luz_dia(1).G = 55
+luz_dia(1).B = 70
 
-    luz_dia(2).R = 60
-    luz_dia(2).G = 70
-    luz_dia(2).B = 70
+luz_dia(2).R = 60
+luz_dia(2).G = 70
+luz_dia(2).B = 70
 
-    luz_dia(3).R = 90
-    luz_dia(3).G = 90
-    luz_dia(3).B = 90
+luz_dia(3).R = 90
+luz_dia(3).G = 90
+luz_dia(3).B = 90
 
-    '4 am 124,117,91
-    luz_dia(4).R = 110
-    luz_dia(4).G = 110
-    luz_dia(4).B = 90
+'4 am 124,117,91
+luz_dia(4).R = 110
+luz_dia(4).G = 110
+luz_dia(4).B = 90
 
-    '5,6 am 143,137,135
-    luz_dia(5).R = 130
-    luz_dia(5).G = 130
-    luz_dia(5).B = 100
+'5,6 am 143,137,135
+luz_dia(5).R = 130
+luz_dia(5).G = 130
+luz_dia(5).B = 100
 
-    luz_dia(6).R = 145
-    luz_dia(6).G = 145
-    luz_dia(6).B = 120
+luz_dia(6).R = 145
+luz_dia(6).G = 145
+luz_dia(6).B = 120
 
-    '7 am 212,205,207
-    luz_dia(7).R = 155
-    luz_dia(7).G = 155
-    luz_dia(7).B = 155
+'7 am 212,205,207
+luz_dia(7).R = 155
+luz_dia(7).G = 155
+luz_dia(7).B = 155
 
-    luz_dia(8).R = 165
-    luz_dia(8).G = 155
-    luz_dia(8).B = 160
+luz_dia(8).R = 165
+luz_dia(8).G = 155
+luz_dia(8).B = 160
 
-    luz_dia(9).R = 180
-    luz_dia(9).G = 175
-    luz_dia(9).B = 180
+luz_dia(9).R = 180
+luz_dia(9).G = 175
+luz_dia(9).B = 180
 
-    luz_dia(10).R = 195
-    luz_dia(10).G = 190
-    luz_dia(10).B = 195
+luz_dia(10).R = 195
+luz_dia(10).G = 190
+luz_dia(10).B = 195
 
-    luz_dia(11).R = 215
-    luz_dia(11).G = 215
-    luz_dia(11).B = 215
+luz_dia(11).R = 215
+luz_dia(11).G = 215
+luz_dia(11).B = 215
 
 
-    luz_dia(12).R = 230
-    luz_dia(12).G = 230
-    luz_dia(12).B = 230
+luz_dia(12).R = 230
+luz_dia(12).G = 230
+luz_dia(12).B = 230
 
-    luz_dia(13).R = 230
-    luz_dia(13).G = 230
-    luz_dia(13).B = 230
+luz_dia(13).R = 230
+luz_dia(13).G = 230
+luz_dia(13).B = 230
 
-    'Medio Dia 255, 200, 255
-    luz_dia(14).R = 230
-    luz_dia(14).G = 220
-    luz_dia(14).B = 230
+'Medio Dia 255, 200, 255
+luz_dia(14).R = 230
+luz_dia(14).G = 220
+luz_dia(14).B = 230
 
-    luz_dia(15).R = 220
-    luz_dia(15).G = 220
-    luz_dia(15).B = 220
+luz_dia(15).R = 220
+luz_dia(15).G = 220
+luz_dia(15).B = 220
 
-    luz_dia(16).R = 210
-    luz_dia(16).G = 210
-    luz_dia(16).B = 210
+luz_dia(16).R = 210
+luz_dia(16).G = 210
+luz_dia(16).B = 210
 
-    '17/18 0, 100, 255
-    luz_dia(17).R = 180
-    luz_dia(17).G = 170
-    luz_dia(17).B = 140
-    '18/19 0, 100, 255
+'17/18 0, 100, 255
+luz_dia(17).R = 180
+luz_dia(17).G = 170
+luz_dia(17).B = 140
+'18/19 0, 100, 255
 
-    luz_dia(18).R = 160
-    luz_dia(18).G = 150
-    luz_dia(18).B = 90
+luz_dia(18).R = 160
+luz_dia(18).G = 150
+luz_dia(18).B = 90
 
-    '19/20 156, 142, 83
-    luz_dia(19).R = 130
-    luz_dia(19).G = 100
-    luz_dia(19).B = 80
+'19/20 156, 142, 83
+luz_dia(19).R = 130
+luz_dia(19).G = 100
+luz_dia(19).B = 80
 
-    luz_dia(20).R = 95
-    luz_dia(20).G = 95
-    luz_dia(20).B = 80
+luz_dia(20).R = 95
+luz_dia(20).G = 95
+luz_dia(20).B = 80
 
-    luz_dia(21).R = 80
-    luz_dia(21).G = 80
-    luz_dia(21).B = 80
+luz_dia(21).R = 80
+luz_dia(21).G = 80
+luz_dia(21).B = 80
 
-    luz_dia(22).R = 60
-    luz_dia(22).G = 65
-    luz_dia(22).B = 80
+luz_dia(22).R = 60
+luz_dia(22).G = 65
+luz_dia(22).B = 80
 
-    luz_dia(23).R = 50
-    luz_dia(23).G = 60
-    luz_dia(23).B = 75
+luz_dia(23).R = 50
+luz_dia(23).G = 60
+luz_dia(23).B = 75
 
-    luz_dia(24).R = 45
-    luz_dia(24).G = 55
-    luz_dia(24).B = 70
+luz_dia(24).R = 45
+luz_dia(24).G = 55
+luz_dia(24).B = 70
             
             
-    Dim t As Integer
-    Dim B As Byte
-    Dim X As Byte
-    ReDim ambient_light(1 To 240) As Long
-    Dim xr As Byte
-    Dim xg As Byte
-    Dim xb As Byte
+Dim t As Integer
+Dim B As Byte
+Dim X As Byte
+ReDim ambient_light(1 To 240) As Long
+Dim xr As Byte
+Dim xg As Byte
+Dim xb As Byte
 
 
-    HoraLuz = 14
-    extra_light(eE_Light.Oscuridad) = D3DColorXRGB(10, 10, 10)
-    extra_light(eE_Light.Cegador) = D3DColorXRGB(255, 255, 255)
-    extra_light(eE_Light.Azul1) = D3DColorXRGB(0, 0, 255)
-    extra_light(eE_Light.Azul2) = D3DColorXRGB(100, 100, 155)
-    extra_light(eE_Light.Azul3) = D3DColorXRGB(50, 50, 200)
-    extra_light(eE_Light.Rojo1) = D3DColorXRGB(200, 0, 0)
-    extra_light(eE_Light.Rojo2) = D3DColorXRGB(155, 100, 100)
-    extra_light(eE_Light.Rojo3) = D3DColorXRGB(200, 50, 50)
-    extra_light(eE_Light.Verde1) = D3DColorXRGB(0, 200, 0)
-    extra_light(eE_Light.Verde2) = D3DColorXRGB(100, 155, 100)
-    extra_light(eE_Light.Verde3) = D3DColorXRGB(50, 200, 50)
+HoraLuz = 14
+extra_light(eE_Light.Oscuridad) = D3DColorXRGB(10, 10, 10)
+extra_light(eE_Light.Cegador) = D3DColorXRGB(255, 255, 255)
+extra_light(eE_Light.Azul1) = D3DColorXRGB(0, 0, 255)
+extra_light(eE_Light.Azul2) = D3DColorXRGB(100, 100, 155)
+extra_light(eE_Light.Azul3) = D3DColorXRGB(50, 50, 200)
+extra_light(eE_Light.Rojo1) = D3DColorXRGB(200, 0, 0)
+extra_light(eE_Light.Rojo2) = D3DColorXRGB(155, 100, 100)
+extra_light(eE_Light.Rojo3) = D3DColorXRGB(200, 50, 50)
+extra_light(eE_Light.Verde1) = D3DColorXRGB(0, 200, 0)
+extra_light(eE_Light.Verde2) = D3DColorXRGB(100, 155, 100)
+extra_light(eE_Light.Verde3) = D3DColorXRGB(50, 200, 50)
 
-    For t = 1 To 225
+For t = 1 To 225
 
-        X = X + 1
+    X = X + 1
 
-        If X > 5 Then 'aclaro
-            If luz_dia(B).R + 60 > 255 Or luz_dia(B).G + 60 > 255 Or luz_dia(B).B + 60 > 255 Then
-                'Dividimo el resto.
-                xr = Int((255 - luz_dia(B).R) / 4)
-                xb = Int((255 - luz_dia(B).B) / 4)
-                xg = Int((255 - luz_dia(B).G) / 4)
-                ambient_light(t) = D3DColorXRGB(luz_dia(B).R + ((X - 5) * xr), luz_dia(B).G + ((X - 5) * xg), luz_dia(B).B + ((X - 5) * xb))
+    If X > 5 Then 'aclaro
+        If luz_dia(B).R + 60 > 255 Or luz_dia(B).G + 60 > 255 Or luz_dia(B).B + 60 > 255 Then
+        'Dividimo el resto.
+            xr = Int((255 - luz_dia(B).R) / 4)
+            xb = Int((255 - luz_dia(B).B) / 4)
+            xg = Int((255 - luz_dia(B).G) / 4)
+            ambient_light(t) = D3DColorXRGB(luz_dia(B).R + ((X - 5) * xr), luz_dia(B).G + ((X - 5) * xg), luz_dia(B).B + ((X - 5) * xb))
         
-            Else
-                ambient_light(t) = D3DColorXRGB(luz_dia(B).R + ((X - 5) * 15), luz_dia(B).G + ((X - 5) * 15), luz_dia(B).B + ((X - 5) * 15))
-            End If
-    
-    
-        ElseIf X > 1 Then
-            If luz_dia(B).R - 40 < 15 Or luz_dia(B).G - 40 < 15 - luz_dia(B).B + 40 < 15 Then
-                'Dividimo el resto.
-                xr = Int((luz_dia(B).R - 15) / 4)
-                xb = Int((luz_dia(B).B - 15) / 4)
-                xg = Int((luz_dia(B).G - 15) / 4)
-                ambient_light(t) = D3DColorXRGB(luz_dia(B).R - ((X - 1) * xr), luz_dia(B).G - ((X - 1) * xg), luz_dia(B).B - ((X - 1) * xb))
-        
-            Else
-                ambient_light(t) = D3DColorXRGB(luz_dia(B).R - ((X - 1) * 10), luz_dia(B).G - ((X - 1) * 10), luz_dia(B).B - ((X - 1) * 10))
-            End If
-        
-    
         Else
-            ambient_light(t) = D3DColorXRGB(luz_dia(B).R, luz_dia(B).G, luz_dia(B).B)
+            ambient_light(t) = D3DColorXRGB(luz_dia(B).R + ((X - 5) * 15), luz_dia(B).G + ((X - 5) * 15), luz_dia(B).B + ((X - 5) * 15))
         End If
-        If X = 9 Then
-            B = B + 1 'cambia de hora
-            X = 0
+    
+    
+    ElseIf X > 1 Then
+        If luz_dia(B).R - 40 < 15 Or luz_dia(B).G - 40 < 15 - luz_dia(B).B + 40 < 15 Then
+        'Dividimo el resto.
+            xr = Int((luz_dia(B).R - 15) / 4)
+            xb = Int((luz_dia(B).B - 15) / 4)
+            xg = Int((luz_dia(B).G - 15) / 4)
+    ambient_light(t) = D3DColorXRGB(luz_dia(B).R - ((X - 1) * xr), luz_dia(B).G - ((X - 1) * xg), luz_dia(B).B - ((X - 1) * xb))
+        
+        Else
+    ambient_light(t) = D3DColorXRGB(luz_dia(B).R - ((X - 1) * 10), luz_dia(B).G - ((X - 1) * 10), luz_dia(B).B - ((X - 1) * 10))
         End If
-    Next t
+        
+    
+    Else
+        ambient_light(t) = D3DColorXRGB(luz_dia(B).R, luz_dia(B).G, luz_dia(B).B)
+    End If
+    If X = 9 Then
+        B = B + 1 'cambia de hora
+        X = 0
+    End If
+Next t
 
 
-    base_light = ambient_light(14 * 9 + 1)
+base_light = ambient_light(14 * 9 + 1)
             
 End Sub
 Public Sub DXEngine_TextureRender(ByVal texture_index As Long, ByVal dest_x As Long, ByVal dest_y As Long, ByVal src_width As Long, _
-    ByVal src_height As Long, ByRef rgb_list() As Long, ByVal Src_X As Long, _
-    ByVal Src_Y As Long, ByVal dest_width As Long, ByVal dest_height As Long, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal Angle As Single)
-    '**************************************************************
-    'This sub doesnt allow texture resizing
-    '
-    '**************************************************************
+                                            ByVal src_height As Long, ByRef rgb_list() As Long, ByVal Src_X As Long, _
+                                            ByVal Src_Y As Long, ByVal dest_width As Long, ByVal dest_height As Long, _
+                                            Optional ByVal alpha_blend As Boolean, Optional ByVal Angle As Single)
+'**************************************************************
+'This sub doesnt allow texture resizing
+'
+'**************************************************************
     Dim src_rect As RECT
     Dim dest_rect As RECT
     Dim temp_verts(3) As TLVERTEX
@@ -2036,20 +2037,20 @@ Public Sub DXEngine_TextureRender(ByVal texture_index As Long, ByVal dest_x As L
     'Enable alpha-blending
     alpha_blend = False
     ddevice.SetRenderState D3DRS_ALPHABLENDENABLE, 1
-    'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE Or D3DTA_TEXTURE)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR)
-    '    Call ddevice.SetRenderState(D3DRS_TEXTUREFACTOR, D3DColorARGB(255, 0, 0, 0))
-    'Call ddevice.SetTextureStageState(0, D3DTSS_COLOROP, 18)
-    'CON EL 18  D3DTOP_MODULATEALPHA_ADDCOLOR hace las dos cosas, agrega alpha y da color. la intesidad del color se da por el valor
-    'no logro aplicar el GRADO DE ALPHA a las cosas.
+'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE)
+'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE Or D3DTA_TEXTURE)
+'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
+'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE)
+'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR)
+'    Call ddevice.SetRenderState(D3DRS_TEXTUREFACTOR, D3DColorARGB(255, 0, 0, 0))
+'Call ddevice.SetTextureStageState(0, D3DTSS_COLOROP, 18)
+'CON EL 18  D3DTOP_MODULATEALPHA_ADDCOLOR hace las dos cosas, agrega alpha y da color. la intesidad del color se da por el valor
+'no logro aplicar el GRADO DE ALPHA a las cosas.
 
     If alpha_blend Then
-        'Set Rendering for alphablending
-        ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
-        ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+       'Set Rendering for alphablending
+ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
         'ddevice.SetRenderState D3DRS_COLORVERTEX, 2
     End If
     
@@ -2066,114 +2067,114 @@ Public Sub DXEngine_TextureRender(ByVal texture_index As Long, ByVal dest_x As L
     'ddevice.SetRenderState D3DRS_ALPHABLENDENABLE, 0
 End Sub
 Public Sub Recalcular_LUZ(ByVal Luz As Byte)
-    If Luz > 24 Then Exit Sub
+If Luz > 24 Then Exit Sub
 
-    Dim X As Long
-    Dim Y As Long
-    For X = 1 To 100
-        For Y = 1 To 100
+Dim X As Long
+Dim Y As Long
+For X = 1 To 100
+For Y = 1 To 100
 
 
-            If MapData(X, Y).Luz > 0 And MapData(X, Y).Luz <= 100 Then
-                If MapData(X, Y).Luz > 0 And MapData(X, Y).Luz < 9 Then 'Luces normales
-                    MapData(X, Y).light_value(0) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
-                    MapData(X, Y).light_value(1) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
-                    MapData(X, Y).light_value(2) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
-                    MapData(X, Y).light_value(3) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
-                ElseIf MapData(X, Y).Luz = 9 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Oscuridad)
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Oscuridad)
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Oscuridad)
-                    MapData(X, Y).light_value(3) = extra_light(eE_Light.Oscuridad)
-                ElseIf MapData(X, Y).Luz = 11 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul1)
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul1)
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul1)
-                    MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul1)
-                ElseIf MapData(X, Y).Luz = 12 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul2)
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul2)
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul2)
-                    MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul2)
-                ElseIf MapData(X, Y).Luz = 13 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul3)
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul3)
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul3)
-                    MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul3)
-                End If
-            ElseIf MapData(X, Y).Luz > 0 Then 'Bordes, cargamos los cosos.
+                                    If MapData(X, Y).Luz > 0 And MapData(X, Y).Luz <= 100 Then
+                        If MapData(X, Y).Luz > 0 And MapData(X, Y).Luz < 9 Then 'Luces normales
+                            MapData(X, Y).light_value(0) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
+                            MapData(X, Y).light_value(1) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
+                            MapData(X, Y).light_value(2) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
+                            MapData(X, Y).light_value(3) = ambient_light((Luz * 9) + MapData(X, Y).Luz + 1)
+                        ElseIf MapData(X, Y).Luz = 9 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Oscuridad)
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Oscuridad)
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Oscuridad)
+                           MapData(X, Y).light_value(3) = extra_light(eE_Light.Oscuridad)
+                        ElseIf MapData(X, Y).Luz = 11 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul1)
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul1)
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul1)
+                           MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul1)
+                        ElseIf MapData(X, Y).Luz = 12 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul2)
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul2)
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul2)
+                           MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul2)
+                        ElseIf MapData(X, Y).Luz = 13 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul3)
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul3)
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul3)
+                           MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul3)
+                        End If
+                    ElseIf MapData(X, Y).Luz > 0 Then 'Bordes, cargamos los cosos.
                     
-                If MapData(X, Y).LV(0) > 0 And MapData(X, Y).LV(0) < 9 Then 'Luces normales
-                    MapData(X, Y).light_value(0) = ambient_light(((Luz * 9) + MapData(X, Y).LV(0) + 1))
-                ElseIf MapData(X, Y).LV(0) = 9 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Oscuridad)
-                ElseIf MapData(X, Y).LV(0) = 11 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul1)
-                ElseIf MapData(X, Y).LV(0) = 12 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul2)
-                ElseIf MapData(X, Y).LV(0) = 13 Then
-                    MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul3)
-                Else
-                    MapData(X, Y).light_value(0) = 0
-                End If
-                If MapData(X, Y).LV(1) > 0 And MapData(X, Y).LV(1) < 9 Then 'Luces normales
-                    MapData(X, Y).light_value(1) = ambient_light((Luz * 9) + MapData(X, Y).LV(1) + 1)
-                ElseIf MapData(X, Y).LV(1) = 9 Then
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Oscuridad)
-                ElseIf MapData(X, Y).LV(1) = 11 Then
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul1)
-                ElseIf MapData(X, Y).LV(1) = 12 Then
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul2)
-                ElseIf MapData(X, Y).LV(1) = 13 Then
-                    MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul3)
-                Else
-                    MapData(X, Y).light_value(1) = 0
-                End If
-                If MapData(X, Y).LV(2) > 0 And MapData(X, Y).LV(2) < 9 Then 'Luces normales
-                    MapData(X, Y).light_value(2) = ambient_light((Luz * 9) + MapData(X, Y).LV(2) + 1)
-                ElseIf MapData(X, Y).LV(2) = 9 Then
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Oscuridad)
-                ElseIf MapData(X, Y).LV(2) = 11 Then
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul1)
-                ElseIf MapData(X, Y).LV(2) = 12 Then
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul2)
-                ElseIf MapData(X, Y).LV(2) = 13 Then
-                    MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul3)
-                Else
-                    MapData(X, Y).light_value(2) = 0
-                End If
-                If MapData(X, Y).LV(3) > 0 And MapData(X, Y).LV(3) < 9 Then 'Luces normales
-                    MapData(X, Y).light_value(3) = ambient_light((Luz * 9) + MapData(X, Y).LV(3) + 1)
-                ElseIf MapData(X, Y).LV(3) = 9 Then
-                    MapData(X, Y).light_value(3) = extra_light(eE_Light.Oscuridad)
-                ElseIf MapData(X, Y).LV(3) = 11 Then
-                    MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul1)
-                ElseIf MapData(X, Y).LV(3) = 12 Then
-                    MapData(X, Y).LV(3) = extra_light(eE_Light.Azul2)
-                ElseIf MapData(X, Y).LV(3) = 13 Then
-                    MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul3)
-                Else
-                    MapData(X, Y).light_value(3) = 0
-                End If
+                        If MapData(X, Y).LV(0) > 0 And MapData(X, Y).LV(0) < 9 Then 'Luces normales
+                            MapData(X, Y).light_value(0) = ambient_light(((Luz * 9) + MapData(X, Y).LV(0) + 1))
+                        ElseIf MapData(X, Y).LV(0) = 9 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Oscuridad)
+                        ElseIf MapData(X, Y).LV(0) = 11 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul1)
+                        ElseIf MapData(X, Y).LV(0) = 12 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul2)
+                        ElseIf MapData(X, Y).LV(0) = 13 Then
+                            MapData(X, Y).light_value(0) = extra_light(eE_Light.Azul3)
+                                                Else
+                            MapData(X, Y).light_value(0) = 0
+                        End If
+                        If MapData(X, Y).LV(1) > 0 And MapData(X, Y).LV(1) < 9 Then 'Luces normales
+                            MapData(X, Y).light_value(1) = ambient_light((Luz * 9) + MapData(X, Y).LV(1) + 1)
+                        ElseIf MapData(X, Y).LV(1) = 9 Then
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Oscuridad)
+                        ElseIf MapData(X, Y).LV(1) = 11 Then
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul1)
+                        ElseIf MapData(X, Y).LV(1) = 12 Then
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul2)
+                        ElseIf MapData(X, Y).LV(1) = 13 Then
+                            MapData(X, Y).light_value(1) = extra_light(eE_Light.Azul3)
+                                                Else
+                            MapData(X, Y).light_value(1) = 0
+                        End If
+                        If MapData(X, Y).LV(2) > 0 And MapData(X, Y).LV(2) < 9 Then 'Luces normales
+                            MapData(X, Y).light_value(2) = ambient_light((Luz * 9) + MapData(X, Y).LV(2) + 1)
+                        ElseIf MapData(X, Y).LV(2) = 9 Then
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Oscuridad)
+                        ElseIf MapData(X, Y).LV(2) = 11 Then
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul1)
+                        ElseIf MapData(X, Y).LV(2) = 12 Then
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul2)
+                        ElseIf MapData(X, Y).LV(2) = 13 Then
+                            MapData(X, Y).light_value(2) = extra_light(eE_Light.Azul3)
+                        Else
+                            MapData(X, Y).light_value(2) = 0
+                        End If
+                        If MapData(X, Y).LV(3) > 0 And MapData(X, Y).LV(3) < 9 Then 'Luces normales
+                            MapData(X, Y).light_value(3) = ambient_light((Luz * 9) + MapData(X, Y).LV(3) + 1)
+                        ElseIf MapData(X, Y).LV(3) = 9 Then
+                            MapData(X, Y).light_value(3) = extra_light(eE_Light.Oscuridad)
+                        ElseIf MapData(X, Y).LV(3) = 11 Then
+                            MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul1)
+                        ElseIf MapData(X, Y).LV(3) = 12 Then
+                            MapData(X, Y).LV(3) = extra_light(eE_Light.Azul2)
+                        ElseIf MapData(X, Y).LV(3) = 13 Then
+                            MapData(X, Y).light_value(3) = extra_light(eE_Light.Azul3)
+                                                Else
+                            MapData(X, Y).light_value(3) = 0
+                        End If
 
                     
-            End If
+                    End If
 
 
-        Next Y
-    Next X
-    base_light = ambient_light((Luz * 9) + 1)
+Next Y
+Next X
+base_light = ambient_light((Luz * 9) + 1)
 
 End Sub
 
 Public Sub DXEngine_iTextureRender(ByVal texture_index As Long, ByVal dest_x As Long, ByVal dest_y As Long, ByVal src_width As Long, _
-    ByVal src_height As Long, ByRef rgb_list() As Long, ByVal Src_X As Long, _
-    ByVal Src_Y As Long, ByVal dest_width As Long, ByVal dest_height As Long, _
-    Optional ByVal alpha_blend As Boolean, Optional ByVal Angle As Single)
-    '**************************************************************
-    'This sub doesnt allow texture resizing
-    '
-    '**************************************************************
+                                            ByVal src_height As Long, ByRef rgb_list() As Long, ByVal Src_X As Long, _
+                                            ByVal Src_Y As Long, ByVal dest_width As Long, ByVal dest_height As Long, _
+                                            Optional ByVal alpha_blend As Boolean, Optional ByVal Angle As Single)
+'**************************************************************
+'This sub doesnt allow texture resizing
+'
+'**************************************************************
     Dim src_rect As RECT
     Dim dest_rect As RECT
     Dim temp_verts(3) As TLVERTEX
@@ -2218,20 +2219,20 @@ Public Sub DXEngine_iTextureRender(ByVal texture_index As Long, ByVal dest_x As 
     'Enable alpha-blending
     alpha_blend = False
     ddevice.SetRenderState D3DRS_ALPHABLENDENABLE, 1
-    'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE Or D3DTA_TEXTURE)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE)
-    'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR)
-    '    Call ddevice.SetRenderState(D3DRS_TEXTUREFACTOR, D3DColorARGB(255, 0, 0, 0))
-    'Call ddevice.SetTextureStageState(0, D3DTSS_COLOROP, 18)
-    'CON EL 18  D3DTOP_MODULATEALPHA_ADDCOLOR hace las dos cosas, agrega alpha y da color. la intesidad del color se da por el valor
-    'no logro aplicar el GRADO DE ALPHA a las cosas.
+'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE)
+'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_DIFFUSE Or D3DTA_TEXTURE)
+'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
+'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE)
+'Call ddevice.SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR)
+'    Call ddevice.SetRenderState(D3DRS_TEXTUREFACTOR, D3DColorARGB(255, 0, 0, 0))
+'Call ddevice.SetTextureStageState(0, D3DTSS_COLOROP, 18)
+'CON EL 18  D3DTOP_MODULATEALPHA_ADDCOLOR hace las dos cosas, agrega alpha y da color. la intesidad del color se da por el valor
+'no logro aplicar el GRADO DE ALPHA a las cosas.
 
     If alpha_blend Then
-        'Set Rendering for alphablending
-        ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
-        ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
+       'Set Rendering for alphablending
+ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_ONE
+ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_ONE
         'ddevice.SetRenderState D3DRS_COLORVERTEX, 2
     End If
     
@@ -2248,12 +2249,12 @@ Public Sub DXEngine_iTextureRender(ByVal texture_index As Long, ByVal dest_x As 
     'ddevice.SetRenderState D3DRS_ALPHABLENDENABLE, 0
 End Sub
 Private Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, ByVal z As Single, _
-    ByVal rhw As Single, ByVal Color As Long, ByVal Specular As Long, tu As Single, _
-    ByVal tv As Single) As TLVERTEX
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '**************************************************************
+                                            ByVal rhw As Single, ByVal Color As Long, ByVal Specular As Long, tu As Single, _
+                                            ByVal tv As Single) As TLVERTEX
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'**************************************************************
     Geometry_Create_TLVertex.X = X
     Geometry_Create_TLVertex.Y = Y
     Geometry_Create_TLVertex.z = z
@@ -2264,19 +2265,19 @@ Private Function Geometry_Create_TLVertex(ByVal X As Single, ByVal Y As Single, 
 End Function
 
 Private Sub Geometry_Create_Box(ByRef verts() As TLVERTEX, ByRef Dest As RECT, ByRef src As RECT, ByRef rgb_list() As Long, _
-    Optional ByRef texture_width As Integer, Optional ByRef texture_height As Integer, Optional ByVal Angle As Single)
-    '**************************************************************
-    'Authors: Aaron Perkins;
-    'Last Modify Date: 5/07/2002
-    '
-    ' * v1 *    v3
-    ' |     \   |
-    ' |     \   |
-    ' |     \   |
-    ' |     \   |
-    ' |     \   |
-    ' * v0 *    v2
-    '**************************************************************
+                                Optional ByRef texture_width As Integer, Optional ByRef texture_height As Integer, Optional ByVal Angle As Single)
+'**************************************************************
+'Authors: Aaron Perkins;
+'Last Modify Date: 5/07/2002
+'
+' * v1 *    v3
+' |     \   |
+' |     \   |
+' |     \   |
+' |     \   |
+' |     \   |
+' * v0 *    v2
+'**************************************************************
     Dim x_center As Single
     Dim y_center As Single
     Dim radius As Single
@@ -2368,19 +2369,19 @@ Private Sub Geometry_Create_Box(ByRef verts() As TLVERTEX, ByRef Dest As RECT, B
     End If
 End Sub
 Private Sub Geometry_Create_iBox(ByRef verts() As TLVERTEX, ByRef Dest As RECT, ByRef src As RECT, ByRef rgb_list() As Long, _
-    Optional ByRef texture_width As Integer, Optional ByRef texture_height As Integer, Optional ByVal Angle As Single)
-    '**************************************************************
-    'Authors: Aaron Perkins;
-    'Last Modify Date: 5/07/2002
-    '
-    ' * v1 *    v3
-    ' |     \   |
-    ' |     \   |
-    ' |     \   |
-    ' |     \   |
-    ' |     \   |
-    ' * v0 *    v2
-    '**************************************************************
+                                Optional ByRef texture_width As Integer, Optional ByRef texture_height As Integer, Optional ByVal Angle As Single)
+'**************************************************************
+'Authors: Aaron Perkins;
+'Last Modify Date: 5/07/2002
+'
+' * v1 *    v3
+' |     \   |
+' |     \   |
+' |     \   |
+' |     \   |
+' |     \   |
+' * v0 *    v2
+'**************************************************************
     Dim x_center As Single
     Dim y_center As Single
     Dim radius As Single
@@ -2472,7 +2473,7 @@ Private Sub Geometry_Create_iBox(ByRef verts() As TLVERTEX, ByRef Dest As RECT, 
     End If
 End Sub
 Public Sub DXEngine_GraphicTextRender(Font_Index As Integer, ByVal Text As String, ByVal top As Long, ByVal left As Long, _
-    ByVal Color As Long)
+                                  ByVal Color As Long)
 
     If Len(Text) > 255 Then Exit Sub
     
@@ -2494,9 +2495,9 @@ Public Sub DXEngine_GraphicTextRender(Font_Index As Integer, ByVal Text As Strin
         Else
             X = X + 1
             Call DXEngine_TextureRenderAdvance(gfont_list(Font_Index).texture_index, left + X * gfont_list(Font_Index).Char_Size, _
-                top, gfont_list(Font_Index).Caracteres(Char).Src_X, gfont_list(Font_Index).Caracteres(Char).Src_Y, _
-                gfont_list(Font_Index).Char_Size, gfont_list(Font_Index).Char_Size, gfont_list(Font_Index).Char_Size, gfont_list(Font_Index).Char_Size, _
-                rgb_list(), False)
+                                                        top, gfont_list(Font_Index).Caracteres(Char).Src_X, gfont_list(Font_Index).Caracteres(Char).Src_Y, _
+                                                            gfont_list(Font_Index).Char_Size, gfont_list(Font_Index).Char_Size, gfont_list(Font_Index).Char_Size, gfont_list(Font_Index).Char_Size, _
+                                                                rgb_list(), False)
         End If
     Next i
     
@@ -2505,12 +2506,12 @@ Public Sub DXEngine_GraphicTextRender(Font_Index As Integer, ByVal Text As Strin
 End Sub
 
 Public Sub DXEngine_Deinitialize()
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '
-    '**************************************************************
-    On Error Resume Next
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'
+'**************************************************************
+On Error Resume Next
 
     'El manager de texturas es ahora independiente del engine.
     Call DXPool.Texture_Remove_All
@@ -2518,7 +2519,7 @@ Public Sub DXEngine_Deinitialize()
     Set d3dx = Nothing
     Set ddevice = Nothing
     Set d3d = Nothing
-    Set dX = Nothing
+    Set dx = Nothing
     Set DXPool = Nothing
 End Sub
 
@@ -2570,11 +2571,11 @@ Public Sub DXEngine_StatsRender()
 End Sub
 
 Private Sub Device_Flip()
-    '**************************************************************
-    'Author: Aaron Perkins
-    'Last Modify Date: 10/07/2002
-    '
-    '**************************************************************
+'**************************************************************
+'Author: Aaron Perkins
+'Last Modify Date: 10/07/2002
+'
+'**************************************************************
     'Draw the graphics to the front buffer.
     ddevice.Present ByVal 0&, ByVal 0&, screen_hwnd, ByVal 0&
     
@@ -2705,186 +2706,186 @@ End Function
 
 Public Sub DibujareEnHwnd(ByVal PIC As Long, ByVal GrhIndex As Integer, ByRef src_rect As RECT, ByVal X As Integer, ByVal Y As Integer, ByVal PRESENTO As Boolean)
 
-    Dim DestRect As RECT
-    Dim tX As Byte
-    Dim tY As Byte
+Dim DestRect As RECT
+Dim tX As Byte
+Dim tY As Byte
     
-    X = X
-    Y = Y
+  X = X
+  Y = Y
   
-    DestRect.top = Y
-    DestRect.left = X
-    DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
-    DestRect.Right = X + src_rect.Right - src_rect.left
-    If src_rect.Bottom <= 0 Or src_rect.Right <= 0 Or src_rect.left = src_rect.Right Or src_rect.top = src_rect.Bottom Then Exit Sub
+   DestRect.top = Y
+   DestRect.left = X
+   DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
+   DestRect.Right = X + src_rect.Right - src_rect.left
+   If src_rect.Bottom <= 0 Or src_rect.Right <= 0 Or src_rect.left = src_rect.Right Or src_rect.top = src_rect.Bottom Then Exit Sub
    
    
-    ddevice.Clear 1, DestRect, D3DCLEAR_TARGET, &H0, ByVal 0, 0
-    ddevice.BeginScene
-    Draw_RAWGrhindex GrhIndex, src_rect, X, Y
+   ddevice.Clear 1, DestRect, D3DCLEAR_TARGET, &H0, ByVal 0, 0
+   ddevice.BeginScene
+   Draw_RAWGrhindex GrhIndex, src_rect, X, Y
 
-    ddevice.EndScene
+   ddevice.EndScene
    
 
    
-    If PRESENTO Then ddevice.Present src_rect, DestRect, PIC, ByVal 0
+   If PRESENTO Then ddevice.Present src_rect, DestRect, PIC, ByVal 0
 
 
 End Sub
 Public Sub DibujareEnHwnd2(ByVal PIC As Long, ByVal nIndex As Integer, ByRef src_rect As RECT, ByVal X As Integer, ByVal Y As Integer, ByVal PRESENTO As Boolean, Optional ByVal ForceSize As Boolean, Optional ByVal ForceW As Integer, Optional ByVal ForceH As Integer)
 
-    Dim DestRect As RECT
-    Dim tX As Byte
-    Dim tY As Byte
+Dim DestRect As RECT
+Dim tX As Byte
+Dim tY As Byte
     
-    X = X
-    Y = Y
+  X = X
+  Y = Y
   
-    DestRect.top = Y
-    DestRect.left = X
+   DestRect.top = Y
+   DestRect.left = X
    
-    If ForceSize Then
-        If Y + (src_rect.Bottom - src_rect.top) > ForceH Then
-            DestRect.Bottom = ForceH
-        Else
-            DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
-        End If
-        If X + (src_rect.Right - src_rect.left) > ForceW Then
-            DestRect.Right = ForceW
-        Else
-            DestRect.Right = Y + src_rect.Right - src_rect.left
-        End If
+   If ForceSize Then
+    If Y + (src_rect.Bottom - src_rect.top) > ForceH Then
+     DestRect.Bottom = ForceH
+    Else
+    DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
+    End If
+    If X + (src_rect.Right - src_rect.left) > ForceW Then
+     DestRect.Right = ForceW
+    Else
+    DestRect.Right = Y + src_rect.Right - src_rect.left
+    End If
       
    
-    Else
-        DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
-        DestRect.Right = X + src_rect.Right - src_rect.left
-    End If
-    If src_rect.Bottom <= 0 Or src_rect.Right <= 0 Or src_rect.left = src_rect.Right Or src_rect.top = src_rect.Bottom Then Exit Sub
+   Else
+   DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
+   DestRect.Right = X + src_rect.Right - src_rect.left
+   End If
+   If src_rect.Bottom <= 0 Or src_rect.Right <= 0 Or src_rect.left = src_rect.Right Or src_rect.top = src_rect.Bottom Then Exit Sub
    
    
 
-    ddevice.BeginScene
-    If PRESENTO Then ddevice.Clear 1, src_rect, D3DCLEAR_TARGET, 0, 0, ByVal 0
-    Draw_RAWnIndex nIndex, X, Y
+   ddevice.BeginScene
+   If PRESENTO Then ddevice.Clear 1, src_rect, D3DCLEAR_TARGET, 0, 0, ByVal 0
+   Draw_RAWnIndex nIndex, X, Y
 
-    ddevice.EndScene
+   ddevice.EndScene
    
 
    
-    If PRESENTO Then ddevice.Present src_rect, DestRect, PIC, ByVal 0
+   If PRESENTO Then ddevice.Present src_rect, DestRect, PIC, ByVal 0
 
 
 End Sub
 Public Function DameWidthTextura(ByVal t As Integer) As Integer
 
-    Dim d3dTextures As D3D8Textures
-    DXPool.Texture_Dimension_Get t, d3dTextures.texwidth, d3dTextures.texheight
+Dim d3dTextures As D3D8Textures
+DXPool.Texture_Dimension_Get t, d3dTextures.texwidth, d3dTextures.texheight
 
-    DameWidthTextura = d3dTextures.texwidth
+DameWidthTextura = d3dTextures.texwidth
 
 
 End Function
 Public Function DameHeightTextura(ByVal t As Integer) As Integer
 
-    Dim d3dTextures As D3D8Textures
-    DXPool.Texture_Dimension_Get t, d3dTextures.texwidth, d3dTextures.texheight
+Dim d3dTextures As D3D8Textures
+DXPool.Texture_Dimension_Get t, d3dTextures.texwidth, d3dTextures.texheight
 
-    DameHeightTextura = d3dTextures.texheight
+DameHeightTextura = d3dTextures.texheight
 
 
 End Function
 
 Public Sub DibujareEnHwnd3(ByVal PIC As Long, ByVal Graf As Integer, ByVal X As Integer, ByVal Y As Integer, ByVal PRESENTO As Boolean, Optional ByVal ForceSize As Boolean, Optional ByVal ForceW As Integer, Optional ByVal ForceH As Integer)
 
-    Dim DestRect As RECT
-    Dim tX As Byte
-    Dim tY As Byte
-    Dim src_rect As RECT
-    Dim d3dTextures As D3D8Textures
-    Dim light_value(0 To 3) As Long
-    Dim verts(3) As TLVERTEX
+Dim DestRect As RECT
+Dim tX As Byte
+Dim tY As Byte
+Dim src_rect As RECT
+Dim d3dTextures As D3D8Textures
+Dim light_value(0 To 3) As Long
+Dim verts(3) As TLVERTEX
 
-    Set d3dTextures.Texture = DXPool.GetTexture(Graf)
-    DXPool.Texture_Dimension_Get Graf, d3dTextures.texwidth, d3dTextures.texheight
-    ddevice.SetTexture 0, d3dTextures.Texture
+Set d3dTextures.Texture = DXPool.GetTexture(Graf)
+DXPool.Texture_Dimension_Get Graf, d3dTextures.texwidth, d3dTextures.texheight
+ddevice.SetTexture 0, d3dTextures.Texture
     
 
 
-    X = X
-    Y = Y
+  X = X
+  Y = Y
 
-    src_rect.top = 0
-    src_rect.left = 0
-    src_rect.Right = d3dTextures.texwidth
-    src_rect.Bottom = d3dTextures.texheight
+   src_rect.top = 0
+   src_rect.left = 0
+   src_rect.Right = d3dTextures.texwidth
+   src_rect.Bottom = d3dTextures.texheight
     
     
-    DestRect.top = Y
-    DestRect.left = X
+   DestRect.top = Y
+   DestRect.left = X
    
-    If ForceSize = False Then
+   If ForceSize = False Then
         DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
         DestRect.Right = X + src_rect.Right - src_rect.left
-    Else
-        If X + (src_rect.Right - src_rect.left) >= ForceW Then
-            DestRect.Right = X + (ForceW - X)
-        Else
-            DestRect.Right = X + src_rect.Right - src_rect.left
-        End If
-        If Y + (src_rect.Bottom - src_rect.top) >= ForceH Then
-            DestRect.Bottom = Y + (ForceH - Y)
-        Else
-            DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
-        End If
+   Else
+       If X + (src_rect.Right - src_rect.left) >= ForceW Then
+        DestRect.Right = X + (ForceW - X)
+       Else
+        DestRect.Right = X + src_rect.Right - src_rect.left
+       End If
+       If Y + (src_rect.Bottom - src_rect.top) >= ForceH Then
+        DestRect.Bottom = Y + (ForceH - Y)
+       Else
+        DestRect.Bottom = Y + src_rect.Bottom - src_rect.top
+       End If
        
-    End If
+   End If
    
-    If src_rect.Bottom <= 0 Or src_rect.Right <= 0 Or src_rect.left = src_rect.Right Or src_rect.top = src_rect.Bottom Then Exit Sub
+   If src_rect.Bottom <= 0 Or src_rect.Right <= 0 Or src_rect.left = src_rect.Right Or src_rect.top = src_rect.Bottom Then Exit Sub
    
    
-    ddevice.Clear 1, DestRect, D3DCLEAR_TARGET, &H0, ByVal 0, 0
-    ddevice.BeginScene
+   ddevice.Clear 1, DestRect, D3DCLEAR_TARGET, &H0, ByVal 0, 0
+   ddevice.BeginScene
 
 
 
-    With verts(2)
-        .X = X
-        .Y = Y + d3dTextures.texheight
-        .tu = 0 / (d3dTextures.texwidth)
-        .tv = (0 + d3dTextures.texheight) / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
-    End With
-    With verts(0)
-        .X = X
-        .Y = Y
-        .tu = 0 / (d3dTextures.texwidth)
-        .tv = 0 / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
+        With verts(2)
+            .X = X
+            .Y = Y + d3dTextures.texheight
+            .tu = 0 / (d3dTextures.texwidth)
+            .tv = (0 + d3dTextures.texheight) / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
+        End With
+        With verts(0)
+            .X = X
+            .Y = Y
+            .tu = 0 / (d3dTextures.texwidth)
+            .tv = 0 / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
 
-    End With
+        End With
         
-    With verts(3)
-        .X = X + d3dTextures.texwidth
-        .Y = Y + d3dTextures.texheight
-        .tu = (0 + d3dTextures.texwidth) / (d3dTextures.texwidth)
-        .tv = (0 + d3dTextures.texheight) / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
+        With verts(3)
+            .X = X + d3dTextures.texwidth
+            .Y = Y + d3dTextures.texheight
+            .tu = (0 + d3dTextures.texwidth) / (d3dTextures.texwidth)
+            .tv = (0 + d3dTextures.texheight) / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
 
-    End With
+        End With
         
-    With verts(1)
-        .X = X + d3dTextures.texwidth
-        .Y = Y
-        .tu = (0 + d3dTextures.texwidth) / (d3dTextures.texwidth)
-        .tv = 0 / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
+        With verts(1)
+            .X = X + d3dTextures.texwidth
+            .Y = Y
+            .tu = (0 + d3dTextures.texwidth) / (d3dTextures.texwidth)
+            .tv = 0 / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
 
-    End With
+        End With
     
    
 
@@ -2895,11 +2896,11 @@ Public Sub DibujareEnHwnd3(ByVal PIC As Long, ByVal Graf As Integer, ByVal X As 
 
 
 
-    ddevice.EndScene
+   ddevice.EndScene
    
 
    
-    If PRESENTO Then ddevice.Present src_rect, DestRect, PIC, ByVal 0
+   If PRESENTO Then ddevice.Present src_rect, DestRect, PIC, ByVal 0
 
 
 End Sub
@@ -2907,7 +2908,7 @@ Public Sub PRESENTAR_PREVIEW(ByRef R As RECT, ByVal PIC As Long)
 
 
 
-    ddevice.Present R, R, PIC, ByVal 0
+ddevice.Present R, R, PIC, ByVal 0
 End Sub
 Private Sub Draw_RAWGrhindex(ByRef CurrentGrhIndex As Integer, ByRef src_rect As RECT, ByVal X As Integer, ByVal Y As Integer)
     Dim d3dTextures As D3D8Textures
@@ -2920,7 +2921,7 @@ Private Sub Draw_RAWGrhindex(ByRef CurrentGrhIndex As Integer, ByRef src_rect As
     
 
 
-    If ((d3dTextures.texwidth - 1)) And ((d3dTextures.texheight - 1)) Then
+      If ((d3dTextures.texwidth - 1)) And ((d3dTextures.texheight - 1)) Then
     
         With verts(2)
             .X = X
@@ -2961,7 +2962,7 @@ Private Sub Draw_RAWGrhindex(ByRef CurrentGrhIndex As Integer, ByRef src_rect As
         End With
     
    
-    Else
+   Else
         With verts(0)
             .X = X
             .Y = Y + grh_list(CurrentGrhIndex).src_height
@@ -3022,13 +3023,13 @@ Private Sub Draw_RAWnIndex(ByVal nIndex As Integer, ByVal X As Integer, ByVal Y 
     Dim jw As Integer
     Dim jh As Integer
     If NewIndexData(nIndex).Estatic > 0 Then
-        With EstaticData(NewIndexData(nIndex).Estatic)
-            jx = .L
-            jy = .t
-            jw = .W
-            jh = .H
+    With EstaticData(NewIndexData(nIndex).Estatic)
+    jx = .L
+    jy = .t
+    jw = .W
+    jh = .H
     
-        End With
+    End With
     ElseIf NewIndexData(nIndex).Dinamica > 0 Then
         With NewAnimationData(NewIndexData(nIndex).Dinamica)
             jx = .Indice(1).X
@@ -3038,43 +3039,43 @@ Private Sub Draw_RAWnIndex(ByVal nIndex As Integer, ByVal X As Integer, ByVal Y 
         
         End With
     End If
-    With verts(2)
-        .X = X
-        .Y = Y + jh
-        .tu = jx / (d3dTextures.texwidth)
-        .tv = (jy + jh) / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
-    End With
-    With verts(0)
-        .X = X
-        .Y = Y
-        .tu = jx / (d3dTextures.texwidth)
-        .tv = jy / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
+        With verts(2)
+            .X = X
+            .Y = Y + jh
+            .tu = jx / (d3dTextures.texwidth)
+            .tv = (jy + jh) / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
+        End With
+        With verts(0)
+            .X = X
+            .Y = Y
+            .tu = jx / (d3dTextures.texwidth)
+            .tv = jy / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
 
-    End With
+        End With
         
-    With verts(3)
-        .X = X + jw
-        .Y = Y + jh
-        .tu = (jx + jw) / (d3dTextures.texwidth)
-        .tv = (jy + jh) / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
+        With verts(3)
+            .X = X + jw
+            .Y = Y + jh
+            .tu = (jx + jw) / (d3dTextures.texwidth)
+            .tv = (jy + jh) / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
 
-    End With
+        End With
         
-    With verts(1)
-        .X = X + jw
-        .Y = Y
-        .tu = (jx + jw) / (d3dTextures.texwidth)
-        .tv = jy / (d3dTextures.texheight)
-        .rhw = 1
-        .Color = -1
+        With verts(1)
+            .X = X + jw
+            .Y = Y
+            .tu = (jx + jw) / (d3dTextures.texwidth)
+            .tv = jy / (d3dTextures.texheight)
+            .rhw = 1
+            .Color = -1
 
-    End With
+        End With
     
   
   
@@ -3150,22 +3151,22 @@ End Sub
 
 
 Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String, ByVal X As Long, ByVal Y As Long, ByVal Color As Long, Optional ByVal center As Boolean = False, Optional ByVal Alpha As Byte = 255)
-    Dim TempVA(0 To 3) As TLVERTEX
-    Dim tempstr() As String
-    Dim Count As Integer
-    Dim ascii() As Byte
-    Dim Row As Integer
-    Dim u As Single
-    Dim v As Single
-    Dim i As Long
-    Dim j As Long
-    Dim KeyPhrase As Byte
-    Dim TempColor As Long
-    Dim ResetColor As Byte
-    Dim SrcRect As RECT
-    Dim v2 As D3DVECTOR2
-    Dim v3 As D3DVECTOR2
-    Dim YOffset As Single
+Dim TempVA(0 To 3) As TLVERTEX
+Dim tempstr() As String
+Dim Count As Integer
+Dim ascii() As Byte
+Dim Row As Integer
+Dim u As Single
+Dim v As Single
+Dim i As Long
+Dim j As Long
+Dim KeyPhrase As Byte
+Dim TempColor As Long
+Dim ResetColor As Byte
+Dim SrcRect As RECT
+Dim v2 As D3DVECTOR2
+Dim v3 As D3DVECTOR2
+Dim YOffset As Single
  
     ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
     ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
@@ -3208,37 +3209,37 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
                 '    If KeyPhrase Then TempColor = ARGB(255, 0, 0, alpha) Else ResetColor = 1
                 'Else
  
-                'Render with triangles
-                'If AlternateRender = 0 Then
+                    'Render with triangles
+                    'If AlternateRender = 0 Then
  
-                'Copy from the cached vertex array to the temp vertex array
-                CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(j - 1)).Vertex(0), 32 * 4
+                        'Copy from the cached vertex array to the temp vertex array
+                        CopyMemory TempVA(0), UseFont.HeaderInfo.CharVA(ascii(j - 1)).Vertex(0), 32 * 4
  
-                'Set up the verticies
-                TempVA(0).X = X + Count
-                TempVA(0).Y = Y + YOffset
+                        'Set up the verticies
+                        TempVA(0).X = X + Count
+                        TempVA(0).Y = Y + YOffset
                        
-                TempVA(1).X = TempVA(1).X + X + Count
-                TempVA(1).Y = TempVA(0).Y
+                        TempVA(1).X = TempVA(1).X + X + Count
+                        TempVA(1).Y = TempVA(0).Y
  
-                TempVA(2).X = TempVA(0).X
-                TempVA(2).Y = TempVA(2).Y + TempVA(0).Y
+                        TempVA(2).X = TempVA(0).X
+                        TempVA(2).Y = TempVA(2).Y + TempVA(0).Y
  
-                TempVA(3).X = TempVA(1).X
-                TempVA(3).Y = TempVA(2).Y
+                        TempVA(3).X = TempVA(1).X
+                        TempVA(3).Y = TempVA(2).Y
                        
-                'Set the colors
-                TempVA(0).Color = TempColor
-                TempVA(1).Color = TempColor
-                TempVA(2).Color = TempColor
-                TempVA(3).Color = TempColor
+                        'Set the colors
+                        TempVA(0).Color = TempColor
+                        TempVA(1).Color = TempColor
+                        TempVA(2).Color = TempColor
+                        TempVA(3).Color = TempColor
                        
-                'Draw the verticies
-                ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, TempVA(0), Len(TempVA(0))
+                        'Draw the verticies
+                        ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, TempVA(0), Len(TempVA(0))
                        
                      
-                'Shift over the the position to render the next character
-                Count = Count + UseFont.HeaderInfo.CharWidth(ascii(j - 1))
+                    'Shift over the the position to render the next character
+                    Count = Count + UseFont.HeaderInfo.CharWidth(ascii(j - 1))
                
                 'End If
                
@@ -3255,11 +3256,11 @@ Private Sub Engine_Render_Text(ByRef UseFont As CustomFont, ByVal Text As String
    
 End Sub
 Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, ByVal Text As String) As Integer
-    '***************************************************
-    'Returns the width of text
-    'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_GetTextWidth]http://www.vbgore.com/GameClient.TileEn ... tTextWidth[/url]
-    '***************************************************
-    Dim i As Integer
+'***************************************************
+'Returns the width of text
+'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_GetTextWidth]http://www.vbgore.com/GameClient.TileEn ... tTextWidth[/url]
+'***************************************************
+Dim i As Integer
  
     'Make sure we have text
     If LenB(Text) = 0 Then Exit Function
@@ -3275,12 +3276,12 @@ Private Function Engine_GetTextWidth(ByRef UseFont As CustomFont, ByVal Text As 
 End Function
  
 Sub Engine_Init_FontTextures()
-    On Error GoTo eDebug:
-    '*****************************************************************
-    'Init the custom font textures
-    'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_Init_FontTextures]http://www.vbgore.com/GameClient.TileEn ... ntTextures[/url]
-    '*****************************************************************
-    Dim TexInfo As D3DXIMAGE_INFO_A
+On Error GoTo eDebug:
+'*****************************************************************
+'Init the custom font textures
+'More info: [url=http://www.vbgore.com/GameClient.TileEngine.Engine_Init_FontTextures]http://www.vbgore.com/GameClient.TileEn ... ntTextures[/url]
+'*****************************************************************
+Dim TexInfo As D3DXIMAGE_INFO_A
  
     'Check if we have the device
     If ddevice.TestCooperativeLevel <> D3D_OK Then Exit Sub
@@ -3304,21 +3305,21 @@ eDebug:
 End Sub
  
 Sub Engine_Init_FontSettings()
-    '*********************************************************
-    '****** Coded by Dunkan ([email=emanuel.m@dunkancorp.com]emanuel.m@dunkancorp.com[/email]) *******
-    '*********************************************************
-    Dim FileNum As Byte
-    Dim LoopChar As Long
-    Dim Row As Single
-    Dim u As Single
-    Dim v As Single
+'*********************************************************
+'****** Coded by Dunkan ([email=emanuel.m@dunkancorp.com]emanuel.m@dunkancorp.com[/email]) *******
+'*********************************************************
+Dim FileNum As Byte
+Dim LoopChar As Long
+Dim Row As Single
+Dim u As Single
+Dim v As Single
  
     '*** Default font ***
  
     'Load the header information
     FileNum = FreeFile
     Open App.PATH & "\RESOURCES\INIT\tahoma.dat" For Binary As #FileNum
-    Get #FileNum, , cfonts(1).HeaderInfo
+        Get #FileNum, , cfonts(1).HeaderInfo
     Close #FileNum
    
     'Calculate some common values
@@ -3374,18 +3375,18 @@ Sub Engine_Init_FontSettings()
  
 End Sub
 Public Function ARGBtoD3DCOLORVALUE(ByVal ARGB As Long, ByRef Color As D3DCOLORVALUE)
-    Dim Dest(3) As Byte
-    CopyMemory Dest(0), ARGB, 4
-    Color.A = Dest(3)
-    Color.R = Dest(2)
-    Color.G = Dest(1)
-    Color.B = Dest(0)
+Dim Dest(3) As Byte
+CopyMemory Dest(0), ARGB, 4
+Color.A = Dest(3)
+Color.R = Dest(2)
+Color.G = Dest(1)
+Color.B = Dest(0)
 End Function
 Public Sub DrawText(ByVal left As Long, ByVal top As Long, ByVal Text As String, ByVal Colorx As Long, Optional ByVal Alpha As Byte = 255, Optional ByVal center As Boolean = False)
-    Dim Color As Long
-    If Text = "0" Then Exit Sub
+Dim Color As Long
+If Text = "0" Then Exit Sub
 
-    If top <= 0 Or left <= 0 Or Colorx = 0 Or LenB(Text) = 0 Then Exit Sub
+If top <= 0 Or left <= 0 Or Colorx = 0 Or LenB(Text) = 0 Then Exit Sub
     If Alpha <> 255 Then
         Dim aux As D3DCOLORVALUE
         ARGBtoD3DCOLORVALUE Colorx, aux
@@ -3394,229 +3395,229 @@ Public Sub DrawText(ByVal left As Long, ByVal top As Long, ByVal Text As String,
     Else
         Color = Colorx
     End If
-    Engine_Render_Text cfonts(1), Text, left, top, Color, center, Alpha
+        Engine_Render_Text cfonts(1), Text, left, top, Color, center, Alpha
 End Sub
 
 Public Sub SPOTLIGHTS_LOADDAT()
-    Dim s As String
-    Dim i As Long
+Dim S As String
+Dim i As Long
 
-    Dim A As Byte
-    Dim R As Byte
-    Dim G As Byte
-    Dim B As Byte
+Dim A As Byte
+Dim R As Byte
+Dim G As Byte
+Dim B As Byte
 
 
-    s = App.PATH & "\RESOURCES\INIT\SPOTLIGHTS.DAT"
+S = App.PATH & "\RESOURCES\INIT\SPOTLIGHTS.DAT"
 
-    NUM_SPOTLIGHTS_COLORES = Val(GetVar(s, "COLORES", "NUM_COLORES"))
+NUM_SPOTLIGHTS_COLORES = Val(GetVar(S, "COLORES", "NUM_COLORES"))
 
-    frmMain.COLOREXTRA.AddItem "NINGUNO"
-    If NUM_SPOTLIGHTS_COLORES > 0 Then
-        ReDim SPOTLIGHTS_COLORES(1 To NUM_SPOTLIGHTS_COLORES)
-        For i = 1 To NUM_SPOTLIGHTS_COLORES
-            A = Val(GetVar(s, "COLOR" & i, "A"))
-            R = Val(GetVar(s, "COLOR" & i, "R"))
-            G = Val(GetVar(s, "COLOR" & i, "G"))
-            B = Val(GetVar(s, "COLOR" & i, "B"))
-            SPOTLIGHTS_COLORES(i) = D3DColorARGB(A, R, G, B)
-            frmMain.COLORSPOT.AddItem GetVar(s, "COLOR" & i, "Nombre")
-            frmMain.COLOREXTRA.AddItem GetVar(s, "COLOR" & i, "Nombre")
+frmMain.COLOREXTRA.AddItem "NINGUNO"
+If NUM_SPOTLIGHTS_COLORES > 0 Then
+ReDim SPOTLIGHTS_COLORES(1 To NUM_SPOTLIGHTS_COLORES)
+    For i = 1 To NUM_SPOTLIGHTS_COLORES
+        A = Val(GetVar(S, "COLOR" & i, "A"))
+        R = Val(GetVar(S, "COLOR" & i, "R"))
+        G = Val(GetVar(S, "COLOR" & i, "G"))
+        B = Val(GetVar(S, "COLOR" & i, "B"))
+        SPOTLIGHTS_COLORES(i) = D3DColorARGB(A, R, G, B)
+        frmMain.COLORSPOT.AddItem GetVar(S, "COLOR" & i, "Nombre")
+        frmMain.COLOREXTRA.AddItem GetVar(S, "COLOR" & i, "Nombre")
         
-        Next i
-    End If
-    frmMain.COLOREXTRA.AddItem "CUSTOM"
-    frmMain.COLORSPOT.AddItem "CUSTOM"
+    Next i
+End If
+frmMain.COLOREXTRA.AddItem "CUSTOM"
+frmMain.COLORSPOT.AddItem "CUSTOM"
 
-    frmMain.COLOREXTRA.ListIndex = 0
-    frmMain.COLORSPOT.ListIndex = 0
+frmMain.COLOREXTRA.ListIndex = 0
+frmMain.COLORSPOT.ListIndex = 0
 
 
-    frmMain.SPOT_ANIM.AddItem "INANIMADA"
+frmMain.SPOT_ANIM.AddItem "INANIMADA"
 
-    NUM_SPOTLIGHTS_ANIMATION = Val(GetVar(s, "ANIMACIONES", "NUM_ANIM"))
-    If NUM_SPOTLIGHTS_ANIMATION > 0 Then
-        ReDim SPOTLIGHTS_ANIMATION(1 To NUM_SPOTLIGHTS_ANIMATION)
-        For i = 1 To NUM_SPOTLIGHTS_ANIMATION
+NUM_SPOTLIGHTS_ANIMATION = Val(GetVar(S, "ANIMACIONES", "NUM_ANIM"))
+If NUM_SPOTLIGHTS_ANIMATION > 0 Then
+ReDim SPOTLIGHTS_ANIMATION(1 To NUM_SPOTLIGHTS_ANIMATION)
+For i = 1 To NUM_SPOTLIGHTS_ANIMATION
 
-            SPOTLIGHTS_ANIMATION(i) = Val(GetVar(s, "ANIM" & i, "Indice"))
-            frmMain.SPOT_ANIM.AddItem GetVar(s, "ANIM" & i, "Nombre")
-        Next i
-    End If
-    frmMain.SPOT_ANIM.ListIndex = 0
+    SPOTLIGHTS_ANIMATION(i) = Val(GetVar(S, "ANIM" & i, "Indice"))
+    frmMain.SPOT_ANIM.AddItem GetVar(S, "ANIM" & i, "Nombre")
+Next i
+End If
+frmMain.SPOT_ANIM.ListIndex = 0
 
 End Sub
 Public Sub Load_NewAnimation()
-    Dim s As String
-    Dim i As Long
-    Dim P As Long
-    Dim k As Long
-    Dim GrafCounter As Integer
-    s = App.PATH & "\RESOURCES\INIT\NewAnim.dat"
+Dim S As String
+Dim i As Long
+Dim p As Long
+Dim k As Long
+Dim GrafCounter As Integer
+S = App.PATH & "\RESOURCES\INIT\NewAnim.dat"
 
 
-    Num_NwAnim = Val(GetVar(s, "NW_ANIM", "NUM"))
+Num_NwAnim = Val(GetVar(S, "NW_ANIM", "NUM"))
 
-    If Num_NwAnim < 1 Then Exit Sub
+If Num_NwAnim < 1 Then Exit Sub
 
-    ReDim NewAnimationData(1 To Num_NwAnim)
+ReDim NewAnimationData(1 To Num_NwAnim)
 
-    For i = 1 To Num_NwAnim
+For i = 1 To Num_NwAnim
 
-        With NewAnimationData(i)
-            .Grafico = Val(GetVar(s, "ANIMACION" & i, "Grafico"))
-            .Columnas = Val(GetVar(s, "ANIMACION" & i, "Columnas"))
-            .Filas = Val(GetVar(s, "ANIMACION" & i, "Filas"))
-            .Height = Val(GetVar(s, "ANIMACION" & i, "Alto"))
-            .Width = Val(GetVar(s, "ANIMACION" & i, "Ancho"))
-            .NumFrames = Val(GetVar(s, "ANIMACION" & i, "NumeroFrames"))
-            .Velocidad = Val(GetVar(s, "ANIMACION" & i, "Velocidad"))
-            .TileWidth = .Width / 32
-            .TileHeight = .Height / 32
-            .Romboidal = Val(GetVar(s, "ANIMACION" & i, "AnimacionRomboidal"))
-            ReDim .Indice(1 To .NumFrames) As tNewIndice
-            GrafCounter = .Grafico
-            k = Val(GetVar(s, "ANIMACION" & i, "INICIAL"))
-            If k = 0 Then k = 1
-            For P = 1 To .NumFrames
-                .Indice(P).X = (((k - 1) Mod .Columnas) * .Width)
-                .Indice(P).Y = ((Int((k - 1) / .Columnas)) * .Height)
-                .Indice(P).Grafico = GrafCounter
-                If P = CInt(.Columnas) * CInt(.Filas) And P < .NumFrames Then
-                    GrafCounter = GrafCounter + 1
-                    k = 0
-                End If
-                k = k + 1
-            Next P
-        End With
-    Next i
+With NewAnimationData(i)
+    .Grafico = Val(GetVar(S, "ANIMACION" & i, "Grafico"))
+    .Columnas = Val(GetVar(S, "ANIMACION" & i, "Columnas"))
+    .Filas = Val(GetVar(S, "ANIMACION" & i, "Filas"))
+    .Height = Val(GetVar(S, "ANIMACION" & i, "Alto"))
+    .Width = Val(GetVar(S, "ANIMACION" & i, "Ancho"))
+    .NumFrames = Val(GetVar(S, "ANIMACION" & i, "NumeroFrames"))
+    .Velocidad = Val(GetVar(S, "ANIMACION" & i, "Velocidad"))
+    .TileWidth = .Width / 32
+    .TileHeight = .Height / 32
+    .Romboidal = Val(GetVar(S, "ANIMACION" & i, "AnimacionRomboidal"))
+    ReDim .Indice(1 To .NumFrames) As tNewIndice
+    GrafCounter = .Grafico
+    k = Val(GetVar(S, "ANIMACION" & i, "INICIAL"))
+    If k = 0 Then k = 1
+    For p = 1 To .NumFrames
+        .Indice(p).X = (((k - 1) Mod .Columnas) * .Width)
+        .Indice(p).Y = ((Int((k - 1) / .Columnas)) * .Height)
+        .Indice(p).Grafico = GrafCounter
+        If p = CInt(.Columnas) * CInt(.Filas) And p < .NumFrames Then
+            GrafCounter = GrafCounter + 1
+            k = 0
+        End If
+        k = k + 1
+    Next p
+End With
+Next i
 
 
 End Sub
 
 Public Sub SPOTLIGHTS_CREAR(ByVal Tipo As Byte, ByVal SPOT_COLOR_BASE As Byte, ByVal SPOT_COLOR_EXTRA, ByVal SPOT_INTENSITY As Byte, ByVal BIND_TO As Byte, ByVal Grafico As Integer, ByVal X As Integer, ByVal Y As Integer, Optional ByVal CHarIndex As Integer, Optional ByVal Color As Long, Optional ByVal COLOR_EXTRA As Long, Optional ByVal EXTRA_GRAFICO As Integer)
-    On Error GoTo erz
-    Dim PUEDE_CREAR As Boolean
-    If MapData(X, Y).SPOTLIGHT.INTENSITY > 0 Then Exit Sub
-    If SPOT_INTENSITY < 1 Or SPOT_INTENSITY = 2 Or SPOT_INTENSITY = 4 Then Exit Sub
-    Num_SPOTLIGHTS = Num_SPOTLIGHTS + 1
-    ReDim Preserve SPOT_LIGHTS(1 To Num_SPOTLIGHTS) As tSPOT_LIGHTS
+On Error GoTo erz
+Dim PUEDE_CREAR As Boolean
+If MapData(X, Y).SPOTLIGHT.INTENSITY > 0 Then Exit Sub
+If SPOT_INTENSITY < 1 Or SPOT_INTENSITY = 2 Or SPOT_INTENSITY = 4 Then Exit Sub
+Num_SPOTLIGHTS = Num_SPOTLIGHTS + 1
+ReDim Preserve SPOT_LIGHTS(1 To Num_SPOTLIGHTS) As tSPOT_LIGHTS
 
-    With SPOT_LIGHTS(Num_SPOTLIGHTS)
+With SPOT_LIGHTS(Num_SPOTLIGHTS)
 
-        .SPOT_TIPO = Tipo
+    .SPOT_TIPO = Tipo
     
-        .BIND_TO = BIND_TO
+    .BIND_TO = BIND_TO
     
-        .Mx = X
-        .My = Y
-        With MapData(X, Y).SPOTLIGHT
+    .Mx = X
+    .My = Y
+                With MapData(X, Y).SPOTLIGHT
                 
-            .INTENSITY = SPOT_INTENSITY
-            .SPOT_TIPO = Tipo
-            .SPOT_COLOR_BASE = SPOT_COLOR_BASE
-            .SPOT_COLOR_EXTRA = SPOT_COLOR_EXTRA
-            .Grafico = Grafico
-            .EXTRA_GRAFICO = EXTRA_GRAFICO
+                    .INTENSITY = SPOT_INTENSITY
+                    .SPOT_TIPO = Tipo
+                    .SPOT_COLOR_BASE = SPOT_COLOR_BASE
+                    .SPOT_COLOR_EXTRA = SPOT_COLOR_EXTRA
+                    .Grafico = Grafico
+                    .EXTRA_GRAFICO = EXTRA_GRAFICO
+                    .COLOR_EXTRA = COLOR_EXTRA
+                    .Color = Color
+                    .OffsetX = Val(frmMain.SPOT_OFFSETX.Text)
+                    .OffsetY = Val(frmMain.SPOT_OFFSETY.Text)
+                    .index = Num_SPOTLIGHTS
+                
+                
+                End With
+
+    .EXTRA_GRAFICO = EXTRA_GRAFICO
+                    .OffsetX = Val(frmMain.SPOT_OFFSETX.Text)
+                    .OffsetY = Val(frmMain.SPOT_OFFSETY.Text)
+    
+    
+    .SPOT_COLOR_BASE = SPOT_COLOR_BASE
+    .INTENSITY = SPOT_INTENSITY
+    If SPOT_COLOR_BASE = frmMain.COLORSPOT.ListCount Then
+        .Color = Color
+    Else
+        .Color = SPOTLIGHTS_COLORES(.SPOT_COLOR_BASE)
+    End If
+    .SPOT_COLOR_EXTRA = SPOT_COLOR_EXTRA
+    If SPOT_COLOR_EXTRA > 0 Then
+        If SPOT_COLOR_EXTRA = frmMain.COLOREXTRA.ListCount - 1 Then
             .COLOR_EXTRA = COLOR_EXTRA
-            .Color = Color
-            .OffsetX = Val(frmMain.SPOT_OFFSETX.Text)
-            .OffsetY = Val(frmMain.SPOT_OFFSETY.Text)
-            .index = Num_SPOTLIGHTS
-                
-                
-        End With
-
-        .EXTRA_GRAFICO = EXTRA_GRAFICO
-        .OffsetX = Val(frmMain.SPOT_OFFSETX.Text)
-        .OffsetY = Val(frmMain.SPOT_OFFSETY.Text)
-    
-    
-        .SPOT_COLOR_BASE = SPOT_COLOR_BASE
-        .INTENSITY = SPOT_INTENSITY
-        If SPOT_COLOR_BASE = frmMain.COLORSPOT.ListCount Then
-            .Color = Color
         Else
-            .Color = SPOTLIGHTS_COLORES(.SPOT_COLOR_BASE)
+            .COLOR_EXTRA = SPOTLIGHTS_COLORES(.SPOT_COLOR_EXTRA)
         End If
-        .SPOT_COLOR_EXTRA = SPOT_COLOR_EXTRA
-        If SPOT_COLOR_EXTRA > 0 Then
-            If SPOT_COLOR_EXTRA = frmMain.COLOREXTRA.ListCount - 1 Then
-                .COLOR_EXTRA = COLOR_EXTRA
-            Else
-                .COLOR_EXTRA = SPOTLIGHTS_COLORES(.SPOT_COLOR_EXTRA)
-            End If
-        End If
+    End If
     
-        If .SPOT_TIPO > 0 Then
-            'Sino es estática iniciamos la animación.
-            nwAnimInit .Anim, SPOTLIGHTS_ANIMATION(.SPOT_TIPO)
-        Else
-            .Grafico = Grafico
-        End If
-        LUZ_SELECTA = Num_SPOTLIGHTS
-    End With
-    Exit Sub
+    If .SPOT_TIPO > 0 Then
+        'Sino es estática iniciamos la animación.
+        nwAnimInit .Anim, SPOTLIGHTS_ANIMATION(.SPOT_TIPO)
+    Else
+        .Grafico = Grafico
+    End If
+LUZ_SELECTA = Num_SPOTLIGHTS
+End With
+Exit Sub
 erz:
-    MsgBox "ERROR SPOTLIGHTS_CREAR: " & Err.Description
+MsgBox "ERROR SPOTLIGHTS_CREAR: " & Err.Description
 
 End Sub
 Public Sub SPOTLIGHTS_BORRAR(ByVal Indice As Integer)
-    Dim i  As Long
-    On Error GoTo errz
-    If Indice > UBound(SPOT_LIGHTS) Or Indice = 0 Then Exit Sub
+Dim i  As Long
+On Error GoTo errz
+If Indice > UBound(SPOT_LIGHTS) Or Indice = 0 Then Exit Sub
 
 
         
-    MapData(SPOT_LIGHTS(Indice).Mx, SPOT_LIGHTS(Indice).My).SPOTLIGHT.index = 0
+MapData(SPOT_LIGHTS(Indice).Mx, SPOT_LIGHTS(Indice).My).SPOTLIGHT.index = 0
 
 
-    If Num_SPOTLIGHTS > Indice Then
-        'Tenemos que hacer resize.
-        'Resort
-        SPOTLIGHTS_RESORT Indice
+If Num_SPOTLIGHTS > Indice Then
+    'Tenemos que hacer resize.
+    'Resort
+    SPOTLIGHTS_RESORT Indice
 
-    End If
+End If
     
-    Num_SPOTLIGHTS = Num_SPOTLIGHTS - 1
-    If Num_SPOTLIGHTS > 0 Then ReDim Preserve SPOT_LIGHTS(1 To Num_SPOTLIGHTS) As tSPOT_LIGHTS
-    Exit Sub
+Num_SPOTLIGHTS = Num_SPOTLIGHTS - 1
+If Num_SPOTLIGHTS > 0 Then ReDim Preserve SPOT_LIGHTS(1 To Num_SPOTLIGHTS) As tSPOT_LIGHTS
+Exit Sub
 errz:
-    MsgBox "ERROR SPOTLIGHTSBORRAR: " & Err.Description
+MsgBox "ERROR SPOTLIGHTSBORRAR: " & Err.Description
 End Sub
 
 Public Sub SPOTLIGHTS_LIMPIARTODOS()
 
-    Num_SPOTLIGHTS = 0
-    Erase SPOT_LIGHTS
+Num_SPOTLIGHTS = 0
+Erase SPOT_LIGHTS
 
-    Set SCREEN_SPOTS = Nothing
+Set SCREEN_SPOTS = Nothing
 
 End Sub
 
 Private Sub SPOTLIGHTS_RESORT(ByVal Start As Integer)
-    On Error GoTo erz
-    Dim i As Long
+On Error GoTo erz
+Dim i As Long
 
-    For i = Start To Num_SPOTLIGHTS - 1
+For i = Start To Num_SPOTLIGHTS - 1
 
-        SPOT_LIGHTS(i) = SPOT_LIGHTS(i + 1)
+    SPOT_LIGHTS(i) = SPOT_LIGHTS(i + 1)
     
-        Select Case SPOT_LIGHTS(i).BIND_TO
+    Select Case SPOT_LIGHTS(i).BIND_TO
     
-            Case 0 'Screen
-                'SCREEN_SPOTS.Item(SPOT_LIGHTS(i).INDEX_IN_COL) = i
+        Case 0 'Screen
+            'SCREEN_SPOTS.Item(SPOT_LIGHTS(i).INDEX_IN_COL) = i
         
-            Case 1 'Mapa
-                MapData(SPOT_LIGHTS(i).Mx, SPOT_LIGHTS(i).My).SPOTLIGHT.index = i
+        Case 1 'Mapa
+            MapData(SPOT_LIGHTS(i).Mx, SPOT_LIGHTS(i).My).SPOTLIGHT.index = i
         
-            Case 2 'Char
-                'CharList(SPOT_LIGHTS(i).CHarIndex).SPOTLIGHTS(SPOT_LIGHTS(i).INDEX_IN_COL) = i
-        End Select
-    Next i
-    Exit Sub
+        Case 2 'Char
+            'CharList(SPOT_LIGHTS(i).CHarIndex).SPOTLIGHTS(SPOT_LIGHTS(i).INDEX_IN_COL) = i
+    End Select
+Next i
+Exit Sub
 erz:
-    MsgBox "ERROR SPOTS_RESORT: " & Err.Description
+MsgBox "ERROR SPOTS_RESORT: " & Err.Description
 End Sub
 Public Sub SPOTLIGHTS_LOADDATA(ByVal FF As Integer)
     'CARGA BINARIA DE SPOTLIGHTS DESDE EFECTOS.BIN
@@ -3626,57 +3627,57 @@ End Sub
 
 
 Private Sub SPOTLIGHTS_DRAW(ByVal SPOT As Integer)
-    Dim CurrentIndex As Integer
-    Dim CurrentGrafico As Integer
-    Dim light_value(0 To 3) As Long
-    Dim Width As Integer
-    Dim Height As Integer
-    Dim sx As Integer
-    Dim sy As Integer
-    Dim X As Integer
-    Dim Y As Integer
-    Dim d3dTextures As D3D8Textures
-    Dim z As Integer
-    Dim verts(3) As TLVERTEX
+Dim CurrentIndex As Integer
+Dim CurrentGrafico As Integer
+Dim light_value(0 To 3) As Long
+Dim Width As Integer
+Dim Height As Integer
+Dim sx As Integer
+Dim sy As Integer
+Dim X As Integer
+Dim Y As Integer
+Dim d3dTextures As D3D8Textures
+Dim z As Integer
+Dim verts(3) As TLVERTEX
 
     With SPOT_LIGHTS(SPOT)
     
 
         
-        X = .X + .OffsetX
-        Y = .Y + .OffsetY
+    X = .X + .OffsetX
+    Y = .Y + .OffsetY
 
     
-        'Primero vemos si es animada
-        If .SPOT_TIPO > 0 Then
-            With SPOT_LIGHTS(SPOT).Anim
+    'Primero vemos si es animada
+    If .SPOT_TIPO > 0 Then
+        With SPOT_LIGHTS(SPOT).Anim
         
-                If (.Romboidal = 1 And .Direction = 1) Or .Romboidal = 0 Then
-                    .IndiceCounter = .IndiceCounter + (((GetTickCount - fps_last_time) * 0.0001) * .NumFrames * (.Velocidad * 0.5))
+            If (.Romboidal = 1 And .Direction = 1) Or .Romboidal = 0 Then
+                .IndiceCounter = .IndiceCounter + (((GetTickCount - fps_last_time) * 0.0001) * .NumFrames * (.Velocidad * 0.5))
             
-                    CurrentIndex = .IndiceCounter
-                    If CurrentIndex >= .NumFrames + 1 Then
-                        If .Romboidal = 1 Then
-                            .Direction = -1
-                            .IndiceCounter = .NumFrames
-                            CurrentIndex = .IndiceCounter
-                        Else
-                            .IndiceCounter = (.IndiceCounter Mod .NumFrames)
-                            CurrentIndex = .IndiceCounter
-                        End If
-                    End If
-                ElseIf .Romboidal = 1 And .Direction = -1 Then
-                    .IndiceCounter = .IndiceCounter - (((GetTickCount - fps_last_time) * 0.0001) * .NumFrames * (.Velocidad * 0.5))
-                    CurrentIndex = .IndiceCounter
-                    If CurrentIndex <= 0 Then
-                
-                        .IndiceCounter = 1
+                CurrentIndex = .IndiceCounter
+                If CurrentIndex >= .NumFrames + 1 Then
+                     If .Romboidal = 1 Then
+                        .Direction = -1
+                        .IndiceCounter = .NumFrames
                         CurrentIndex = .IndiceCounter
-                        .Direction = 1
+                    Else
+                        .IndiceCounter = (.IndiceCounter Mod .NumFrames)
+                        CurrentIndex = .IndiceCounter
                     End If
-            
-            
                 End If
+            ElseIf .Romboidal = 1 And .Direction = -1 Then
+                .IndiceCounter = .IndiceCounter - (((GetTickCount - fps_last_time) * 0.0001) * .NumFrames * (.Velocidad * 0.5))
+                CurrentIndex = .IndiceCounter
+                If CurrentIndex <= 0 Then
+                
+                    .IndiceCounter = 1
+                     CurrentIndex = .IndiceCounter
+                     .Direction = 1
+                End If
+            
+            
+            End If
                 If .TileWidth <> 1 Then
                     z = -.TileWidth * 16 + 16
                     X = X + z
@@ -3685,36 +3686,36 @@ Private Sub SPOTLIGHTS_DRAW(ByVal SPOT As Integer)
                     z = -.TileHeight * 16 + 16
                     Y = Y + z
                 End If
-                If CurrentIndex = 0 Then Exit Sub
-                CurrentGrafico = .Indice(CurrentIndex).Grafico
-                Width = .Width
-                Height = .Height
-                sx = .Indice(CurrentIndex).X
-                sy = .Indice(CurrentIndex).Y
-            End With
+            If CurrentIndex = 0 Then Exit Sub
+            CurrentGrafico = .Indice(CurrentIndex).Grafico
+            Width = .Width
+            Height = .Height
+            sx = .Indice(CurrentIndex).X
+            sy = .Indice(CurrentIndex).Y
+        End With
     
-        Else
-            CurrentGrafico = .Grafico
-        End If
+    Else
+        CurrentGrafico = .Grafico
+    End If
 
-        Set d3dTextures.Texture = DXPool.GetTexture(CurrentGrafico)
-        Call DXPool.Texture_Dimension_Get(CurrentGrafico, d3dTextures.texwidth, d3dTextures.texheight)
+    Set d3dTextures.Texture = DXPool.GetTexture(CurrentGrafico)
+    Call DXPool.Texture_Dimension_Get(CurrentGrafico, d3dTextures.texwidth, d3dTextures.texheight)
     
-        ddevice.SetTexture 0, d3dTextures.Texture
+   ddevice.SetTexture 0, d3dTextures.Texture
     
-        If Width = 0 Then
-            Width = d3dTextures.texwidth
-            Height = d3dTextures.texheight
+    If Width = 0 Then
+        Width = d3dTextures.texwidth
+        Height = d3dTextures.texheight
         
-            z = -(Width / 32) * 16 + 19
-            X = X + z
+        z = -(Width / 32) * 16 + 19
+        X = X + z
         
-            z = -(Height / 32) * 16 + 16
-            Y = Y + z
-        End If
+        z = -(Height / 32) * 16 + 16
+        Y = Y + z
+    End If
     
     
-        If ((d3dTextures.texwidth - 1)) And ((d3dTextures.texheight - 1)) Then
+      If ((d3dTextures.texwidth - 1)) And ((d3dTextures.texheight - 1)) Then
     
 
             verts(2).X = X
@@ -3752,7 +3753,7 @@ Private Sub SPOTLIGHTS_DRAW(ByVal SPOT As Integer)
 
     
    
-        Else
+   Else
             verts(0).X = X
             verts(0).Y = Y + Height
             verts(0).tu = 0
@@ -3787,98 +3788,98 @@ Private Sub SPOTLIGHTS_DRAW(ByVal SPOT As Integer)
             verts(3).Color = .Color
 
     
-        End If
+    End If
         
 
 
 
-        ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR
-        ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_SRCCOLOR + D3DBLEND_INVSRCCOLOR
+ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR
+ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_SRCCOLOR + D3DBLEND_INVSRCCOLOR
 
 
-        Select Case .INTENSITY
-            Case 1
-                ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
-            Case 3
-                ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
-                ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
-            Case 5
-                ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
-                ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
-                ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
-        End Select
+   Select Case .INTENSITY
+        Case 1
+            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
+        Case 3
+            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
+            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
+        Case 5
+            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
+            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
+            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
+    End Select
    
-        ddevice.SetRenderState D3DRS_SRCBLEND, 5
-        ddevice.SetRenderState D3DRS_DESTBLEND, 6
+ddevice.SetRenderState D3DRS_SRCBLEND, 5
+ddevice.SetRenderState D3DRS_DESTBLEND, 6
 
-        If .COLOR_EXTRA <> 0 Then
+If .COLOR_EXTRA <> 0 Then
 
-            verts(0).Color = .COLOR_EXTRA  '
-            verts(1).Color = .COLOR_EXTRA  '
-            verts(2).Color = .COLOR_EXTRA  '
-            verts(3).Color = .COLOR_EXTRA  '
+    verts(0).Color = .COLOR_EXTRA  '
+    verts(1).Color = .COLOR_EXTRA  '
+    verts(2).Color = .COLOR_EXTRA  '
+    verts(3).Color = .COLOR_EXTRA  '
     
-            If .EXTRA_GRAFICO > 0 Then
-                Set d3dTextures.Texture = DXPool.GetTexture(.EXTRA_GRAFICO)
-                ddevice.SetTexture 0, d3dTextures.Texture
-            End If
+    If .EXTRA_GRAFICO > 0 Then
+        Set d3dTextures.Texture = DXPool.GetTexture(.EXTRA_GRAFICO)
+        ddevice.SetTexture 0, d3dTextures.Texture
+    End If
         
             
 
 
 
-            ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-            ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-            ddevice.SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
-            Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, 2)
-            Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, 1)
+ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+    ddevice.SetTextureStageState 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE
+        Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, 2)
+        Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, 1)
 
 
-            ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
+    ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, verts(0), 28
 
-            ddevice.SetRenderState D3DRS_SRCBLEND, 5
-            ddevice.SetRenderState D3DRS_DESTBLEND, 6
+ddevice.SetRenderState D3DRS_SRCBLEND, 5
+ddevice.SetRenderState D3DRS_DESTBLEND, 6
 
 
-            Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTOP_SELECTARG1)
-            Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTOP_DISABLE)
+        Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTOP_SELECTARG1)
+        Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTOP_DISABLE)
 
-        End If
+End If
 
-        If Not .BIND_TO = 0 Then .Mustbe_Render = False
-    End With
+If Not .BIND_TO = 0 Then .Mustbe_Render = False
+End With
 End Sub
 Public Sub SPOTLIGHTS_RENDER()
-    Dim i As Long
+Dim i As Long
 
-    For i = 1 To Num_SPOTLIGHTS
-        If SPOT_LIGHTS(i).Mustbe_Render Then
-            SPOTLIGHTS_DRAW i
-        End If
-    Next i
+For i = 1 To Num_SPOTLIGHTS
+    If SPOT_LIGHTS(i).Mustbe_Render Then
+        SPOTLIGHTS_DRAW i
+    End If
+Next i
 End Sub
 Public Sub nwAnimInit(ByRef Animacion As tNewAnimation, ByVal Numero As Integer)
-    Dim t As Long
-    If Numero <= Num_NwAnim Then
-        With NewAnimationData(Numero)
-            Animacion.Columnas = .Columnas
-            Animacion.Filas = .Filas
-            Animacion.Grafico = .Grafico
-            Animacion.Width = .Width
-            Animacion.Height = .Height
-            Animacion.NumFrames = .NumFrames
-            Animacion.Velocidad = .Velocidad
-            Animacion.TileHeight = .TileHeight
-            Animacion.TileWidth = .TileWidth
-            Animacion.Romboidal = .Romboidal
-            Animacion.Direction = 1
-            ReDim Animacion.Indice(1 To .NumFrames) As tNewIndice
-            For t = 1 To .NumFrames
-                Animacion.Indice(t).X = .Indice(t).X
-                Animacion.Indice(t).Y = .Indice(t).Y
-                Animacion.Indice(t).Grafico = .Indice(t).Grafico
-            Next t
-        End With
-    End If
+Dim t As Long
+If Numero <= Num_NwAnim Then
+With NewAnimationData(Numero)
+    Animacion.Columnas = .Columnas
+    Animacion.Filas = .Filas
+    Animacion.Grafico = .Grafico
+    Animacion.Width = .Width
+    Animacion.Height = .Height
+    Animacion.NumFrames = .NumFrames
+    Animacion.Velocidad = .Velocidad
+    Animacion.TileHeight = .TileHeight
+    Animacion.TileWidth = .TileWidth
+    Animacion.Romboidal = .Romboidal
+    Animacion.Direction = 1
+    ReDim Animacion.Indice(1 To .NumFrames) As tNewIndice
+    For t = 1 To .NumFrames
+        Animacion.Indice(t).X = .Indice(t).X
+        Animacion.Indice(t).Y = .Indice(t).Y
+        Animacion.Indice(t).Grafico = .Indice(t).Grafico
+    Next t
+End With
+End If
 End Sub
 
