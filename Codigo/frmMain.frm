@@ -5,16 +5,16 @@ Begin VB.Form frmMain
    BackColor       =   &H00000000&
    BorderStyle     =   1  'Fixed Single
    Caption         =   "WorldEditor"
-   ClientHeight    =   10740
+   ClientHeight    =   13260
    ClientLeft      =   390
    ClientTop       =   840
-   ClientWidth     =   15435
+   ClientWidth     =   21000
    Icon            =   "frmMain.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
-   ScaleHeight     =   716
+   ScaleHeight     =   884
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   1029
+   ScaleWidth      =   1400
    StartUpPosition =   1  'CenterOwner
    Visible         =   0   'False
    WindowState     =   2  'Maximized
@@ -2841,14 +2841,14 @@ Begin VB.Form frmMain
    Begin VB.PictureBox MainViewPic 
       AutoRedraw      =   -1  'True
       BorderStyle     =   0  'None
-      Height          =   9000
+      Height          =   11520
       Left            =   4560
-      ScaleHeight     =   600
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   800
+      ScaleHeight     =   910.222
+      ScaleMode       =   0  'User
+      ScaleWidth      =   1040.254
       TabIndex        =   75
       Top             =   1440
-      Width           =   12000
+      Width           =   15360
    End
    Begin WorldEditor.lvButtons_H SelectPanel 
       Height          =   1035
@@ -5281,7 +5281,7 @@ Private Sub mnuAbrirMapa_Click()
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 20/05/06
-Dim B As Byte
+Dim b As Byte
 '*************************************************
 On Error GoTo ErrHandler
 
@@ -5328,7 +5328,7 @@ If Len(Dialog.FileName) < 3 Then Exit Sub
 Exit Sub
 ErrHandler:
 
-MsgBox "ERROR EN ABRIR" & "_" & B & "_" & Err.Description
+MsgBox "ERROR EN ABRIR" & "_" & b & "_" & Err.Description
 End Sub
 
 Private Sub mnuacercade_Click()
@@ -6177,7 +6177,7 @@ If Len(Dialog.FileName) < 3 Then Exit Sub
 Exit Sub
 ErrHandler:
 
-MsgBox "ERROR EN ABRIR" & "_" & B & "_" & Err.Description
+MsgBox "ERROR EN ABRIR" & "_" & b & "_" & Err.Description
 
 
 End Sub

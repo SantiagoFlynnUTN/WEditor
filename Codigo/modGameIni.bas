@@ -32,10 +32,10 @@ Public TempFromReal(0 To 10000) As Integer
 Public TempFromReale(0 To 10000) As Integer
 
 Public Type tAura
-    GrhIndex As Integer
-    R As Byte
-    G As Byte
-    B As Byte
+    grhindex As Integer
+    r As Byte
+    g As Byte
+    b As Byte
     A As Byte
     OffsetX As Integer
     OffsetY As Integer
@@ -45,10 +45,11 @@ Public Type tAura
 End Type
 
 Public Type tAuraGrh
-    fC As Single
+    fc As Single
     Count As Single
 End Type
 Public AuraDATA() As tAura
+
 Private Type tGrafHandler
     lStart As Long
     lSize As Long
@@ -105,15 +106,15 @@ Public Function LeerGameIni() As tGameIni
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-Dim n As Integer
+Dim N As Integer
 Dim GameIni As tGameIni
-n = FreeFile
-Open DirIndex & "Inicio.con" For Binary As #n
-Get #n, , MiCabecera
+N = FreeFile
+Open DirIndex & "Inicio.con" For Binary As #N
+Get #N, , MiCabecera
 
-Get #n, , GameIni
+Get #N, , GameIni
 
-Close #n
+Close #N
 LeerGameIni = GameIni
 End Function
 
@@ -122,13 +123,13 @@ Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-Dim n As Integer
-n = FreeFile
-Open DirIndex & "Inicio.con" For Binary As #n
-Put #n, , MiCabecera
+Dim N As Integer
+N = FreeFile
+Open DirIndex & "Inicio.con" For Binary As #N
+Put #N, , MiCabecera
 GameIniConfiguration.Password = "DAMMLAMERS!"
-Put #n, , GameIniConfiguration
-Close #n
+Put #N, , GameIniConfiguration
+Close #N
 End Sub
 Public Sub Load_DecorData()
 Dim dFile As String
@@ -184,7 +185,7 @@ If NumDecorKeys > 0 Then
     Next k
 End If
 End Sub
-Public Sub Save_DecoKeys(ByVal n As Integer)
+Public Sub Save_DecoKeys(ByVal N As Integer)
 Dim dFile As String
 Dim j As Long
 dFile = App.PATH & "\Resources\Dats\DecorKeys.dat"
@@ -193,16 +194,16 @@ WriteVar dFile, "INIT", "ultima_Comun", CStr(UltimaDecorKey_Comun)
 WriteVar dFile, "INIT", "NumDecorKeys", CStr(NumDecorKeys)
 
 
-If n > 0 Then
-    If n <= NumDecorKeys Then
+If N > 0 Then
+    If N <= NumDecorKeys Then
         
-        With DecorKeys(n)
-            WriteVar dFile, "dKEY" & n, "Tipo_Objeto", CStr(.Tipo_Objeto)
-            WriteVar dFile, "dKEY" & n, "Tipo_Clave", CStr(.Tipo_Clave)
-            WriteVar dFile, "dKEY" & n, "Contenedor", CStr(.Contenedor)
-            WriteVar dFile, "dKEY" & n, "Clave", CStr(.Clave)
-            WriteVar dFile, "dKEY" & n, "X", CStr(.X)
-            WriteVar dFile, "dKEY" & n, "X", CStr(.Y)
+        With DecorKeys(N)
+            WriteVar dFile, "dKEY" & N, "Tipo_Objeto", CStr(.Tipo_Objeto)
+            WriteVar dFile, "dKEY" & N, "Tipo_Clave", CStr(.Tipo_Clave)
+            WriteVar dFile, "dKEY" & N, "Contenedor", CStr(.Contenedor)
+            WriteVar dFile, "dKEY" & N, "Clave", CStr(.Clave)
+            WriteVar dFile, "dKEY" & N, "X", CStr(.X)
+            WriteVar dFile, "dKEY" & N, "X", CStr(.Y)
 
         End With
     End If
@@ -228,12 +229,12 @@ End If
 
 End Sub
 
-Public Sub nLoad_NewBodys(ByVal k As Integer, ByVal S As Long)
+Public Sub nLoad_NewBodys(ByVal k As Integer, ByVal s As Long)
 
 Dim i As Long
 Dim z As Long
 Dim X As Integer
-Get k, S + 2, NumNewBodys
+Get k, s + 2, NumNewBodys
 
 If NumNewBodys > 0 Then
 ReDim BodyData(1 To NumNewBodys)
@@ -318,12 +319,12 @@ Public Sub LoadIndexData()
    Close k
 
 End Sub
-Public Sub nLoad_NewEstatics(ByVal k As Integer, ByVal S As Long)
+Public Sub nLoad_NewEstatics(ByVal k As Integer, ByVal s As Long)
 
 Dim i As Long
 Dim z As Long
 
-Get k, S + 2, numNewEstatic
+Get k, s + 2, numNewEstatic
 
 If numNewEstatic > 0 Then
 ReDim EstaticData(1 To numNewEstatic)
@@ -341,12 +342,12 @@ Next i
 End If
 
 End Sub
-Public Sub nLoad_NewIndex(ByVal k As Integer, ByVal S As Long)
+Public Sub nLoad_NewIndex(ByVal k As Integer, ByVal s As Long)
 
 Dim i As Long
 Dim z As Long
 
-Get k, S + 2, numNewIndex
+Get k, s + 2, numNewIndex
 If numNewIndex > 0 Then
 ReDim NewIndexData(1 To numNewIndex)
 For i = 1 To numNewIndex
@@ -361,12 +362,12 @@ Next i
 End If
 
 End Sub
-Public Sub nLoad_NewHeads(ByVal k As Integer, ByVal S As Long)
+Public Sub nLoad_NewHeads(ByVal k As Integer, ByVal s As Long)
 
 Dim i As Long
 Dim z As Long
 Dim X As Integer
-Get k, S + 2, Num_Heads
+Get k, s + 2, Num_Heads
 
 If Num_Heads > 0 Then
 ReDim HeadData(1 To Num_Heads)
@@ -386,14 +387,14 @@ End If
 
 
 End Sub
-Public Sub nLoad_NewAnimation(ByVal k As Integer, ByVal S As Long)
+Public Sub nLoad_NewAnimation(ByVal k As Integer, ByVal s As Long)
 
 Dim i As Long
-Dim p As Long
+Dim P As Long
 
 Dim GrafCounter As Integer
 
-Get k, S + 2, Num_NwAnim
+Get k, s + 2, Num_NwAnim
 
 
 If Num_NwAnim < 1 Then Exit Sub
@@ -419,29 +420,29 @@ With NewAnimationData(i)
             Get k, , .TipoAnimacion
             ReDim .Indice(1 To .NumFrames)
             If .TipoAnimacion = 0 Then
-                For p = 1 To .NumFrames
-                    Get k, , .Indice(p).Grafico
-                    Get k, , .Indice(p).X
-                    Get k, , .Indice(p).Y
-                Next p
+                For P = 1 To .NumFrames
+                    Get k, , .Indice(P).Grafico
+                    Get k, , .Indice(P).X
+                    Get k, , .Indice(P).Y
+                Next P
             ElseIf .TipoAnimacion = 1 Then
                 .NumFrames = .NumFrames + 2
                 ReDim .Indice(1 To .NumFrames)
-                For p = 1 To .NumFrames
-                    If p <> 4 And p <> 8 Then
-                        Get k, , .Indice(p).Grafico
-                        Get k, , .Indice(p).X
-                        Get k, , .Indice(p).Y
-                    ElseIf p = 4 Then
-                        .Indice(p).Grafico = .Indice(2).Grafico
-                        .Indice(p).X = .Indice(2).X
-                        .Indice(p).Y = .Indice(2).Y
-                    ElseIf p = 8 Then
-                        .Indice(p).Grafico = .Indice(6).Grafico
-                        .Indice(p).X = .Indice(6).X
-                        .Indice(p).Y = .Indice(6).Y
+                For P = 1 To .NumFrames
+                    If P <> 4 And P <> 8 Then
+                        Get k, , .Indice(P).Grafico
+                        Get k, , .Indice(P).X
+                        Get k, , .Indice(P).Y
+                    ElseIf P = 4 Then
+                        .Indice(P).Grafico = .Indice(2).Grafico
+                        .Indice(P).X = .Indice(2).X
+                        .Indice(P).Y = .Indice(2).Y
+                    ElseIf P = 8 Then
+                        .Indice(P).Grafico = .Indice(6).Grafico
+                        .Indice(P).X = .Indice(6).X
+                        .Indice(P).Y = .Indice(6).Y
                     End If
-                Next p
+                Next P
             End If
             
 End With
@@ -542,90 +543,140 @@ Public Sub Load_Png_Array()
 End Sub
 
 Public Sub CargarEfectos()
-Dim FF As Integer
+      Dim FF As Integer
 
-FF = FreeFile
-Open App.PATH & "\RESOURCES\INIT\Efectos.bin" For Binary Access Read Lock Read As #FF
-    CargarAurasBin FF
-    CargarParticulasBin FF
-    'CargarBuffdataBin FF
-    'SPOTLIGHTS_LOADDATA FF
-Close #FF
+   On Error GoTo CargarEfectos_Error
 
+2     FF = FreeFile
+4     Open App.PATH & "\RESOURCES\INIT\Efectos.bin" For Binary Access Read Lock Read As #FF
+6         CargarAurasBin FF
+8         CargarParticulasBin FF
+10        'CargarBuffdataBin FF
+12        'SPOTLIGHTS_LOADDATA FF
+14    Close #FF
+
+
+    Exit Sub
+
+CargarEfectos_Error:
+
+    MsgBox "Error " & Err.Number & " (" & Err.Description & ") in procedure CargarEfectos in line:" & Erl
 
 End Sub
 Sub CargarAurasBin(ByVal FF As Integer)
-Dim n As Integer
+      Dim N As Integer
+      Dim i As Long
+   On Error GoTo CargarAurasBin_Error
 
-    Get FF, , n
-    ReDim AuraDATA(0 To n) As tAura
-    Get FF, , AuraDATA
+10        Get FF, , N
+20        ReDim AuraDATA(0 To N) As tAura
+30        For i = 1 To N
+40            Get FF, , AuraDATA(i).Tipo
+50            Get FF, , AuraDATA(i).grhindex
+60            Get FF, , AuraDATA(i).Giratoria
+70            Get FF, , AuraDATA(i).Velocidad
+80            Get FF, , AuraDATA(i).OffsetX
+90            Get FF, , AuraDATA(i).OffsetY
+100           Get FF, , AuraDATA(i).A
+110           Get FF, , AuraDATA(i).r
+120           Get FF, , AuraDATA(i).g
+130           Get FF, , AuraDATA(i).b
+          
+140       Next i
+
+
+
+   On Error GoTo 0
+   Exit Sub
+
+CargarAurasBin_Error:
+
+    MsgBox "Error " & Err.Number & " (" & Err.Description & "in " & Erl & ") in procedure CargarAurasBin"
+
 End Sub
 Sub CargarParticulasBin(ByVal FF As Integer)
-Dim StreamFile As String
-Dim LoopC As Long
-Dim i As Long
-Dim GrhListing As String
-Dim TempSet As String
-Dim ColorSet As Long
+      Dim StreamFile As String
+      Dim LoopC As Long
+      Dim i As Long
+      Dim GrhListing As String
+      Dim TempSet As String
+      Dim ColorSet As Long
 
-Get FF, , TotalStreams
+   On Error GoTo CargarParticulasBin_Error
 
-'resize StreamData array
-ReDim StreamData(1 To TotalStreams) As Stream
- 
-    'fill StreamData array with info from Particles.ini
-    For LoopC = 1 To TotalStreams
-        Get FF, , StreamData(LoopC).NumOfParticles
-        StreamData(LoopC).NumTrueParticles = StreamData(LoopC).NumOfParticles
-        
-                
-        Get FF, , StreamData(LoopC).x1
-        Get FF, , StreamData(LoopC).y1 '= GetVar(StreamFile, Val(loopc), "Y1")
-        Get FF, , StreamData(LoopC).x2 '= GetVar(StreamFile, Val(loopc), "X2")
-        Get FF, , StreamData(LoopC).y2 '= GetVar(StreamFile, Val(loopc), "Y2")
-        Get FF, , StreamData(LoopC).Angle '= GetVar(StreamFile, Val(loopc), "Angle")
-        Get FF, , StreamData(LoopC).vecx1 '= GetVar(StreamFile, Val(loopc), "VecX1")
-        Get FF, , StreamData(LoopC).vecx2 '= GetVar(StreamFile, Val(loopc), "VecX2")
-        Get FF, , StreamData(LoopC).vecy1 '= GetVar(StreamFile, Val(loopc), "VecY1")
-        Get FF, , StreamData(LoopC).vecy2 '= GetVar(StreamFile, Val(loopc), "VecY2")
-        Get FF, , StreamData(LoopC).life1 '= GetVar(StreamFile, Val(loopc), "Life1")
-        Get FF, , StreamData(LoopC).life2 '= GetVar(StreamFile, Val(loopc), "Life2")
-        Get FF, , StreamData(LoopC).friction '= GetVar(StreamFile, Val(loopc), "Friction")
-        Get FF, , StreamData(LoopC).Spin '= GetVar(StreamFile, Val(loopc), "Spin")
-        Get FF, , StreamData(LoopC).spin_speedL '= GetVar(StreamFile, Val(loopc), "Spin_SpeedL")
-        Get FF, , StreamData(LoopC).spin_speedH '= GetVar(StreamFile, Val(loopc), "Spin_SpeedH")
-        Get FF, , StreamData(LoopC).AlphaBlend '= GetVar(StreamFile, Val(loopc), "AlphaBlend")
-        Get FF, , StreamData(LoopC).gravity '= GetVar(StreamFile, Val(loopc), "Gravity")
-        Get FF, , StreamData(LoopC).grav_strength '= GetVar(StreamFile, Val(loopc), "Grav_Strength")
-        Get FF, , StreamData(LoopC).bounce_strength '= GetVar(StreamFile, Val(loopc), "Bounce_Strength")
-        Get FF, , StreamData(LoopC).XMove '= GetVar(StreamFile, Val(loopc), "XMove")
-        Get FF, , StreamData(LoopC).YMove '= GetVar(StreamFile, Val(loopc), "YMove")
-        Get FF, , StreamData(LoopC).move_x1 '= GetVar(StreamFile, Val(loopc), "move_x1")
-        Get FF, , StreamData(LoopC).move_x2 '= GetVar(StreamFile, Val(loopc), "move_x2")
-        Get FF, , StreamData(LoopC).move_y1 '= GetVar(StreamFile, Val(loopc), "move_y1")
-        Get FF, , StreamData(LoopC).move_y2 '= GetVar(StreamFile, Val(loopc), "move_y2")
-        Get FF, , StreamData(LoopC).life_counter '= GetVar(StreamFile, Val(loopc), "life_counter")
-        Get FF, , StreamData(LoopC).Speed '= Val(GetVar(StreamFile, Val(loopc), "Speed"))
-        Get FF, , StreamData(LoopC).grh_resize '= Val(GetVar(StreamFile, Val(loopc), "resize"))
-        Get FF, , StreamData(LoopC).grh_resizex '= Val(GetVar(StreamFile, Val(loopc), "rx"))
-        Get FF, , StreamData(LoopC).grh_resizey '= Val(GetVar(StreamFile, Val(loopc), "ry"))
-        Get FF, , StreamData(LoopC).NumGrhs '= GetVar(StreamFile, Val(loopc), "NumGrhs")
+2     Get FF, , TotalStreams
+
+      'resize StreamData array
+4     ReDim StreamData(1 To TotalStreams) As Stream
        
-       ReDim StreamData(LoopC).grh_list(1 To StreamData(LoopC).NumGrhs)
+          'fill StreamData array with info from Particles.ini
+6         For LoopC = 1 To TotalStreams
+8             Get FF, , StreamData(LoopC).NumOfParticles
+10            StreamData(LoopC).NumTrueParticles = StreamData(LoopC).NumOfParticles
+              
+12            'If StreamData(LoopC).NumOfParticles > 20 And GConfig.Engine.Nivel_Particulas > 1 Then
+14                StreamData(LoopC).NumOfParticles = StreamData(LoopC).NumOfParticles ' / GConfig.Engine.Nivel_Particulas
+16                'If StreamData(LoopC).NumOfParticles < 10 Then StreamData(LoopC).NumOfParticles = 10
+18            'End If
+              
+20            'If GConfig.Engine.MAX_PARTICULAS > 0 Then
+22                'If StreamData(LoopC).NumOfParticles > GConfig.Engine.MAX_PARTICULAS Then
+24                    'StreamData(LoopC).NumOfParticles = GConfig.Engine.MAX_PARTICULAS
+26              '  End If
+28            'End If
+              
+30            Get FF, , StreamData(LoopC).x1
+32            Get FF, , StreamData(LoopC).y1 '= GetVar(StreamFile, Val(loopc), "Y1")
+34            Get FF, , StreamData(LoopC).x2 '= GetVar(StreamFile, Val(loopc), "X2")
+36            Get FF, , StreamData(LoopC).y2 '= GetVar(StreamFile, Val(loopc), "Y2")
+38            Get FF, , StreamData(LoopC).Angle '= GetVar(StreamFile, Val(loopc), "Angle")
+40            Get FF, , StreamData(LoopC).vecx1 '= GetVar(StreamFile, Val(loopc), "VecX1")
+42            Get FF, , StreamData(LoopC).vecx2 '= GetVar(StreamFile, Val(loopc), "VecX2")
+44            Get FF, , StreamData(LoopC).vecy1 '= GetVar(StreamFile, Val(loopc), "VecY1")
+46            Get FF, , StreamData(LoopC).vecy2 '= GetVar(StreamFile, Val(loopc), "VecY2")
+48            Get FF, , StreamData(LoopC).life1 '= GetVar(StreamFile, Val(loopc), "Life1")
+50            Get FF, , StreamData(LoopC).life2 '= GetVar(StreamFile, Val(loopc), "Life2")
+52            Get FF, , StreamData(LoopC).friction '= GetVar(StreamFile, Val(loopc), "Friction")
+54            Get FF, , StreamData(LoopC).Spin '= GetVar(StreamFile, Val(loopc), "Spin")
+56            Get FF, , StreamData(LoopC).spin_speedL '= GetVar(StreamFile, Val(loopc), "Spin_SpeedL")
+58            Get FF, , StreamData(LoopC).spin_speedH '= GetVar(StreamFile, Val(loopc), "Spin_SpeedH")
+60            Get FF, , StreamData(LoopC).AlphaBlend '= GetVar(StreamFile, Val(loopc), "AlphaBlend")
+62            Get FF, , StreamData(LoopC).gravity '= GetVar(StreamFile, Val(loopc), "Gravity")
+64            Get FF, , StreamData(LoopC).grav_strength '= GetVar(StreamFile, Val(loopc), "Grav_Strength")
+66            Get FF, , StreamData(LoopC).bounce_strength '= GetVar(StreamFile, Val(loopc), "Bounce_Strength")
+68            Get FF, , StreamData(LoopC).XMove '= GetVar(StreamFile, Val(loopc), "XMove")
+70            Get FF, , StreamData(LoopC).YMove '= GetVar(StreamFile, Val(loopc), "YMove")
+72            Get FF, , StreamData(LoopC).move_x1 '= GetVar(StreamFile, Val(loopc), "move_x1")
+74            Get FF, , StreamData(LoopC).move_x2 '= GetVar(StreamFile, Val(loopc), "move_x2")
+76            Get FF, , StreamData(LoopC).move_y1 '= GetVar(StreamFile, Val(loopc), "move_y1")
+78            Get FF, , StreamData(LoopC).move_y2 '= GetVar(StreamFile, Val(loopc), "move_y2")
+80            Get FF, , StreamData(LoopC).life_counter '= GetVar(StreamFile, Val(loopc), "life_counter")
+82            Get FF, , StreamData(LoopC).Speed '= Val(GetVar(StreamFile, Val(loopc), "Speed"))
+84            Get FF, , StreamData(LoopC).grh_resize '= Val(GetVar(StreamFile, Val(loopc), "resize"))
+86            Get FF, , StreamData(LoopC).grh_resizex '= Val(GetVar(StreamFile, Val(loopc), "rx"))
+88            Get FF, , StreamData(LoopC).grh_resizey '= Val(GetVar(StreamFile, Val(loopc), "ry"))
+90            Get FF, , StreamData(LoopC).NumGrhs '= GetVar(StreamFile, Val(loopc), "NumGrhs")
+94           ReDim StreamData(LoopC).grh_list(1 To StreamData(LoopC).NumGrhs)
+             
        
-      
-       For i = 1 To StreamData(LoopC).NumGrhs
-           Get FF, , StreamData(LoopC).grh_list(i)
-       Next i
+96           For i = 1 To StreamData(LoopC).NumGrhs
+98               Get FF, , StreamData(LoopC).grh_list(i)
+100          Next i
+
+             
+102           For ColorSet = 1 To 4
+104               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).r
+106               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).g
+108               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).b
+110           Next ColorSet
+112       Next LoopC
+
+    Exit Sub
+
+CargarParticulasBin_Error:
+
+    MsgBox "Error " & Err.Number & " (" & Err.Description & ") in procedure CargarParticulasBin in line:" & Erl & " en particula: " & LoopC
        
-        For ColorSet = 1 To 4
-            Get FF, , StreamData(LoopC).colortint(ColorSet - 1).R
-            Get FF, , StreamData(LoopC).colortint(ColorSet - 1).G
-            Get FF, , StreamData(LoopC).colortint(ColorSet - 1).B
-        Next ColorSet
-    Next LoopC
- 
 End Sub
 Public Sub CargarTipoTerrenos()
 With frmMain.lListado(8)
@@ -636,37 +687,37 @@ End With
 End Sub
 Public Sub LoadTempIndex()
 Dim j As Long
-Dim p As String
-p = App.PATH & "\Resources\InitTemp\TempIndex.Dat"
+Dim P As String
+P = App.PATH & "\Resources\InitTemp\TempIndex.Dat"
 
-ntIndex = Val(GetVar(p, "INIT", "NUM"))
+ntIndex = Val(GetVar(P, "INIT", "NUM"))
 If ntIndex > 0 Then
 ReDim TempIndex(1 To ntIndex)
 For j = 1 To ntIndex
     With TempIndex(j)
-            .OverWriteGrafico = Val(GetVar(p, j, "OverWriteGrafico"))
-            .temp = Val(GetVar(p, j, "Temp"))
-            .Estatic = Val(GetVar(p, j, "Estatica"))
-            .Dinamica = Val(GetVar(p, j, "Dinamica"))
-            .Replace = Val(GetVar(p, j, "Reemplazo"))
+            .OverWriteGrafico = Val(GetVar(P, j, "OverWriteGrafico"))
+            .temp = Val(GetVar(P, j, "Temp"))
+            .Estatic = Val(GetVar(P, j, "Estatica"))
+            .Dinamica = Val(GetVar(P, j, "Dinamica"))
+            .Replace = Val(GetVar(P, j, "Reemplazo"))
     End With
 Next j
 End If
-p = App.PATH & "\Resources\InitTemp\TempEstatics.Dat"
+P = App.PATH & "\Resources\InitTemp\TempEstatics.Dat"
 
-ntEstatic = Val(GetVar(p, "INIT", "NUM"))
+ntEstatic = Val(GetVar(P, "INIT", "NUM"))
 If ntEstatic > 0 Then
 ReDim TempEstatic(1 To ntEstatic)
 
 For j = 1 To ntEstatic
     With TempEstatic(j)
-        .L = Val(GetVar(p, j, "Left"))
-        .t = Val(GetVar(p, j, "Top"))
-        .W = Val(GetVar(p, j, "Width"))
-        .H = Val(GetVar(p, j, "Height"))
+        .L = Val(GetVar(P, j, "Left"))
+        .t = Val(GetVar(P, j, "Top"))
+        .W = Val(GetVar(P, j, "Width"))
+        .H = Val(GetVar(P, j, "Height"))
         .tw = .W / 32
         .th = .H / 32
-        .Replace = Val(GetVar(p, j, "Reemplazo"))
+        .Replace = Val(GetVar(P, j, "Reemplazo"))
     End With
 Next j
 End If

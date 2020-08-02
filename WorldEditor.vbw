@@ -1,11 +1,11 @@
-frmMain = 397, 57, 1308, 652, C, 99, -6, 1558, 908, C
+frmMain = 397, 57, 1308, 652, C, 99, -6, 1558, 953, C
 modGeneral = 44, 44, 1501, 889, 
 modDeclaraciones = 0, 0, 1535, 813, 
 modTileEngine = 66, 66, 1414, 909, 
 frmGrafico = 0, 0, 0, 0, C, 66, 66, 896, 438, C
 frmCargando = 308, 308, 1558, 964, , 88, 88, 918, 460, C
 frmMusica = 0, 0, 0, 0, C, 110, 110, 940, 482, C
-modGameIni = 44, 44, 887, 388, 
+modGameIni = 44, 44, 1216, 839, 
 frmConfigSup = 88, 88, 679, 516, , 132, 132, 962, 504, C
 frmUnionAdyacente = 176, 176, 767, 604, C, 154, 154, 984, 526, C
 modPaneles = 44, 44, 892, 388, 
