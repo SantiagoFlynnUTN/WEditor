@@ -1,1 +1,5 @@
 Línea 56: la clase MSComctlLib.ProgressBar del control ProgressBar1 no era una clase de control cargada.
+Línea 62: el nombre de la propiedad _ExtentX de ProgressBar1 no es válido.
+Línea 63: el nombre de la propiedad _ExtentY de ProgressBar1 no es válido.
+Línea 64: el nombre de la propiedad _Version de ProgressBar1 no es válido.
+Línea 66: el nombre de la propiedad Max de ProgressBar1 no es válido.

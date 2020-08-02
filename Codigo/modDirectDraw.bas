@@ -500,6 +500,8 @@ Public Sub AccionSeleccion()
         Next
     Next
     Seleccionando = False
+    UsingUndoSelection = False
+    
 End Sub
 
 Public Sub BlockearSeleccion()
@@ -1133,18 +1135,18 @@ VertexArray(0).Y = 0
 VertexArray(0).tu = 0
 VertexArray(0).tv = 0 '
 
-VertexArray(1).X = 800
+VertexArray(1).X = ClienteWidth * 32
 VertexArray(1).Y = 0
 VertexArray(1).tu = 1
 VertexArray(1).tv = 0
 
 VertexArray(2).X = 0
-VertexArray(2).Y = 600
+VertexArray(2).Y = ClienteHeight * 32
 VertexArray(2).tu = 0
 VertexArray(2).tv = 1
 
-VertexArray(3).X = 800
-VertexArray(3).Y = 600
+VertexArray(3).X = ClienteWidth * 32
+VertexArray(3).Y = ClienteHeight * 32
 VertexArray(3).tu = 1
 VertexArray(3).tv = 1
 '

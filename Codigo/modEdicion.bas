@@ -72,6 +72,10 @@ Dim j As Integer
 
 ' Guardo los valores
 
+If UsingUndoSelection Then 'para que no guarde cada operación sobre grilla, sino todo junto
+Exit Sub
+End If
+
 If UltimoDeshacer = 0 Then
     DeshacerStack = maxDeshacer 'si es la primera vez inicio el stack (para q no reutilice deshacer al modear con un congruente repetido)
 End If
@@ -773,8 +777,8 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 'Last modified: 20/05/06
 '*************************************************
 
-        Dim H As Long
-        Dim o As Long
+    Dim H As Long
+    Dim o As Long
     Dim LoopC As Integer
     Dim NPCIndex As Integer
     Dim objindex As Integer
@@ -782,6 +786,7 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
     Dim Body As Integer
     Dim Heading As Byte
     Dim ZxZ As Integer
+
     If tY < 1 Or tY > 100 Then Exit Sub
     If tX < 1 Or tX > 100 Then Exit Sub
     
@@ -887,10 +892,13 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
         End If
         
         ' Capas
-        frmMain.StatTxt.Text = frmMain.StatTxt.Text & ENDL & "Capa1: " & MapData(tX, tY).Graphic(1).index & " - Capa2: " & MapData(tX, tY).Graphic(2).index & " - Capa3: " & MapData(tX, tY).Graphic(3).index & " - Capa4: " & MapData(tX, tY).Graphic(4).index
+        frmMain.StatTxt.Text = frmMain.StatTxt.Text & ENDL & "Capa1: " & MapData(tX, tY).Graphic(1).index & " - Capa2: " & MapData(tX, tY).Graphic(2).index & " - Capa3: " & MapData(tX, tY).Graphic(3).index & " - Capa4: " & MapData(tX, tY).Graphic(4).index & " - Capa5: " & MapData(tX, tY).Graphic(5).index
         Debug.Print "Capa1: " & MapData(tX, tY).Graphic(1).index & " - Capa2: " & MapData(tX, tY).Graphic(2).index & " - Capa3: " & MapData(tX, tY).Graphic(3).index & " - Capa4: " & MapData(tX, tY).Graphic(4).index
         If frmMain.mnuAutoCapturarSuperficie.Checked = True And frmMain.cSeleccionarSuperficie.value = False Then
-            If MapData(tX, tY).Graphic(4).index <> 0 Then
+            If MapData(tX, tY).Graphic(5).index <> 0 Then
+                frmMain.cCapas.Text = 5
+                frmMain.cGrh.Text = MapData(tX, tY).Graphic(5).index
+            ElseIf MapData(tX, tY).Graphic(4).index <> 0 Then
                 frmMain.cCapas.Text = 4
                 frmMain.cGrh.Text = MapData(tX, tY).Graphic(4).index
             ElseIf MapData(tX, tY).Graphic(3).index <> 0 Then
@@ -1018,23 +1026,23 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
         End If
         '************** Place blocked tile
         If Seleccionando And (tX <= SeleccionFX And tX >= SeleccionIX) And (tX <= SeleccionFX And tX >= SeleccionIX) And (frmMain.cInsertarBloqueo.value Or frmMain.cQuitarBloqueo.value) Then
+        modEdicion.Deshacer_Add "Insertar grilla de Bloqueos" ' Hago deshacer
         For o = SeleccionIX To SeleccionFX
         For H = SeleccionIY To SeleccionFY
         If frmMain.cInsertarBloqueo.value = True Then
             If MapData(o, H).Blocked <> 1 Then
-                'modEdicion.Deshacer_Add "Insertar Bloqueo" ' Hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(o, H).Blocked = 1
             End If
         ElseIf frmMain.cQuitarBloqueo.value = True Then
             If MapData(o, H).Blocked <> 0 Then
-                'modEdicion.Deshacer_Add "Quitar Bloqueo" ' Hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(o, H).Blocked = 0
             End If
         End If
         Next H
         Next o
+        Seleccionando = False
         
         Else
          If frmMain.cInsertarBloqueo.value = True Then
@@ -1071,7 +1079,7 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                 Exit Sub
             End If
                 If frmMain.cUnionManual.value = True Then
-                    modEdicion.Deshacer_Add "Insertar Translado de Union Manual' Hago deshacer"
+                    modEdicion.Deshacer_Add "Insertar Translado de Union Manual" ' Hago deshacer
                     MapInfo.Changed = 1 'Set changed flag
                     MapData(tX, tY).TileExit.Map = Val(frmMain.tTMapa.Text)
                     If tX >= 90 Then ' 21 ' derecha
@@ -1124,7 +1132,7 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                     End If
                 Else
                     If NPCIndex <> (MapData(tX, tY).NPCIndex) Then
-                        modEdicion.Deshacer_Add "Insertar NPC Hostil' Hago deshacer"
+                        modEdicion.Deshacer_Add "Insertar NPC Hostil" ' Hago deshacer
                         MapInfo.Changed = 1 'Set changed flag
                         Body = NpcData(NPCIndex).Body
                         Head = NpcData(NPCIndex).Head
@@ -1155,7 +1163,7 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         ObjetoSeleccionado.X = 0
                         ObjetoSeleccionado.Y = 0
                         TipoSeleccionado = 0
-                                    frmMain.mele_decor.Enabled = False
+                        frmMain.mele_decor.Enabled = False
                     End If
                 End If
                 Call EraseChar(MapData(tX, tY).CHarIndex)
@@ -1227,6 +1235,7 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
         
     If Seleccionando And (tX >= SeleccionIX And tX <= SeleccionFX) And (tY >= SeleccionIY And tY <= SeleccionFY) Then
     If frmMain.cRango = 0 And frmMain.cBorde = 0 Then
+    modEdicion.Deshacer_Add "Luz" ' hago deshacer
      For o = SeleccionIX To SeleccionFX
         For H = SeleccionIY To SeleccionFY
         If frmMain.cInsertarLuz.value Then
@@ -1243,39 +1252,47 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
         '*****************LUCES******************************
         If frmMain.cInsertarLuz.value Then
             If Val(frmMain.cRango = 0) Then Exit Sub
+            modEdicion.Deshacer_Add "Agregar Luz" ' hago deshacer
             'LightSet tX, tY, frmMain.LuzRedonda.value, frmMain.cRango, Val(frmMain.R), Val(frmMain.G), Val(frmMain.B)
             AplicarLuz tX, tY, LuzSelecta, frmMain.cRango, frmMain.cBorde
         ElseIf frmMain.cQuitarLuz.value Then
+            modEdicion.Deshacer_Add "Quitar Luz" ' hago deshacer
             AplicarLuz tX, tY, 0, frmMain.cRango, 0
         ElseIf frmMain.cInsertarBorde.value Then
             'Aplicamos BORDE!
+            modEdicion.Deshacer_Add "Luz borde" ' hago deshacer
             AplicarBorde tX, tY
         End If
     End If
         '********************PARTICULAS*****************
         If frmMain.cInsertarParticula Then
             If Val(frmMain.txtParticula) = 0 Then Exit Sub
+            modEdicion.Deshacer_Add "Insertar Particula" ' hago deshacer
             MapData(tX, tY).particle_group = General_Particle_Create(Val(frmMain.txtParticula), tX, tY, -1)
             MapData(tX, tY).parti_index = Val(frmMain.txtParticula)
         ElseIf frmMain.cQuitarParticula Then
             If MapData(tX, tY).particle_group Then
+                modEdicion.Deshacer_Add "Quitar particula" ' hago deshacer
                 Call modDXEngine.Particle_Group_Remove(MapData(tX, tY).particle_group)
                 MapData(tX, tY).particle_group = 0
                 MapData(tX, tY).parti_index = 0
             End If
-        ElseIf frmMain.CmdInteriorI Then
             
+        ElseIf frmMain.CmdInteriorI Then
+            modEdicion.Deshacer_Add "Agregar interior" ' hago deshacer
             MapData(tX, tY).InteriorVal = Val(frmMain.txtInterior)
             
         ElseIf frmMain.CmdInteriorQ Then
-        
+            modEdicion.Deshacer_Add "Quitar interior" ' hago deshacer
             MapData(tX, tY).InteriorVal = 0
         End If
 
     If frmMain.frmSPOTLIGHTS.Visible Then
         If frmMain.PONERSPOT Then
+            modEdicion.Deshacer_Add "Poner SPOT" ' hago deshacer
             modDXEngine.SPOTLIGHTS_CREAR frmMain.SPOT_ANIM.ListIndex, frmMain.COLORSPOT.ListIndex + 1, frmMain.COLOREXTRA.ListIndex, Val(frmMain.SPOT_INTENSIDAD), 1, Val(frmMain.GRAFICO_SPOT.Text), tX, tY, 0, Val(frmMain.COLOR_CUSTOM_SPOT.Text), Val(frmMain.COLOR_CUSTOM_EXTRA), Val(frmMain.GRAFICO_SPOT_COLOR.Text)
         ElseIf frmMain.QUITARSPOT Then
+            modEdicion.Deshacer_Add "QUITAR SPOT" ' hago deshacer
             modDXEngine.SPOTLIGHTS_BORRAR MapData(tX, tY).SPOTLIGHT.index
 
         End If
@@ -1283,18 +1300,17 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
     
     If Seleccionando And (tX <= SeleccionFX And tX >= SeleccionIX) And _
     (tY <= SeleccionFY And tY >= SeleccionIY) And (frmMain.cInsertarTrigger.value Or frmMain.cQuitarTrigger.value) Then
+    modEdicion.Deshacer_Add "Insertar cluster de Triggers"
     For H = SeleccionIX To SeleccionFX
         For o = SeleccionIY To SeleccionFY
         ' ***************** Control de Funcion de Triggers *****************
         If frmMain.cInsertarTrigger.value = True Then ' Insertar Trigger
             If MapData(H, o).Trigger <> frmMain.lListado(4).ListIndex Then
-                'modEdicion.Deshacer_Add "Insertar Trigger" ' Hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(H, o).Trigger = DameTrigger
             End If
         ElseIf frmMain.cQuitarTrigger.value = True Then ' Quitar Trigger
             If MapData(H, o).Trigger <> 0 Then
-                'modEdicion.Deshacer_Add "Quitar Trigger" ' Hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(H, o).Trigger = 0
             End If
@@ -1307,11 +1323,13 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
             ' ***************** Control de Funcion de Triggers *****************
         If frmMain.cInsertarTrigger.value = True Then ' Insertar Tipo Terreno
             If MapData(tX, tY).TipoTerreno <> frmMain.lListado(8).ListIndex Then
+                modEdicion.Deshacer_Add "Tipo Terreno" ' hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(tX, tY).TipoTerreno = DameTipoTerreno(MapData(tX, tY).TipoTerreno)
             End If
         ElseIf frmMain.cQuitarTrigger.value = True Then ' Quitar Trigger
             If MapData(tX, tY).TipoTerreno <> 0 Then
+                modEdicion.Deshacer_Add "Tipo Terreno" ' hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(tX, tY).TipoTerreno = DameTipoTerreno(MapData(tX, tY).TipoTerreno)
             End If
@@ -1321,13 +1339,13 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
         Else
         If frmMain.cInsertarTrigger.value = True Then ' Insertar Trigger
             If MapData(tX, tY).Trigger <> frmMain.lListado(4).ListIndex Then
-                'modEdicion.Deshacer_Add "Insertar Trigger" ' Hago deshacer
+                modEdicion.Deshacer_Add "Insertar Trigger" ' Hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(tX, tY).Trigger = DameTrigger
             End If
         ElseIf frmMain.cQuitarTrigger.value = True Then ' Quitar Trigger
             If MapData(tX, tY).Trigger <> 0 Then
-                'modEdicion.Deshacer_Add "Quitar Trigger" ' Hago deshacer
+                modEdicion.Deshacer_Add "Quitar Trigger" ' Hago deshacer
                 MapInfo.Changed = 1 'Set changed flag
                 MapData(tX, tY).Trigger = 0
             End If
@@ -1360,9 +1378,6 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 
                             SobreIndex = DameIndexEnTex(SelTexWe, tX, tY, PutX, PutY)
 
-                        
-
-                            
                         End If
                     
                     End If

@@ -180,6 +180,7 @@ Public SeleccionAncho As Integer
 Public SeleccionAlto As Integer
 Public Seleccionando As Boolean
 Public SeleccionMap() As MapBlock
+Public UsingUndoSelection As Boolean
 
 Public DeSeleccionOX As Integer
 Public DeSeleccionOY As Integer

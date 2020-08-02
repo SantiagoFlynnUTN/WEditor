@@ -1,5 +1,4 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.1#0"; "MSCOMCTL.OCX"
 Begin VB.Form Render 
    Caption         =   "Render"
    ClientHeight    =   2235
@@ -53,17 +52,14 @@ Begin VB.Form Render
       Visible         =   0   'False
       Width           =   1695
    End
-   Begin MSComctlLib.ProgressBar ProgressBar1 
+   Begin VB.PictureBox ProgressBar1 
       Height          =   615
       Left            =   1200
+      ScaleHeight     =   555
+      ScaleWidth      =   6315
       TabIndex        =   2
       Top             =   840
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   1085
-      _Version        =   393216
-      Appearance      =   1
-      Max             =   13
    End
    Begin VB.PictureBox Picture2 
       Appearance      =   0  'Flat
@@ -186,7 +182,7 @@ Dim nombre As String
     Next i
 
         Me.Caption = "Produciendo... " & z & "/13"
-        Me.ProgressBar1.value = Me.ProgressBar1.value + 1
+        'Me.ProgressBar1.value = Me.ProgressBar1.value + 1
         Me.Refresh
         LastY = LastY + Picture2.ScaleHeight
         LastX = 0

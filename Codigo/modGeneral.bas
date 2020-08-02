@@ -361,10 +361,11 @@ Private Sub CargarMapIni()
       ' Tamaño de visualizacion en el cliente
 170   ClienteHeight = Val(Leer.GetValue("MOSTRAR", "ClienteHeight"))
 172   ClienteWidth = Val(Leer.GetValue("MOSTRAR", "ClienteWidth"))
-174   If ClienteHeight <= 0 Then ClienteHeight = 24
-176   If ClienteWidth <= 0 Then ClienteWidth = 32
+174   If ClienteHeight <= 0 Then ClienteHeight = (Screen.Height \ Screen.TwipsPerPixelY - frmMain.MainViewPic.top) / 32 - 3
+176   If ClienteWidth <= 0 Then ClienteWidth = (Screen.Width \ Screen.TwipsPerPixelX - frmMain.MainViewPic.left) / 32
 
 178   Exit Sub
+
 Fallo:
 180       MsgBox "ERROR " & Err.Number & " en WorldEditor.ini" & vbCrLf & Err.Description, vbCritical
 182       Resume Next
