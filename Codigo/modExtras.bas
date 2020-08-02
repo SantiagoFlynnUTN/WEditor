@@ -1420,7 +1420,6 @@ End If
 End Function
 Public Function DameIndexEnTexUL(ByVal Tex As Integer) As Integer
 
-
 Dim P As Long
 Dim lp As Integer
 

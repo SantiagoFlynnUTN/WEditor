@@ -94,7 +94,7 @@ Public SPOT_LIGHTS() As tSPOT_LIGHTS
 Public Num_SPOTLIGHTS As Integer
 'SISTEMA DE INTERIORES.
 
-Public S As Direct3DSurface8
+Public s As Direct3DSurface8
 Public ambient_light() As Long
 Public base_light As Long
 Public day_r_old As Byte
@@ -119,7 +119,7 @@ Public Type Particle 'LEAN_PART
     vector_y As Single
     AngleC As Single
     index As Integer
-    fC As Single
+    fc As Single
     alive_counter As Long
     x1 As Integer
     x2 As Integer
@@ -297,7 +297,7 @@ End Enum
 'Variables
 '***************************
 'Major DX Objects
-Public dx As DirectX8
+Public dX As DirectX8
 Public d3d As Direct3D8
 Public ddevice As Direct3DDevice8
 Public d3dx As D3DX8
@@ -863,13 +863,13 @@ Public Sub Particle_Render(ByRef temp_particle As Particle, ByVal screen_x As In
     'Draw it
     If grh_resize = True Then
         If temp_particle.index Then
-              Draw_NewIndex2 temp_particle.index, temp_particle.fC, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
+              Draw_NewIndex2 temp_particle.index, temp_particle.fc, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
               
         End If
     Else
     'Draw it
     If temp_particle.index Then
-        Draw_NewIndex2 temp_particle.index, temp_particle.fC, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
+        Draw_NewIndex2 temp_particle.index, temp_particle.fc, temp_particle.X + screen_x, temp_particle.Y + screen_Y, 1, 0, rgb_list(), alpha_blend, True, temp_particle.AngleC
                                     
     End If
     End If
@@ -900,7 +900,7 @@ End If
 
 
 End Function
- Private Sub Draw_NewIndex2(ByVal nIndex As Integer, ByRef fC As Single, ByVal X As Integer, ByVal Y As Integer, ByVal center As Byte, ByVal Animate As Byte, ByRef Color() As Long, Optional ByVal alpha_blend As Byte, Optional ByVal NeglectNegro As Boolean, Optional ByVal Angle As Single)
+ Private Sub Draw_NewIndex2(ByVal nIndex As Integer, ByRef fc As Single, ByVal X As Integer, ByVal Y As Integer, ByVal center As Byte, ByVal Animate As Byte, ByRef Color() As Long, Optional ByVal alpha_blend As Byte, Optional ByVal NeglectNegro As Boolean, Optional ByVal Angle As Single)
 
     Dim ci As Integer
     Dim jL As Integer
@@ -914,18 +914,18 @@ End Function
     If NewIndexData(nIndex).Dinamica > 0 Then
         With NewAnimationData(NewIndexData(nIndex).Dinamica)
             If Animate Then
-            fC = fC + ((MEE * 0.002) * .NumFrames * .Velocidad)
-            ci = fC
+            fc = fc + ((MEE * 0.002) * .NumFrames * .Velocidad)
+            ci = fc
             If ci > .NumFrames Then
                 ci = ci Mod .NumFrames
             ElseIf ci <= 0 Then
                 ci = 1
             End If
             Else
-                If fC < 0 Then
-                    fC = 1
-                ElseIf fC > .NumFrames Then
-                    fC = .NumFrames
+                If fc < 0 Then
+                    fc = 1
+                ElseIf fc > .NumFrames Then
+                    fc = .NumFrames
                 End If
             End If
             jT = .Indice(ci).Y
@@ -1577,9 +1577,9 @@ Public Function DXEngine_Initialize(ByVal f_hwnd As Long, ByVal s_hwnd As Long, 
     '*******************************
     'Initialize root DirectX8 objects
     '*******************************
-    Set dx = New DirectX8
+    Set dX = New DirectX8
     'Create the Direct3D object
-    Set d3d = dx.Direct3DCreate
+    Set d3d = dX.Direct3DCreate
     'Create helper class
     Set d3dx = New D3DX8
     
@@ -1595,12 +1595,15 @@ Public Function DXEngine_Initialize(ByVal f_hwnd As Long, ByVal s_hwnd As Long, 
     Call d3d.GetAdapterDisplayMode(D3DADAPTER_DEFAULT, d3ddm)
     
     'Now we'll go ahead and fill the D3DPRESENT_PARAMETERS type.
+    frmMain.MainViewPic.Width = ClienteWidth * 32
+    frmMain.MainViewPic.Height = ClienteHeight * 32
+    
     With d3dpp
         .windowed = 1
         .SwapEffect = D3DSWAPEFFECT_COPY
         .BackBufferFormat = d3ddm.Format 'current display depth
-        .BackBufferHeight = 600
-        .BackBufferWidth = 800
+        .BackBufferHeight = (ClienteHeight * 32)
+        .BackBufferWidth = (ClienteWidth * 32)
         .EnableAutoDepthStencil = 1
         .AutoDepthStencilFormat = D3DFMT_D16
         .hDeviceWindow = frmMain.hWnd
@@ -1639,7 +1642,6 @@ Public Function DXEngine_Initialize(ByVal f_hwnd As Long, ByVal s_hwnd As Long, 
 ErrHandler:
     DXEngine_Initialize = False
 End Function
-
 Public Function DXEngine_BeginRender() As Boolean
 On Error GoTo ErrorHandler:
     DXEngine_BeginRender = True
@@ -2519,7 +2521,7 @@ On Error Resume Next
     Set d3dx = Nothing
     Set ddevice = Nothing
     Set d3d = Nothing
-    Set dx = Nothing
+    Set dX = Nothing
     Set DXPool = Nothing
 End Sub
 
@@ -2704,7 +2706,7 @@ Public Function D3DColorValueGet(ByVal A As Byte, ByVal R As Byte, ByVal G As By
 End Function
 
 
-Public Sub DibujareEnHwnd(ByVal PIC As Long, ByVal GrhIndex As Integer, ByRef src_rect As RECT, ByVal X As Integer, ByVal Y As Integer, ByVal PRESENTO As Boolean)
+Public Sub DibujareEnHwnd(ByVal PIC As Long, ByVal grhindex As Integer, ByRef src_rect As RECT, ByVal X As Integer, ByVal Y As Integer, ByVal PRESENTO As Boolean)
 
 Dim DestRect As RECT
 Dim tX As Byte
@@ -2722,7 +2724,7 @@ Dim tY As Byte
    
    ddevice.Clear 1, DestRect, D3DCLEAR_TARGET, &H0, ByVal 0, 0
    ddevice.BeginScene
-   Draw_RAWGrhindex GrhIndex, src_rect, X, Y
+   Draw_RAWGrhindex grhindex, src_rect, X, Y
 
    ddevice.EndScene
    
@@ -3399,7 +3401,7 @@ If top <= 0 Or left <= 0 Or Colorx = 0 Or LenB(Text) = 0 Then Exit Sub
 End Sub
 
 Public Sub SPOTLIGHTS_LOADDAT()
-Dim S As String
+Dim s As String
 Dim i As Long
 
 Dim A As Byte
@@ -3408,21 +3410,21 @@ Dim G As Byte
 Dim B As Byte
 
 
-S = App.PATH & "\RESOURCES\INIT\SPOTLIGHTS.DAT"
+s = App.PATH & "\RESOURCES\INIT\SPOTLIGHTS.DAT"
 
-NUM_SPOTLIGHTS_COLORES = Val(GetVar(S, "COLORES", "NUM_COLORES"))
+NUM_SPOTLIGHTS_COLORES = Val(GetVar(s, "COLORES", "NUM_COLORES"))
 
 frmMain.COLOREXTRA.AddItem "NINGUNO"
 If NUM_SPOTLIGHTS_COLORES > 0 Then
 ReDim SPOTLIGHTS_COLORES(1 To NUM_SPOTLIGHTS_COLORES)
     For i = 1 To NUM_SPOTLIGHTS_COLORES
-        A = Val(GetVar(S, "COLOR" & i, "A"))
-        R = Val(GetVar(S, "COLOR" & i, "R"))
-        G = Val(GetVar(S, "COLOR" & i, "G"))
-        B = Val(GetVar(S, "COLOR" & i, "B"))
+        A = Val(GetVar(s, "COLOR" & i, "A"))
+        R = Val(GetVar(s, "COLOR" & i, "R"))
+        G = Val(GetVar(s, "COLOR" & i, "G"))
+        B = Val(GetVar(s, "COLOR" & i, "B"))
         SPOTLIGHTS_COLORES(i) = D3DColorARGB(A, R, G, B)
-        frmMain.COLORSPOT.AddItem GetVar(S, "COLOR" & i, "Nombre")
-        frmMain.COLOREXTRA.AddItem GetVar(S, "COLOR" & i, "Nombre")
+        frmMain.COLORSPOT.AddItem GetVar(s, "COLOR" & i, "Nombre")
+        frmMain.COLOREXTRA.AddItem GetVar(s, "COLOR" & i, "Nombre")
         
     Next i
 End If
@@ -3435,28 +3437,28 @@ frmMain.COLORSPOT.ListIndex = 0
 
 frmMain.SPOT_ANIM.AddItem "INANIMADA"
 
-NUM_SPOTLIGHTS_ANIMATION = Val(GetVar(S, "ANIMACIONES", "NUM_ANIM"))
+NUM_SPOTLIGHTS_ANIMATION = Val(GetVar(s, "ANIMACIONES", "NUM_ANIM"))
 If NUM_SPOTLIGHTS_ANIMATION > 0 Then
 ReDim SPOTLIGHTS_ANIMATION(1 To NUM_SPOTLIGHTS_ANIMATION)
 For i = 1 To NUM_SPOTLIGHTS_ANIMATION
 
-    SPOTLIGHTS_ANIMATION(i) = Val(GetVar(S, "ANIM" & i, "Indice"))
-    frmMain.SPOT_ANIM.AddItem GetVar(S, "ANIM" & i, "Nombre")
+    SPOTLIGHTS_ANIMATION(i) = Val(GetVar(s, "ANIM" & i, "Indice"))
+    frmMain.SPOT_ANIM.AddItem GetVar(s, "ANIM" & i, "Nombre")
 Next i
 End If
 frmMain.SPOT_ANIM.ListIndex = 0
 
 End Sub
 Public Sub Load_NewAnimation()
-Dim S As String
+Dim s As String
 Dim i As Long
-Dim p As Long
+Dim P As Long
 Dim k As Long
 Dim GrafCounter As Integer
-S = App.PATH & "\RESOURCES\INIT\NewAnim.dat"
+s = App.PATH & "\RESOURCES\INIT\NewAnim.dat"
 
 
-Num_NwAnim = Val(GetVar(S, "NW_ANIM", "NUM"))
+Num_NwAnim = Val(GetVar(s, "NW_ANIM", "NUM"))
 
 If Num_NwAnim < 1 Then Exit Sub
 
@@ -3465,30 +3467,30 @@ ReDim NewAnimationData(1 To Num_NwAnim)
 For i = 1 To Num_NwAnim
 
 With NewAnimationData(i)
-    .Grafico = Val(GetVar(S, "ANIMACION" & i, "Grafico"))
-    .Columnas = Val(GetVar(S, "ANIMACION" & i, "Columnas"))
-    .Filas = Val(GetVar(S, "ANIMACION" & i, "Filas"))
-    .Height = Val(GetVar(S, "ANIMACION" & i, "Alto"))
-    .Width = Val(GetVar(S, "ANIMACION" & i, "Ancho"))
-    .NumFrames = Val(GetVar(S, "ANIMACION" & i, "NumeroFrames"))
-    .Velocidad = Val(GetVar(S, "ANIMACION" & i, "Velocidad"))
+    .Grafico = Val(GetVar(s, "ANIMACION" & i, "Grafico"))
+    .Columnas = Val(GetVar(s, "ANIMACION" & i, "Columnas"))
+    .Filas = Val(GetVar(s, "ANIMACION" & i, "Filas"))
+    .Height = Val(GetVar(s, "ANIMACION" & i, "Alto"))
+    .Width = Val(GetVar(s, "ANIMACION" & i, "Ancho"))
+    .NumFrames = Val(GetVar(s, "ANIMACION" & i, "NumeroFrames"))
+    .Velocidad = Val(GetVar(s, "ANIMACION" & i, "Velocidad"))
     .TileWidth = .Width / 32
     .TileHeight = .Height / 32
-    .Romboidal = Val(GetVar(S, "ANIMACION" & i, "AnimacionRomboidal"))
+    .Romboidal = Val(GetVar(s, "ANIMACION" & i, "AnimacionRomboidal"))
     ReDim .Indice(1 To .NumFrames) As tNewIndice
     GrafCounter = .Grafico
-    k = Val(GetVar(S, "ANIMACION" & i, "INICIAL"))
+    k = Val(GetVar(s, "ANIMACION" & i, "INICIAL"))
     If k = 0 Then k = 1
-    For p = 1 To .NumFrames
-        .Indice(p).X = (((k - 1) Mod .Columnas) * .Width)
-        .Indice(p).Y = ((Int((k - 1) / .Columnas)) * .Height)
-        .Indice(p).Grafico = GrafCounter
-        If p = CInt(.Columnas) * CInt(.Filas) And p < .NumFrames Then
+    For P = 1 To .NumFrames
+        .Indice(P).X = (((k - 1) Mod .Columnas) * .Width)
+        .Indice(P).Y = ((Int((k - 1) / .Columnas)) * .Height)
+        .Indice(P).Grafico = GrafCounter
+        If P = CInt(.Columnas) * CInt(.Filas) And P < .NumFrames Then
             GrafCounter = GrafCounter + 1
             k = 0
         End If
         k = k + 1
-    Next p
+    Next P
 End With
 Next i
 

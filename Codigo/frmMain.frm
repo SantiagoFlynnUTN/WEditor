@@ -5281,7 +5281,7 @@ Private Sub mnuAbrirMapa_Click()
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 20/05/06
-Dim b As Byte
+Dim B As Byte
 '*************************************************
 On Error GoTo ErrHandler
 
@@ -5328,7 +5328,7 @@ If Len(Dialog.FileName) < 3 Then Exit Sub
 Exit Sub
 ErrHandler:
 
-MsgBox "ERROR EN ABRIR" & "_" & b & "_" & Err.Description
+MsgBox "ERROR EN ABRIR" & "_" & B & "_" & Err.Description
 End Sub
 
 Private Sub mnuacercade_Click()
@@ -6177,7 +6177,7 @@ If Len(Dialog.FileName) < 3 Then Exit Sub
 Exit Sub
 ErrHandler:
 
-MsgBox "ERROR EN ABRIR" & "_" & b & "_" & Err.Description
+MsgBox "ERROR EN ABRIR" & "_" & B & "_" & Err.Description
 
 
 End Sub
@@ -6255,6 +6255,7 @@ HotKeysAllow = True
 ConvertCPtoTP 0, 0, X, Y, tX, tY
 Mx = tX
 My = tY
+
 
 POSX.Caption = "X: " & tX & " - Y: " & tY
 If tX < 10 Or tY < 10 Or tX > 90 Or tY > 90 Then

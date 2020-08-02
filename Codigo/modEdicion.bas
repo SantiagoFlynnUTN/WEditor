@@ -773,7 +773,6 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
 'Last modified: 20/05/06
 '*************************************************
 
-
         Dim H As Long
         Dim o As Long
     Dim LoopC As Integer

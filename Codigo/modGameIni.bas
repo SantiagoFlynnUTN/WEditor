@@ -33,9 +33,9 @@ Public TempFromReale(0 To 10000) As Integer
 
 Public Type tAura
     grhindex As Integer
-    r As Byte
-    g As Byte
-    b As Byte
+    R As Byte
+    G As Byte
+    B As Byte
     A As Byte
     OffsetX As Integer
     OffsetY As Integer
@@ -106,15 +106,15 @@ Public Function LeerGameIni() As tGameIni
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-Dim N As Integer
+Dim n As Integer
 Dim GameIni As tGameIni
-N = FreeFile
-Open DirIndex & "Inicio.con" For Binary As #N
-Get #N, , MiCabecera
+n = FreeFile
+Open DirIndex & "Inicio.con" For Binary As #n
+Get #n, , MiCabecera
 
-Get #N, , GameIni
+Get #n, , GameIni
 
-Close #N
+Close #n
 LeerGameIni = GameIni
 End Function
 
@@ -123,13 +123,13 @@ Public Sub EscribirGameIni(ByRef GameIniConfiguration As tGameIni)
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-Dim N As Integer
-N = FreeFile
-Open DirIndex & "Inicio.con" For Binary As #N
-Put #N, , MiCabecera
+Dim n As Integer
+n = FreeFile
+Open DirIndex & "Inicio.con" For Binary As #n
+Put #n, , MiCabecera
 GameIniConfiguration.Password = "DAMMLAMERS!"
-Put #N, , GameIniConfiguration
-Close #N
+Put #n, , GameIniConfiguration
+Close #n
 End Sub
 Public Sub Load_DecorData()
 Dim dFile As String
@@ -185,7 +185,7 @@ If NumDecorKeys > 0 Then
     Next k
 End If
 End Sub
-Public Sub Save_DecoKeys(ByVal N As Integer)
+Public Sub Save_DecoKeys(ByVal n As Integer)
 Dim dFile As String
 Dim j As Long
 dFile = App.PATH & "\Resources\Dats\DecorKeys.dat"
@@ -194,16 +194,16 @@ WriteVar dFile, "INIT", "ultima_Comun", CStr(UltimaDecorKey_Comun)
 WriteVar dFile, "INIT", "NumDecorKeys", CStr(NumDecorKeys)
 
 
-If N > 0 Then
-    If N <= NumDecorKeys Then
+If n > 0 Then
+    If n <= NumDecorKeys Then
         
-        With DecorKeys(N)
-            WriteVar dFile, "dKEY" & N, "Tipo_Objeto", CStr(.Tipo_Objeto)
-            WriteVar dFile, "dKEY" & N, "Tipo_Clave", CStr(.Tipo_Clave)
-            WriteVar dFile, "dKEY" & N, "Contenedor", CStr(.Contenedor)
-            WriteVar dFile, "dKEY" & N, "Clave", CStr(.Clave)
-            WriteVar dFile, "dKEY" & N, "X", CStr(.X)
-            WriteVar dFile, "dKEY" & N, "X", CStr(.Y)
+        With DecorKeys(n)
+            WriteVar dFile, "dKEY" & n, "Tipo_Objeto", CStr(.Tipo_Objeto)
+            WriteVar dFile, "dKEY" & n, "Tipo_Clave", CStr(.Tipo_Clave)
+            WriteVar dFile, "dKEY" & n, "Contenedor", CStr(.Contenedor)
+            WriteVar dFile, "dKEY" & n, "Clave", CStr(.Clave)
+            WriteVar dFile, "dKEY" & n, "X", CStr(.X)
+            WriteVar dFile, "dKEY" & n, "X", CStr(.Y)
 
         End With
     End If
@@ -564,13 +564,13 @@ CargarEfectos_Error:
 
 End Sub
 Sub CargarAurasBin(ByVal FF As Integer)
-      Dim N As Integer
+      Dim n As Integer
       Dim i As Long
    On Error GoTo CargarAurasBin_Error
 
-10        Get FF, , N
-20        ReDim AuraDATA(0 To N) As tAura
-30        For i = 1 To N
+10        Get FF, , n
+20        ReDim AuraDATA(0 To n) As tAura
+30        For i = 1 To n
 40            Get FF, , AuraDATA(i).Tipo
 50            Get FF, , AuraDATA(i).grhindex
 60            Get FF, , AuraDATA(i).Giratoria
@@ -578,9 +578,9 @@ Sub CargarAurasBin(ByVal FF As Integer)
 80            Get FF, , AuraDATA(i).OffsetX
 90            Get FF, , AuraDATA(i).OffsetY
 100           Get FF, , AuraDATA(i).A
-110           Get FF, , AuraDATA(i).r
-120           Get FF, , AuraDATA(i).g
-130           Get FF, , AuraDATA(i).b
+110           Get FF, , AuraDATA(i).R
+120           Get FF, , AuraDATA(i).G
+130           Get FF, , AuraDATA(i).B
           
 140       Next i
 
@@ -665,9 +665,9 @@ Sub CargarParticulasBin(ByVal FF As Integer)
 
              
 102           For ColorSet = 1 To 4
-104               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).r
-106               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).g
-108               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).b
+104               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).R
+106               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).G
+108               Get FF, , StreamData(LoopC).colortint(ColorSet - 1).B
 110           Next ColorSet
 112       Next LoopC
 

@@ -352,10 +352,10 @@ Private Sub CargarMapIni()
 160   frmMain.cVerBloqueos.value = frmMain.mnuVerBloqueos.Checked
 
       ' Tamaño de visualizacion
-162   PantallaX = 32 'Val(Leer.GetValue("MOSTRAR", "PantallaX"))
-164   PantallaY = 24 'Val(Leer.GetValue("MOSTRAR", "PantallaY"))
-166   If PantallaX > 50 Or PantallaX <= 2 Then PantallaX = 23
-168   If PantallaY > 50 Or PantallaY <= 2 Then PantallaY = 32
+162   PantallaX = Val(Leer.GetValue("MOSTRAR", "PantallaX"))
+164   PantallaY = Val(Leer.GetValue("MOSTRAR", "PantallaY"))
+166   If PantallaX > 23 Or PantallaX <= 2 Then PantallaX = 23
+168   If PantallaY > 32 Or PantallaY <= 2 Then PantallaY = 32
 
       ' [GS] 02/10/06
       ' Tamaño de visualizacion en el cliente
@@ -387,7 +387,7 @@ Public Sub CambioDeVideo()
 '*************************************************
 Exit Sub
 Dim ModoDeVideo As typDevMODE
-Dim r As Long
+Dim R As Long
 Call EnumDisplaySettings(0, -1, ModoDeVideo)
     If ModoDeVideo.dmPelsWidth < 1024 Or ModoDeVideo.dmPelsHeight < 768 Then
         Select Case MsgBox("La aplicacion necesita una resolucion minima de 1024 X 768 ,¿Acepta el Cambio de resolucion?", vbInformation + vbOKCancel, "World Editor")
@@ -395,8 +395,8 @@ Call EnumDisplaySettings(0, -1, ModoDeVideo)
                 ModoDeVideo.dmPelsWidth = 1024
                 ModoDeVideo.dmPelsHeight = 768
                 ModoDeVideo.dmFields = DM_PELSWIDTH Or DM_PELSHEIGHT
-                r = ChangeDisplaySettings(ModoDeVideo, CDS_TEST)
-                If r <> 0 Then
+                R = ChangeDisplaySettings(ModoDeVideo, CDS_TEST)
+                If R <> 0 Then
                     MsgBox "Error al cambiar la resolucion, La aplicacion se cerrara."
                     End
                 End If
@@ -725,7 +725,7 @@ End If
 fin:
 End Sub
 
-Public Sub FixCoasts(ByVal grhindex As Integer, ByVal X As Integer, ByVal Y As Integer)
+Public Sub FixCoasts(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer)
 '*************************************************
 'Author: Unkwown
 'Last modified: 20/05/06

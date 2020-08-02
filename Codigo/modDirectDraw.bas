@@ -52,7 +52,7 @@ Public Type Particle
     vector_y As Single
     Angle As Byte
     index As Integer
-    fc As Single
+    fC As Single
     alive_counter As Long
     x1 As Integer
     x2 As Integer
@@ -160,6 +160,7 @@ Sub ConvertTPtoCP(StartPixelLeft As Integer, StartPixelTop As Integer, CX As Sin
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
+
 Dim HWindowX As Integer
 Dim HWindowY As Integer
 
@@ -771,24 +772,24 @@ If MapData(X, Y).Graphic(2).index Then
        
             'MapData(X, y).Graphic(2).fC = MapData(X, y).Graphic(2).fC + ((timer_elapsed_time * 0.1) * .NumFrames / .Velocidad)
             If Not MapData(X, Y).TipoTerreno And eTipoTerreno.Agua Then
-            MapData(X, Y).Graphic(2).fc = MapData(X, Y).Graphic(2).fc + (.NumFrames * (MEE * 0.0011) * Rnd)
+            MapData(X, Y).Graphic(2).fC = MapData(X, Y).Graphic(2).fC + (.NumFrames * (MEE * 0.0011) * Rnd)
             Else
-            MapData(X, Y).Graphic(2).fc = MapData(X, Y).Graphic(2).fc + (.NumFrames * (MEE * 0.0005) * Rnd)
+            MapData(X, Y).Graphic(2).fC = MapData(X, Y).Graphic(2).fC + (.NumFrames * (MEE * 0.0005) * Rnd)
             
             End If
-            If MapData(X, Y).Graphic(2).fc > .NumFrames Then
-                MapData(X, Y).Graphic(2).fc = (MapData(X, Y).Graphic(2).fc Mod .NumFrames) + 1
+            If MapData(X, Y).Graphic(2).fC > .NumFrames Then
+                MapData(X, Y).Graphic(2).fC = (MapData(X, Y).Graphic(2).fC Mod .NumFrames) + 1
             End If
 tiempo = 1
-            If MapData(X, Y).Graphic(2).fc < 1 Then MapData(X, Y).Graphic(2).fc = 1
+            If MapData(X, Y).Graphic(2).fC < 1 Then MapData(X, Y).Graphic(2).fC = 1
             
-            jx = .Indice(MapData(X, Y).Graphic(2).fc).X
-            jy = .Indice(MapData(X, Y).Graphic(2).fc).Y
+            jx = .Indice(MapData(X, Y).Graphic(2).fC).X
+            jy = .Indice(MapData(X, Y).Graphic(2).fC).Y
             jw = .Width
             jh = .Height
             jtw = .TileWidth
             jth = .TileHeight
-            jg = (.Indice(MapData(X, Y).Graphic(2).fc).Grafico - .Indice(2).Grafico) + NewIndexData(MapData(X, Y).Graphic(2).index).OverWriteGrafico
+            jg = (.Indice(MapData(X, Y).Graphic(2).fC).Grafico - .Indice(2).Grafico) + NewIndexData(MapData(X, Y).Graphic(2).index).OverWriteGrafico
         End With
     Else
         With EstaticData(NewIndexData(MapData(X, Y).Graphic(2).index).Estatic)
@@ -1457,6 +1458,7 @@ Function InitTileEngine(ByRef setDisplayFormhWnd As Long, setMainViewTop As Inte
     WindowTileHeight = setWindowTileHeight
     WindowTileWidth = setWindowTileWidth
     TileBufferSize = setTileBufferSize
+
     
     '[GS] 02/10/2006
     MinXBorder = XMinMapSize + (ClienteWidth \ 2)
@@ -1466,13 +1468,14 @@ Function InitTileEngine(ByRef setDisplayFormhWnd As Long, setMainViewTop As Inte
     
     MainViewWidth = (TilePixelWidth * WindowTileWidth)
     MainViewHeight = (TilePixelHeight * WindowTileHeight)
-    
+    'frmMain.MainViewPic.Width = MainViewWidth
+    'frmMain.MainViewPic.Height = MainViewHeight
     Set Back_Sur = ddevice.GetRenderTarget
     
-    Set Stencil = ddevice.CreateDepthStencilSurface(1024, 768, D3DFMT_D16, D3DMULTISAMPLE_NONE)
+    Set Stencil = ddevice.CreateDepthStencilSurface(MainViewWidth, MainViewHeight, D3DFMT_D16, D3DMULTISAMPLE_NONE)
 
     
-    Set Agua_Tex = d3dx.CreateTexture(ddevice, 1024, 768, 0, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT)
+    Set Agua_Tex = d3dx.CreateTexture(ddevice, MainViewWidth, MainViewHeight, 0, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT)
     'Set Agua_Tex = d3dx.CreateTextureFromFileEx(ddevice, vbNullString, 800, 600, 0, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, 0, 0, vbBlack, ByVal 0, ByVal 0)
     
     Set Agua_Sur = Agua_Tex.GetSurfaceLevel(0)
@@ -1488,7 +1491,7 @@ Function InitTileEngine(ByRef setDisplayFormhWnd As Long, setMainViewTop As Inte
     DoEvents
 End Function
 
-Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, ByVal Range As Integer, ByVal r As Byte, ByVal g As Byte, ByVal b As Byte)
+Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, ByVal Range As Integer, ByVal R As Byte, ByVal G As Byte, ByVal B As Byte)
     Dim min_x As Integer
     Dim min_y As Integer
     Dim max_x As Integer
@@ -1517,9 +1520,9 @@ Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, 
         Lights(i).Y = Y * 32
         Lights(i).Range = Range
         Lights(i).RGBCOLOR.A = 255
-        Lights(i).RGBCOLOR.r = r
-        Lights(i).RGBCOLOR.g = g
-        Lights(i).RGBCOLOR.b = b
+        Lights(i).RGBCOLOR.R = R
+        Lights(i).RGBCOLOR.G = G
+        Lights(i).RGBCOLOR.B = B
     Else
         'Set up light borders
         min_x = X - Range
@@ -1529,28 +1532,28 @@ Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, 
     
         If InMapBounds(min_x, min_y) Then
             MapData(min_x, min_y).base_light(2) = True
-            MapData(min_x, min_y).light_base_value(2) = D3DColorXRGB(r, g, b)
+            MapData(min_x, min_y).light_base_value(2) = D3DColorXRGB(R, G, B)
         End If
         If InMapBounds(min_x, max_y) Then
             MapData(min_x, max_y).base_light(3) = True
-            MapData(min_x, max_y).light_base_value(3) = D3DColorXRGB(r, g, b)
+            MapData(min_x, max_y).light_base_value(3) = D3DColorXRGB(R, G, B)
         End If
         If InMapBounds(max_x, min_y) Then
             MapData(max_x, min_y).base_light(0) = True
-            MapData(max_x, min_y).light_base_value(0) = D3DColorXRGB(r, g, b)
+            MapData(max_x, min_y).light_base_value(0) = D3DColorXRGB(R, G, B)
         End If
         If InMapBounds(max_x, max_y) Then
             MapData(max_x, max_y).base_light(1) = True
-            MapData(max_x, max_y).light_base_value(1) = D3DColorXRGB(r, g, b)
+            MapData(max_x, max_y).light_base_value(1) = D3DColorXRGB(R, G, B)
         End If
         
         'Upper Border
         For iX = min_x + 1 To max_x - 1
             If InMapBounds(iX, min_y) Then
                 MapData(iX, min_y).base_light(0) = True
-                MapData(iX, min_y).light_base_value(0) = D3DColorXRGB(r, g, b)
+                MapData(iX, min_y).light_base_value(0) = D3DColorXRGB(R, G, B)
                 MapData(iX, min_y).base_light(2) = True
-                MapData(iX, min_y).light_base_value(2) = D3DColorXRGB(r, g, b)
+                MapData(iX, min_y).light_base_value(2) = D3DColorXRGB(R, G, B)
             End If
         Next iX
         
@@ -1558,9 +1561,9 @@ Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, 
         For iX = min_x + 1 To max_x - 1
             If InMapBounds(iX, max_y) Then
                 MapData(iX, max_y).base_light(3) = True
-                MapData(iX, max_y).light_base_value(3) = D3DColorXRGB(r, g, b)
+                MapData(iX, max_y).light_base_value(3) = D3DColorXRGB(R, G, B)
                 MapData(iX, max_y).base_light(1) = True
-                MapData(iX, max_y).light_base_value(1) = D3DColorXRGB(r, g, b)
+                MapData(iX, max_y).light_base_value(1) = D3DColorXRGB(R, G, B)
             End If
         Next iX
         
@@ -1568,9 +1571,9 @@ Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, 
         For iY = min_y + 1 To max_y - 1
             If InMapBounds(max_x, iY) Then
                 MapData(max_x, iY).base_light(1) = True
-                MapData(max_x, iY).light_base_value(1) = D3DColorXRGB(r, g, b)
+                MapData(max_x, iY).light_base_value(1) = D3DColorXRGB(R, G, B)
                 MapData(max_x, iY).base_light(0) = True
-                MapData(max_x, iY).light_base_value(0) = D3DColorXRGB(r, g, b)
+                MapData(max_x, iY).light_base_value(0) = D3DColorXRGB(R, G, B)
             End If
         Next iY
         
@@ -1578,9 +1581,9 @@ Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, 
         For iY = min_y + 1 To max_y - 1
             If InMapBounds(min_x, iY) Then
                 MapData(min_x, iY).base_light(3) = True
-                MapData(min_x, iY).light_base_value(3) = D3DColorXRGB(r, g, b)
+                MapData(min_x, iY).light_base_value(3) = D3DColorXRGB(R, G, B)
                 MapData(min_x, iY).base_light(2) = True
-                MapData(min_x, iY).light_base_value(2) = D3DColorXRGB(r, g, b)
+                MapData(min_x, iY).light_base_value(2) = D3DColorXRGB(R, G, B)
             End If
         Next iY
         
@@ -1589,13 +1592,13 @@ Public Sub LightSet(ByVal X As Byte, ByVal Y As Byte, ByVal Rounded As Boolean, 
             For iX = min_x + 1 To max_x - 1
                 If InMapBounds(iX, iY) Then
                     MapData(iX, iY).base_light(3) = True
-                    MapData(iX, iY).light_base_value(3) = D3DColorXRGB(r, g, b)
+                    MapData(iX, iY).light_base_value(3) = D3DColorXRGB(R, G, B)
                     MapData(iX, iY).base_light(2) = True
-                    MapData(iX, iY).light_base_value(2) = D3DColorXRGB(r, g, b)
+                    MapData(iX, iY).light_base_value(2) = D3DColorXRGB(R, G, B)
                     MapData(iX, iY).base_light(1) = True
-                    MapData(iX, iY).light_base_value(1) = D3DColorXRGB(r, g, b)
+                    MapData(iX, iY).light_base_value(1) = D3DColorXRGB(R, G, B)
                     MapData(iX, iY).base_light(0) = True
-                    MapData(iX, iY).light_base_value(0) = D3DColorXRGB(r, g, b)
+                    MapData(iX, iY).light_base_value(0) = D3DColorXRGB(R, G, B)
                 End If
             Next iX
         Next iY
@@ -1624,7 +1627,7 @@ On Error GoTo errx
     
     
     Meteo.Get_AmbientLight AmbientColor
-    Color = D3DColorXRGB(AmbientColor.r, AmbientColor.g, AmbientColor.b)
+    Color = D3DColorXRGB(AmbientColor.R, AmbientColor.G, AmbientColor.B)
     
     
     Luz = HoraLuz
@@ -1781,7 +1784,7 @@ Private Function LightCalculate(ByVal cRadio As Integer, ByVal LightX As Integer
     
     If VertexDist <= pRadio Then
         Call D3DXColorLerp(CurrentColor, LightColor, AmbientColor, VertexDist / pRadio)
-        LightCalculate = D3DColorXRGB(CurrentColor.r, CurrentColor.g, CurrentColor.b)
+        LightCalculate = D3DColorXRGB(CurrentColor.R, CurrentColor.G, CurrentColor.B)
         If TileLight > LightCalculate Then LightCalculate = TileLight
     Else
         LightCalculate = TileLight
@@ -4844,7 +4847,7 @@ CreateTLVertex.Color = Color
 CreateTLVertex.tu = tu
 CreateTLVertex.tv = tv
 End Function
-Public Sub DibujarGEnPic(ByVal PIC As PictureBox, ByVal grhindex As Integer, ByVal X As Integer, ByVal Y As Integer, Optional ByVal size As Byte, Optional destX As Integer, Optional destY As Integer, Optional Texto As String, Optional TextPos As Byte, Optional TextoColor As Long = D3DWHITE, Optional TextoAlpha As Byte = 255)
+Public Sub DibujarGEnPic(ByVal PIC As PictureBox, ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer, Optional ByVal size As Byte, Optional destX As Integer, Optional destY As Integer, Optional Texto As String, Optional TextPos As Byte, Optional TextoColor As Long = D3DWHITE, Optional TextoAlpha As Byte = 255)
 
 Dim DestRect As RECT
 Dim tX As Byte
@@ -4861,7 +4864,7 @@ Dim tY As Byte
    'If destRect.right <= 0 Then destRect.right = Pic.Width
    ddevice.Clear 1, DestRect, D3DCLEAR_TARGET, &H0, ByVal 0, 0
    ddevice.BeginScene
-   Draw_RAWGraph grhindex, 0, 0
+   Draw_RAWGraph GrhIndex, 0, 0
    If LenB(Texto) > 0 Then
     Select Case TextPos
         Case 0 'UpperLeft
