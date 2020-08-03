@@ -104,20 +104,20 @@ Private m_lPtr As Long
 Private m_tBI As BITMAPINFO
 
 Public Function CopyToClipboard( _
-    Optional ByVal bAsDIB As Boolean = True _
+        Optional ByVal bAsDIB As Boolean = True _
     ) As Boolean
-    Dim lhDCDesktop As Long
-    Dim lhDC As Long
-    Dim lhBmpOld As Long
-    Dim hObj As Long
-    Dim lFmt As Long
+Dim lhDCDesktop As Long
+Dim lhDC As Long
+Dim lhBmpOld As Long
+Dim hObj As Long
+Dim lFmt As Long
 
     lhDCDesktop = GetDC(GetDesktopWindow())
     If (lhDCDesktop <> 0) Then
         lhDC = CreateCompatibleDC(lhDCDesktop)
         If (lhDC <> 0) Then
             If (bAsDIB) Then
-                MsgBox "I don't know how to put a DIB on the clipboard! Copy as bitmap instead!!!"
+               MsgBox "I don't know how to put a DIB on the clipboard! Copy as bitmap instead!!!"
                 ' Create a duplicate DIBSection and copy
                 ' to the clipboard:
                 'LSet tBI = m_tBI
@@ -164,10 +164,10 @@ Public Function CopyToClipboard( _
 End Function
 
 Public Function CreateDIB( _
-    ByVal lhDC As Long, _
-    ByVal lWidth As Long, _
-    ByVal lHeight As Long, _
-    ByRef hDib As Long _
+        ByVal lhDC As Long, _
+        ByVal lWidth As Long, _
+        ByVal lHeight As Long, _
+        ByRef hDib As Long _
     ) As Boolean
     With m_tBI.bmiHeader
         .biSize = Len(m_tBI.bmiHeader)
@@ -179,21 +179,21 @@ Public Function CreateDIB( _
         .biSizeImage = BytesPerScanLine * .biHeight
     End With
     hDib = CreateDIBSection( _
-        lhDC, _
-        m_tBI, _
-        DIB_RGB_COLORS, _
-        m_lPtr, _
-        0, 0)
+            lhDC, _
+            m_tBI, _
+            DIB_RGB_COLORS, _
+            m_lPtr, _
+            0, 0)
     CreateDIB = (hDib <> 0)
 End Function
 Public Function CreateFromPicture( _
-    ByRef picThis As StdPicture _
+        ByRef picThis As StdPicture _
     )
-    Dim lhDC As Long
-    Dim lhDCDesktop As Long
-    Dim lhBmpOld As Long
-    Dim tBMP As BITMAP
-    Dim lhWnd As Long
+Dim lhDC As Long
+Dim lhDCDesktop As Long
+Dim lhBmpOld As Long
+Dim tBMP As BITMAP
+Dim lhWnd As Long
     
     GetObjectAPI picThis.handle, Len(tBMP), tBMP
     If (Create(tBMP.bmWidth, tBMP.bmHeight)) Then
@@ -212,8 +212,8 @@ Public Function CreateFromPicture( _
     End If
 End Function
 Public Function Create( _
-    ByVal lWidth As Long, _
-    ByVal lHeight As Long _
+        ByVal lWidth As Long, _
+        ByVal lHeight As Long _
     ) As Boolean
     ClearUp
     m_hDC = CreateCompatibleDC(0)
@@ -240,12 +240,12 @@ Public Property Get Height() As Long
 End Property
 
 Public Sub LoadPictureBlt( _
-    ByVal lhDC As Long, _
-    Optional ByVal lSrcLeft As Long = 0, _
-    Optional ByVal lSrcTop As Long = 0, _
-    Optional ByVal lSrcWidth As Long = -1, _
-    Optional ByVal lSrcHeight As Long = -1, _
-    Optional ByVal eRop As RasterOpConstants = vbSrcCopy _
+        ByVal lhDC As Long, _
+        Optional ByVal lSrcLeft As Long = 0, _
+        Optional ByVal lSrcTop As Long = 0, _
+        Optional ByVal lSrcWidth As Long = -1, _
+        Optional ByVal lSrcHeight As Long = -1, _
+        Optional ByVal eRop As RasterOpConstants = vbSrcCopy _
     )
     If lSrcWidth < 0 Then lSrcWidth = m_tBI.bmiHeader.biWidth
     If lSrcHeight < 0 Then lSrcHeight = m_tBI.bmiHeader.biHeight
@@ -254,14 +254,14 @@ End Sub
 
 
 Public Sub PaintPicture( _
-    ByVal lhDC As Long, _
-    Optional ByVal lDestLeft As Long = 0, _
-    Optional ByVal lDestTop As Long = 0, _
-    Optional ByVal lDestWidth As Long = -1, _
-    Optional ByVal lDestHeight As Long = -1, _
-    Optional ByVal lSrcLeft As Long = 0, _
-    Optional ByVal lSrcTop As Long = 0, _
-    Optional ByVal eRop As RasterOpConstants = vbSrcCopy _
+        ByVal lhDC As Long, _
+        Optional ByVal lDestLeft As Long = 0, _
+        Optional ByVal lDestTop As Long = 0, _
+        Optional ByVal lDestWidth As Long = -1, _
+        Optional ByVal lDestHeight As Long = -1, _
+        Optional ByVal lSrcLeft As Long = 0, _
+        Optional ByVal lSrcTop As Long = 0, _
+        Optional ByVal eRop As RasterOpConstants = vbSrcCopy _
     )
     If (lDestWidth < 0) Then lDestWidth = m_tBI.bmiHeader.biWidth
     If (lDestHeight < 0) Then lDestHeight = m_tBI.bmiHeader.biHeight
@@ -278,13 +278,13 @@ Public Property Get DIBSectionBitsPtr() As Long
     DIBSectionBitsPtr = m_lPtr
 End Property
 Public Sub RandomiseBits( _
-    Optional ByVal bGray As Boolean = False _
+        Optional ByVal bGray As Boolean = False _
     )
-    Dim bDib() As Byte
-    Dim X As Long, Y As Long
-    Dim lC As Long
-    Dim tSA As SAFEARRAY2D
-    Dim xEnd As Long
+Dim bDib() As Byte
+Dim X As Long, Y As Long
+Dim lC As Long
+Dim tSA As SAFEARRAY2D
+Dim xEnd As Long
     
     ' Get the bits in the from DIB section:
     With tSA
@@ -340,10 +340,10 @@ Public Sub ClearUp()
 End Sub
 
 Public Function Resample( _
-    ByVal lNewHeight As Long, _
-    ByVal lNewWidth As Long _
+        ByVal lNewHeight As Long, _
+        ByVal lNewWidth As Long _
     ) As cDIBSection
-    Dim cDib As cDIBSection
+Dim cDib As cDIBSection
     Set cDib = New cDIBSection
     If cDib.Create(lNewWidth, lNewHeight) Then
         If (lNewWidth <> m_tBI.bmiHeader.biWidth) Or (lNewHeight <> m_tBI.bmiHeader.biHeight) Then
@@ -358,11 +358,11 @@ Public Function Resample( _
 End Function
 
 Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
-    Dim bDibFrom() As Byte
-    Dim bDibTo() As Byte
+Dim bDibFrom() As Byte
+Dim bDibTo() As Byte
 
-    Dim tSAFrom As SAFEARRAY2D
-    Dim tSATo As SAFEARRAY2D
+Dim tSAFrom As SAFEARRAY2D
+Dim tSATo As SAFEARRAY2D
 
     ' Get the bits in the from DIB section:
     With tSAFrom
@@ -388,19 +388,19 @@ Private Function ResampleDib(ByRef cDibTo As cDIBSection) As Boolean
     End With
     CopyMemory ByVal VarPtrArray(bDibTo()), VarPtr(tSATo), 4
 
-    Dim xScale As Single
-    Dim yScale As Single
+Dim xScale As Single
+Dim yScale As Single
 
-    Dim X As Long, Y As Long, xEnd As Long, xOut As Long
+Dim X As Long, Y As Long, xEnd As Long, xOut As Long
 
-    Dim fX As Single, fY As Single
-    Dim ifY As Long, ifX As Long
-    Dim dX As Single, dy As Single
-    Dim R As Long, r1 As Single, r2 As Single, r3 As Single, r4 As Single
-    Dim G As Long, g1 As Single, g2 As Single, g3 As Single, g4 As Single
-    Dim B As Long, b1 As Single, b2 As Single, b3 As Single, b4 As Single
-    Dim ir1 As Long, ig1 As Long, ib1 As Long
-    Dim ir2 As Long, ig2 As Long, ib2 As Long
+Dim fX As Single, fY As Single
+Dim ifY As Long, ifX As Long
+Dim dX As Single, dy As Single
+Dim R As Long, r1 As Single, r2 As Single, r3 As Single, r4 As Single
+Dim G As Long, g1 As Single, g2 As Single, g3 As Single, g4 As Single
+Dim B As Long, b1 As Single, b2 As Single, b3 As Single, b4 As Single
+Dim ir1 As Long, ig1 As Long, ib1 As Long
+Dim ir2 As Long, ig2 As Long, ib2 As Long
 
     xScale = (Width - 1) / cDibTo.Width
     yScale = (Height - 1) / cDibTo.Height

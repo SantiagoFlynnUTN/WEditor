@@ -150,7 +150,7 @@ Private AgregoClave As Boolean
 Private ModificoClave As Boolean
 
 Private Sub bExit_Click()
-    If AgregoClave Then
+       If AgregoClave Then
         'Modifico clave pero no guardo el decor, raro.
         NumDecorKeys = NumDecorKeys - 1
         Select Case DecorKeys(NumDecorKeys + 1).Tipo_Clave
@@ -172,7 +172,6 @@ Public Sub Parse()
                 xTipo = DecorData(.DecorI).DecorType
                 xNumero = .DecorI
                 xDefault = .DecorInfo.EstadoDefault
-                
                 xTipoClave = .DecorInfo.TipoClave
                 xClave = .DecorInfo.Clave
             End With
@@ -203,8 +202,8 @@ Private Sub bNextClave_Click()
 End Sub
 
 Private Sub bSave_Click()
-    Dim j As Long
-    If TipoSeleccionado = 1 Then
+Dim j As Long
+        If TipoSeleccionado = 1 Then
         If MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y).DecorI > 0 Then
             With MapData(ObjetoSeleccionado.X, ObjetoSeleccionado.Y)
 
@@ -250,9 +249,9 @@ Private Sub bSave_Click()
                             AgregoClave = False
                         End If
                     End If
-                End If
-                .DecorInfo.Clave = Val(xNumClave)
-                .DecorInfo.EstadoDefault = Val(xDefault)
+                    End If
+                    .DecorInfo.Clave = Val(xNumClave)
+                    .DecorInfo.EstadoDefault = Val(xDefault)
 
                 If Val(xNumero) <> .DecorI Then
                     If Val(xNumero) <= UBound(DecorData) Then

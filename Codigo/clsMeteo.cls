@@ -28,7 +28,7 @@ Private MediaNoche As D3DCOLORVALUE
 Private LuzActual As D3DCOLORVALUE
 
 Public Sub Initialize()
-    Dim B As Byte
+Dim B As Byte
     Al(1).R = 215
     Al(1).G = 215
     Al(1).B = 215
@@ -111,7 +111,7 @@ Public Sub Initialize()
     Lucez(5) = D3DColorXRGB(0, 0, 60)
     Lucez(6) = D3DColorARGB(100, 0, 0, 255)
     
-End Sub
+   End Sub
 
 Public Sub Set_Time(ByVal Hour As Byte, ByVal Minutes As Byte)
     mHour = Hour

@@ -35,10 +35,10 @@ Public PngEnd(0 To 6) As Byte
 Public zCurrentIndex As Integer
 
 Public Declare Sub CopyMemory _
-    Lib "kernel32" _
-    Alias "RtlMoveMemory" (ByRef destination As Any, _
-    ByRef Source As Any, _
-    ByVal length As Long)
+                Lib "kernel32" _
+                Alias "RtlMoveMemory" (ByRef destination As Any, _
+                                       ByRef Source As Any, _
+                                       ByVal length As Long)
 Public SelInterior() As Byte
 Public SIx As Byte
 Public SIy As Byte
@@ -180,6 +180,7 @@ Public SeleccionAncho As Integer
 Public SeleccionAlto As Integer
 Public Seleccionando As Boolean
 Public SeleccionMap() As MapBlock
+Public UsingUndoSelection As Boolean
 
 Public DeSeleccionOX As Integer
 Public DeSeleccionOY As Integer
@@ -389,7 +390,7 @@ Public Type Char
     Moving As Byte
     MoveOffset As Position
 
-    'LEAN_PART
+          'LEAN_PART
     particle_count As Integer
     particle_group() As Long
 End Type
@@ -451,18 +452,18 @@ Public Const CANT_GRAF_DECOR As Byte = 5
 
 Public Type tDecor
    
-    Name           As String
-    MaxHP          As Long           ' Cuanta vida tiene el decor
-    Respawn        As Long           ' Cada cuanto respawnea
-    value          As Single         ' Modificaro del objeto que da
-    DecorGrh(1 To CANT_GRAF_DECOR)  As Integer   ' Graficos
-    Atacable       As Byte           ' SI pueden atacarse
-    Clave          As Integer        ' Para las puertas?
-    Objeto         As Integer        '
-    DecorType      As Byte
-    EstadoDefault  As Byte           ' Cual es el estado default del decor
-    TileH          As Byte
-    TileW          As Byte
+   Name           As String
+   MaxHP          As Long           ' Cuanta vida tiene el decor
+   Respawn        As Long           ' Cada cuanto respawnea
+   value          As Single         ' Modificaro del objeto que da
+   DecorGrh(1 To CANT_GRAF_DECOR)  As Integer   ' Graficos
+   Atacable       As Byte           ' SI pueden atacarse
+   Clave          As Integer        ' Para las puertas?
+   Objeto         As Integer        '
+   DecorType      As Byte
+   EstadoDefault  As Byte           ' Cual es el estado default del decor
+   TileH          As Byte
+   TileW          As Byte
    
 End Type
 Public Type tDecorInfo
@@ -544,10 +545,9 @@ Public MaxYBorder As Byte
 Public Const MAX_INVENORY_OBJS  As Integer = 10000
 
 ' Deshacer
-Public Const maxDeshacer As Integer = 10
+Public Const maxDeshacer As Integer = 128
 Public MapData_Deshacer(1 To maxDeshacer, XMinMapSize To XMaxMapSize, YMinMapSize To YMaxMapSize) As MapBlock
 Type tDeshacerInfo
-    Libre As Boolean
     Desc As String
 End Type
 Public MapData_Deshacer_Info(1 To maxDeshacer) As tDeshacerInfo
@@ -559,26 +559,26 @@ Public CharList(1 To 10000) As Char 'Holds info about all characters on map
 Public Lights() As Light
 'Encabezado bmp
 Type BITMAPFILEHEADER
-    bfType As Integer
-    bfSize As Long
-    bfReserved1 As Integer
-    bfReserved2 As Integer
-    bfOffBits As Long
+        bfType As Integer
+        bfSize As Long
+        bfReserved1 As Integer
+        bfReserved2 As Integer
+        bfOffBits As Long
 End Type
 
 'Info del encabezado del bmp
 Type BITMAPINFOHEADER
-    biSize As Long
-    biWidth As Long
-    biHeight As Long
-    biPlanes As Integer
-    biBitCount As Integer
-    biCompression As Long
-    biSizeImage As Long
-    biXPelsPerMeter As Long
-    biYPelsPerMeter As Long
-    biClrUsed As Long
-    biClrImportant As Long
+        biSize As Long
+        biWidth As Long
+        biHeight As Long
+        biPlanes As Integer
+        biBitCount As Integer
+        biCompression As Long
+        biSizeImage As Long
+        biXPelsPerMeter As Long
+        biYPelsPerMeter As Long
+        biClrUsed As Long
+        biClrImportant As Long
 End Type
 
 Public gDespX As Integer
@@ -686,4 +686,3 @@ Public Declare Function GetAsyncKeyState Lib "user32" (ByVal nVirtKey As Long) A
 
 
 Public Declare Function GetTickCount Lib "kernel32" () As Long
-

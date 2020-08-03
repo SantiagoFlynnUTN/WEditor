@@ -98,8 +98,8 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub Command1_Click()
-    MapHead.GraficoMapa = Val(Text1)
-    MapHead.Version = Val(tVer)
-    MapHead.SombrasAmbientales = Val(tSom)
+MapHead.GraficoMapa = Val(Text1)
+MapHead.Version = Val(tVer)
+MapHead.SombrasAmbientales = Val(tSom)
 End Sub
 

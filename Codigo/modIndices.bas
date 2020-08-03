@@ -33,12 +33,12 @@ Option Explicit
 '
 
 Public Sub CargarIndicesSuperficie()
-    '*************************************************
-    'Author: ^[GS]^
-    'Last modified: 29/05/06
-    '*************************************************
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 29/05/06
+'*************************************************
 
-    On Error GoTo Fallo
+On Error GoTo Fallo
     If General_File_Exist(inipath & "GrhIndex\indices.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'GrhIndex\indices.ini'", vbCritical
         End
@@ -69,12 +69,12 @@ End Sub
 '
 
 Public Sub CargarIndicesOBJ()
-    '*************************************************
-    'Author: ^[GS]^
-    'Last modified: 20/05/06
-    '*************************************************
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 20/05/06
+'*************************************************
 
-    On Error GoTo Fallo
+On Error GoTo Fallo
     If General_File_Exist(DirDats & "\OBJ.dat", vbArchive) = False Then
         MsgBox "Falta el archivo 'OBJ.dat' en " & DirDats, vbCritical
         End
@@ -100,7 +100,7 @@ Public Sub CargarIndicesOBJ()
     Next Obj
     Exit Sub
 Fallo:
-    MsgBox "Error al intentar cargar el Objteto " & Obj & " de OBJ.dat en " & DirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
+MsgBox "Error al intentar cargar el Objteto " & Obj & " de OBJ.dat en " & DirDats & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
 
 End Sub
 
@@ -109,12 +109,12 @@ End Sub
 '
 
 Public Sub CargarIndicesTriggers()
-    '*************************************************
-    'Author: ^[GS]^
-    'Last modified: 28/05/06
-    '*************************************************
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 28/05/06
+'*************************************************
 
-    On Error GoTo Fallo
+On Error GoTo Fallo
     If General_File_Exist(DirIndex & "Triggers.ini", vbArchive) = False Then
         MsgBox "Falta el archivo 'Triggers.ini' en " & DirIndex, vbCritical
         End
@@ -126,10 +126,10 @@ Public Sub CargarIndicesTriggers()
     frmMain.lListado(4).Clear
     NumT = Val(Leer.GetValue("INIT", "NumTriggers"))
     For t = 1 To NumT
-        frmMain.lListado(4).AddItem Leer.GetValue("Trig" & t, "Name") & " - #" & (t - 1)
+         frmMain.lListado(4).AddItem Leer.GetValue("Trig" & t, "Name") & " - #" & (t - 1)
     Next t
 
-    Exit Sub
+Exit Sub
 Fallo:
     MsgBox "Error al intentar cargar el Trigger " & t & " de Triggers.ini en " & DirIndex & vbCrLf & "Err: " & Err.Number & " - " & Err.Description, vbCritical + vbOKOnly
 
@@ -147,12 +147,12 @@ End Sub
 '
 
 Public Sub CargarIndicesNPC()
-    '*************************************************
-    'Author: ^[GS]^
-    'Last modified: 26/05/06
-    '*************************************************
-    On Error Resume Next
-    'On Error GoTo Fallo
+'*************************************************
+'Author: ^[GS]^
+'Last modified: 26/05/06
+'*************************************************
+On Error Resume Next
+'On Error GoTo Fallo
     If General_File_Exist(DirDats & "\NPCs.dat", vbArchive) = False Then
         MsgBox "Falta el archivo 'NPCs.dat' en " & DirDats, vbCritical
         End
@@ -189,7 +189,7 @@ Public Sub CargarIndicesNPC()
         NpcData(NPC).Exp = Val(Leer2.GetValue("NPC" & (NPC), "GiveExp"))
         NpcData(NPC).Oro = Val(Leer2.GetValue("NPC" & (NPC), "GiveGLD"))
         
-        NpcData(NPC).ModHp = Val(Leer2.GetValue("NPC" & (NPC), "ModHP"))
+                NpcData(NPC).ModHp = Val(Leer2.GetValue("NPC" & (NPC), "ModHP"))
         NpcData(NPC).ModHit = Val(Leer2.GetValue("NPC" & (NPC), "ModHit"))
         NpcData(NPC).ModDef = Val(Leer2.GetValue("NPC" & (NPC), "ModDef"))
         NpcData(NPC).ModExp = Val(Leer2.GetValue("NPC" & (NPC), "ModExp"))

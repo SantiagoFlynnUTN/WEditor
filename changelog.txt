@@ -1,0 +1,8 @@
+Arreglado run time al usar texturas con index invalidos
+No aplica un indice si es el mismo en esa posición
+Mejorado el deshacer: 
+	ahora guarda hasta 128 estados
+	no modifica la performance la cantidad de estados
+Agrandado de render segun definición
+
+

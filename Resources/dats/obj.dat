@@ -441,8 +441,8 @@ ObjType=1
 GrhIndex=166
 AnimAlto=59
 AnimBajo=79
-MaxHIT=7
-MinHIT=6
+MaxHIT=100
+MinHIT=100
 Apuñala=1
 Valor=1
 CP1=247
@@ -916,8 +916,10 @@ AnimAlto=176
 AnimBajo=175
 AnimAltoM=176
 AnimBajoM=175
-MINDEF=195
-MAXDEF=200
+DefensaMagicaMin=15
+DefensaMagicaMax=15
+MINDEF=50
+MAXDEF=50
 Valor=1
 CP1=247
 CP2=3
@@ -1652,9 +1654,9 @@ CP2=3
 [OBJ108]
 Name=Escudo Ase Agite
 ObjType=5
-GrhIndex=212
-AnimAlto=36
-AnimBajo=46
+GrhIndex=193
+AnimAlto=33
+AnimBajo=43
 LingH=18
 LingP=10
 Valor=1
@@ -1687,7 +1689,7 @@ CP2=3
 [OBJ111]
 Name=Escudo Guerre Agite
 ObjType=5
-GrhIndex=5719
+GrhIndex=213
 AnimAlto=36
 AnimBajo=46
 LingH=18
@@ -2208,21 +2210,21 @@ Name=Copa de Oro
 NameP=Copas de oro
 ObjType=8
 Log=1
-GrhIndex=52
+GrhIndex=44
 
 [OBJ160]
 Name=Copa de Plata
 NameP=Copas de Plata
 ObjType=8
 Log=1
-GrhIndex=50
+GrhIndex=42
 
 [OBJ161]
 Name=Copa de Bronce
 NameP=Copas de Bronce
 ObjType=8
 Log=1
-GrhIndex=51
+GrhIndex=43
 [OBJ162]
 Name=Medalla de Oro
 NameP=Medallas de Oro
@@ -2234,7 +2236,7 @@ GrhIndex=212
 Name=Pergamino de la avaricia
 NameP=Pergaminos de la avaricia
 ObjType=8
-GrhIndex=36
+GrhIndex=57
 NoSeCae=1
 
 [OBJ164]
@@ -2291,7 +2293,7 @@ Name=Amuleto de Lider
 NameP=Amuletos de lider
 ObjType=8
 Log=1
-GrhIndex=212
+GrhIndex=60
 NoSeCae=1
 
 [OBJ172]
@@ -2306,7 +2308,7 @@ NoSeCae=1
 Name=Pergamino de Regreso
 NameP=Pergaminos de Regreso
 ObjType=8
-GrhIndex=36
+GrhIndex=57
 Crucial=1
 Valor=1
 [OBJ174]
@@ -2520,27 +2522,27 @@ GrhIndex=32
 Name=Piel de lobo
 NameP=Pieles de lobo
 ObjType=17
-GrhIndex=59
+GrhIndex=47
 Valor=1
 
 [OBJ202]
 Name=Piel de Oso Pardo
 NameP=Pieles de Oso Pardo
 ObjType=17
-GrhIndex=58
+GrhIndex=46
 Valor=1
 
 [OBJ203]
 Name=Piel de Oso Polar
 NameP=Pieles de Oso Polar
 ObjType=17
-GrhIndex=60
+GrhIndex=48
 Valor=1
 [OBJ204]
 Name=Martillo de Herrero
 NameP=Martillos de Herrero
 ObjType=18
-GrhIndex=212
+GrhIndex=56
 Crucial=1
 Valor=1
 
@@ -2548,7 +2550,7 @@ Valor=1
 Name=Piquete de Minero
 NameP=Piquetes de Minero
 ObjType=18
-GrhIndex=212
+GrhIndex=52
 Crucial=1
 Valor=1
 
@@ -2556,7 +2558,7 @@ Valor=1
 Name=Serrucho
 NameP=Serruchos
 ObjType=18
-GrhIndex=212
+GrhIndex=51
 Crucial=1
 Valor=1
 
@@ -2564,7 +2566,7 @@ Valor=1
 Name=Hacha de Leñador
 NameP=Hachas de Leñador
 ObjType=18
-GrhIndex=212
+GrhIndex=55
 Crucial=1
 MaxHIT=10
 MinHIT=4
@@ -2573,7 +2575,7 @@ Valor=1
 Name=Caña de Pescador
 NameP=Cañas de Pescador
 ObjType=18
-GrhIndex=212
+GrhIndex=53
 Crucial=1
 MaxHIT=10
 MinHIT=4
@@ -2583,7 +2585,7 @@ Valor=1
 Name=Red de Pesca
 NameP=Redes de Pesca
 ObjType=18
-GrhIndex=212
+GrhIndex=50
 Crucial=1
 MaxHIT=10
 MinHIT=4
@@ -2600,21 +2602,21 @@ Valor=1
 Name=Manzana Roja
 NameP=Manzanas Rojas
 ObjType=255
-GrhIndex=212
+GrhIndex=798
 Crucial=1
 Valor=1
 [OBJ212]
 Name=Banana
 NameP=Bananas
 ObjType=255
-GrhIndex=212
+GrhIndex=799
 Crucial=1
 Valor=1
 
 [OBJ213]
 Name=Pollo
 ObjType=255
-GrhIndex=212
+GrhIndex=800
 Crucial=1
 Valor=1
 
@@ -2622,7 +2624,7 @@ Valor=1
 Name=Pescado
 NameP=Pescados
 ObjType=255
-GrhIndex=212
+GrhIndex=797
 Crucial=1
 Valor=1
 
@@ -2630,20 +2632,20 @@ Valor=1
 Name=Corvina
 NameP=Corvinas
 ObjType=255
-GrhIndex=212
+GrhIndex=796
 Valor=1
 
 [OBJ216]
 Name=Pez Espada
 NameP=Peces Espada
 ObjType=255
-GrhIndex=212
+GrhIndex=795
 Valor=1
 [OBJ217]
 Name=Salmón
 NameP=Salmones
 ObjType=255
-GrhIndex=212
+GrhIndex=794
 Valor=1
 
 
