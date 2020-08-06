@@ -96,6 +96,7 @@ TileH=1
 TileW=1
 
 [DECOR5] ' Yacimiento Calidad Normal Hierro
+Name=Yacimiento de hierro [Normal]
 MaxHP=0
 Respawn=0
 Value=1
@@ -111,6 +112,7 @@ TileW=1
 TileTransY=0
 
 [DECOR6] ' Yacimiento Calidad Buena Hierro
+Name=Yacimiento de Hierro [Superior]
 MaxHP=0
 Respawn=0
 Value=1.5
@@ -125,6 +127,7 @@ TileH=1
 TileW=1
 
 [DECOR7] ' Yacimiento Calidad Superior Hierro
+Name=Yacimiento de hierro [Excepcional]
 MaxHP=0
 Respawn=0
 Value=2
@@ -139,6 +142,7 @@ TileH=1
 TileW=1
 
 [DECOR8] ' Yacimiento Calidad Normal Plata
+Name=Yacimiento de plata [Normal]
 MaxHP=0
 Respawn=0
 Value=1
@@ -153,6 +157,7 @@ TileH=1
 TileW=1
 
 [DECOR9] ' Yacimiento Calidad Buena Plata
+Name=Yacimiento de plata [Superior]
 MaxHP=0
 Respawn=0
 Value=1.5
@@ -167,6 +172,7 @@ TileH=1
 TileW=1
 
 [DECOR10] ' Yacimiento Calidad Superior Plata
+Name=Yacimiento de plata [Excepcional]
 MaxHP=0
 Respawn=0
 Value=2
@@ -181,6 +187,7 @@ TileH=1
 TileW=1
 
 [DECOR11] ' Yacimiento Calidad Normal Oro
+Name=Yacimiento de oro [Normal]
 MaxHP=0
 Respawn=0
 Value=1
@@ -195,6 +202,7 @@ TileH=1
 TileW=1
 
 [DECOR12] ' Yacimiento Calidad Buena Oro
+Name=Yacimiento de oro [Superior]
 MaxHP=0
 Respawn=0
 Value=1.5
@@ -209,6 +217,7 @@ TileH=1
 TileW=1
 
 [DECOR13] ' Yacimiento Calidad Superior Oro
+Name=Yacimiento de oro [Excepcional]
 MaxHP=0
 Respawn=0
 Value=2
@@ -223,10 +232,11 @@ TileH=1
 TileW=1
 
 [DECOR14] ' Puerta Normal 1 Sin Llave
+Name=Puerta normal 1 sin llave
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=1-803-804-0-0
+DecorGrh=803-804-0-0-0
 Atacable=0
 Clave=0
 Objeto=0
@@ -238,10 +248,11 @@ TileW=2
 OffX=-1
 
 [DECOR15] ' Puerta Normal 2 Sin Llave
+Name=Puerta normal 2 sin llave
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=1-803-804-0-0
+DecorGrh=803-804-0-0-0 ' abierta-cerrada-cerradallave
 Atacable=0
 Clave=0
 Objeto=0
@@ -280,10 +291,11 @@ TileH=1
 TileW=2
 
 [DECOR18] ' Yunque
+Name=Yunque
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=646-0-0-0-0
+DecorGrh=61-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=0
@@ -294,10 +306,11 @@ TileH=1
 TileW=1
 
 [DECOR19] ' Fragua
+Name=Fragua
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=1844-0-0-0-0
+DecorGrh=59-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=0
@@ -308,10 +321,11 @@ TileH=1
 TileW=1
 
 [DECOR20] ' Telar
+Name=Telar
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=646-0-0-0-0
+DecorGrh=60-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=0
@@ -322,10 +336,11 @@ TileH=1
 TileW=1
 
 [DECOR21] ' Taller Carpi
+Name=Taller Carp
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=1884-0-0-0-0
+DecorGrh=54-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=0

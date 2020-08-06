@@ -1910,7 +1910,7 @@ CP2=3
 [OBJ131]
 Name=Corona Mago Torneo
 ObjType=6
-GrhIndex=6
+GrhIndex=136
 AnimAlto=7
 AnimBajo=7
 MINDEF=125
@@ -1932,7 +1932,7 @@ CP2=3
 [OBJ133]
 Name=Casco Bardo Torneo
 ObjType=6
-GrhIndex=102
+GrhIndex=131
 AnimAlto=15
 AnimBajo=15
 MINDEF=185
@@ -1943,7 +1943,7 @@ CP2=3
 [OBJ134]
 Name=Casco Clero Torneo
 ObjType=6
-GrhIndex=104
+GrhIndex=133
 AnimAlto=14
 AnimBajo=14
 MINDEF=185
@@ -2595,7 +2595,7 @@ Valor=1
 Name=Tijera
 NameP=Tijeras
 ObjType=18
-GrhIndex=45
+GrhIndex=41
 Crucial=1
 Valor=1
 [OBJ211]
