@@ -32,7 +32,7 @@ Public TempFromReal(0 To 10000) As Integer
 Public TempFromReale(0 To 10000) As Integer
 
 Public Type tAura
-    grhindex As Integer
+    GrhIndex As Integer
     R As Byte
     G As Byte
     B As Byte
@@ -45,7 +45,7 @@ Public Type tAura
 End Type
 
 Public Type tAuraGrh
-    fc As Single
+    fC As Single
     Count As Single
 End Type
 Public AuraDATA() As tAura
@@ -572,7 +572,7 @@ Sub CargarAurasBin(ByVal FF As Integer)
 20        ReDim AuraDATA(0 To n) As tAura
 30        For i = 1 To n
 40            Get FF, , AuraDATA(i).Tipo
-50            Get FF, , AuraDATA(i).grhindex
+50            Get FF, , AuraDATA(i).GrhIndex
 60            Get FF, , AuraDATA(i).Giratoria
 70            Get FF, , AuraDATA(i).Velocidad
 80            Get FF, , AuraDATA(i).OffsetX

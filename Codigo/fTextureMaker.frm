@@ -913,7 +913,7 @@ List1.Clear
     tAlto = TexWE(TexAc).Largo
     tAncho = TexWE(TexAc).Ancho
     If TexWE(TexAc).NumIndex > 0 Then
-        ReDim tIndex(1 To TexWE(TexAc).NumIndex + 1)
+        ReDim tIndex(1 To TexWE(TexAc).NumIndex)
         tNumIndex = TexWE(TexAc).NumIndex
         For P = 1 To TexWE(TexAc).NumIndex
         
@@ -984,7 +984,7 @@ If Selecto = False Then
 If TexArray(Tmp) = 0 Then
 
     'Agregamos
-    If Val(Text2.Text) > 0 And Val(Text2.Text) <= numNewIndex Then
+    If Val(Text2.Text) > 0 And Val(Text2.Text) < numNewIndex Then
         If NewIndexData(Val(Text2.Text)).Estatic > 0 Then
     
         With EstaticData(NewIndexData(Val(Text2.Text)).Estatic)

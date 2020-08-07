@@ -628,798 +628,799 @@ Public Sub GenerarVista()
 End Sub
 ' [/Loopzer]
 Public Sub RenderScreen(TileX As Integer, TileY As Integer, PixelOffsetX As Integer, PixelOffsetY As Integer)
-'*************************************************
-'Author: Unkwown
-'Last modified: 31/05/06 by GS
-'Last modified: 21/11/07 By Loopzer
-'Last modifier: 24/11/08 by GS
-'*************************************************
+      '*************************************************
+      'Author: Unkwown
+      'Last modified: 31/05/06 by GS
+      'Last modified: 21/11/07 By Loopzer
+      'Last modifier: 24/11/08 by GS
+      '*************************************************
 
-On Error GoTo errs
-Dim Y       As Integer              'Keeps track of where on map we are
-Dim X       As Integer
-Dim MinY    As Integer              'Start Y pos on current map
-Dim MaxY    As Integer              'End Y pos on current map
-Dim MinX    As Integer              'Start X pos on current map
-Dim MaxX    As Integer              'End X pos on current map
-Dim ScreenX As Integer              'Keeps track of where to place tile on screen
-Dim ScreenY As Integer
-Dim Sobre   As Integer
-Dim iPPx    As Integer              'Usado en el Layer de Chars
-Dim iPPy    As Integer              'Usado en el Layer de Chars
-Dim Grh     As Grh
-Dim nGrh As tnGrh 'Temp Grh for show tile and blocked
-Dim bCapa    As Byte                 'cCapas ' 31/05/2006 - GS, control de Capas
-Dim iGrhIndex           As Integer  'Usado en el Layer 1
-Dim PixelOffsetXTemp    As Integer  'For centering grhs
-Dim PixelOffsetYTemp    As Integer
-Dim TempChar            As Char
-Dim tiempo As Byte
-Dim colorlist(3) As Long
-Dim Polygon_Ignore_Top As Byte
-Dim Polygon_Ignore_Right As Byte
-Dim Polygon_Ignore_Left As Byte
-Dim Polygon_Ignore_lower As Byte
-Dim Corner As Byte
+10    On Error GoTo errs
+      Dim Y       As Integer              'Keeps track of where on map we are
+      Dim X       As Integer
+      Dim MinY    As Integer              'Start Y pos on current map
+      Dim MaxY    As Integer              'End Y pos on current map
+      Dim MinX    As Integer              'Start X pos on current map
+      Dim MaxX    As Integer              'End X pos on current map
+      Dim ScreenX As Integer              'Keeps track of where to place tile on screen
+      Dim ScreenY As Integer
+      Dim Sobre   As Integer
+      Dim iPPx    As Integer              'Usado en el Layer de Chars
+      Dim iPPy    As Integer              'Usado en el Layer de Chars
+      Dim Grh     As Grh
+      Dim nGrh As tnGrh 'Temp Grh for show tile and blocked
+      Dim bCapa    As Byte                 'cCapas ' 31/05/2006 - GS, control de Capas
+      Dim iGrhIndex           As Integer  'Usado en el Layer 1
+      Dim PixelOffsetXTemp    As Integer  'For centering grhs
+      Dim PixelOffsetYTemp    As Integer
+      Dim TempChar            As Char
+      Dim tiempo As Byte
+      Dim colorlist(3) As Long
+      Dim Polygon_Ignore_Top As Byte
+      Dim Polygon_Ignore_Right As Byte
+      Dim Polygon_Ignore_Left As Byte
+      Dim Polygon_Ignore_lower As Byte
+      Dim Corner As Byte
 
-tiempo = 255
-colorlist(0) = D3DColorXRGB(255, 200, 0)
-colorlist(1) = D3DColorXRGB(255, 200, 0)
-colorlist(2) = D3DColorXRGB(255, 200, 0)
-colorlist(3) = D3DColorXRGB(255, 200, 0)
+20    tiempo = 255
+30    colorlist(0) = D3DColorXRGB(255, 200, 0)
+40    colorlist(1) = D3DColorXRGB(255, 200, 0)
+50    colorlist(2) = D3DColorXRGB(255, 200, 0)
+60    colorlist(3) = D3DColorXRGB(255, 200, 0)
 
-Map_LightsRender
-If Not guardobmp Then
-MinY = (TileY - (WindowTileHeight \ 2)) - TileBufferSize
-MaxY = (TileY + (WindowTileHeight \ 2)) + TileBufferSize
-MinX = (TileX - (WindowTileWidth \ 2)) - TileBufferSize
-MaxX = (TileX + (WindowTileWidth \ 2)) + TileBufferSize
+70    Map_LightsRender
+80    If Not guardobmp Then
+90    MinY = (TileY - (WindowTileHeight \ 2)) - TileBufferSize
+100   MaxY = (TileY + (WindowTileHeight \ 2)) + TileBufferSize
+110   MinX = (TileX - (WindowTileWidth \ 2)) - TileBufferSize
+120   MaxX = (TileX + (WindowTileWidth \ 2)) + TileBufferSize
 
-Else
-MinY = TileY - 8
-MaxY = TileY + 16
-MinX = TileX - 8
-MaxX = TileX + 16
-
-
-End If
+130   Else
+140   MinY = TileY - 8
+150   MaxY = TileY + 16
+160   MinX = TileX - 8
+170   MaxX = TileX + 16
 
 
+180   End If
 
 
-' 31/05/2006 - GS, control de Capas
-If Val(frmMain.cCapas.Text) >= 1 And (frmMain.cCapas.Text) <= 4 Then
-    bCapa = Val(frmMain.cCapas.Text)
-Else
-    bCapa = 1
-End If
-GenerarVista 'Loopzer
-ScreenY = -8
-tiempo = 254
-
-    Dim jx As Integer
-    Dim jy As Integer
-    Dim jh As Integer
-    Dim jw As Integer
-    Dim jg As Integer
-    Dim jtw As Single
-    Dim jth As Single
-
-    Dim VertexArray(0 To 3) As TLVERTEX
-    Dim Tex As Direct3DTexture8
-    Dim SrcWidth As Integer
-    Dim Width As Integer
-    Dim SrcHeight As Integer
-    Dim Height As Integer
-    Dim SrcBitmapWidth As Long
-    Dim SrcBitmapHeight As Long
-    Dim xb As Integer
-    Dim yb As Integer
-    'Dim iGrhIndex As Integer
-    Dim srdesc As D3DSURFACE_DESC
-                            Dim aux As Integer
-                        Dim dy As Integer
-                        Dim dX As Integer
-    
-For Y = (MinY) To (MaxY)
-    ScreenX = -8
-    For X = (MinX) To (MaxX)
-
-        If InMapBounds(X, Y) Then
-
-            If VerCapa1 Then
 
 
-            If MapData(X, Y).Graphic(1).index <> 0 And VerCapa2 Then
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                modGrh.Grh_iRenderN MapData(X, Y).Graphic(1), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
-               
-                Else
-                modGrh.Grh_RenderN MapData(X, Y).Graphic(1), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
-                End If
-            End If
-            
-        End If
-        End If
-        
-        ScreenX = ScreenX + 1
-    Next X
-    ScreenY = ScreenY + 1
-    If Y > 100 Then Exit For
-Next Y
-ScreenY = -8
+      ' 31/05/2006 - GS, control de Capas
+190   If Val(frmMain.cCapas.Text) >= 1 And (frmMain.cCapas.Text) <= 4 Then
+200       bCapa = Val(frmMain.cCapas.Text)
+210   Else
+220       bCapa = 1
+230   End If
+240   GenerarVista 'Loopzer
+250   ScreenY = -8
+260   tiempo = 254
+
+          Dim jx As Integer
+          Dim jy As Integer
+          Dim jh As Integer
+          Dim jw As Integer
+          Dim jg As Integer
+          Dim jtw As Single
+          Dim jth As Single
+
+          Dim VertexArray(0 To 3) As TLVERTEX
+          Dim Tex As Direct3DTexture8
+          Dim SrcWidth As Integer
+          Dim Width As Integer
+          Dim SrcHeight As Integer
+          Dim Height As Integer
+          Dim SrcBitmapWidth As Long
+          Dim SrcBitmapHeight As Long
+          Dim xb As Integer
+          Dim yb As Integer
+          'Dim iGrhIndex As Integer
+          Dim srdesc As D3DSURFACE_DESC
+                                  Dim aux As Integer
+                              Dim dy As Integer
+                              Dim dX As Integer
+          
+270   For Y = (MinY) To (MaxY)
+280       ScreenX = -8
+290       For X = (MinX) To (MaxX)
+
+300           If InMapBounds(X, Y) Then
+
+310               If VerCapa1 Then
 
 
-ddevice.SetRenderTarget Agua_Sur, Agua_St, ByVal 0
-ddevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, vbBlack, ByVal 0, ByVal 0
-'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE)
-Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE)
-Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
-ddevice.SetRenderState D3DRS_SRCBLEND, 5
-ddevice.SetRenderState D3DRS_DESTBLEND, 1
+320               If MapData(X, Y).Graphic(1).index <> 0 And VerCapa2 Then
+330                   If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+340                   modGrh.Grh_iRenderN MapData(X, Y).Graphic(1), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
+                     
+350                   Else
+360                   modGrh.Grh_RenderN MapData(X, Y).Graphic(1), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
+370                   End If
+380               End If
+                  
+390           End If
+400           End If
+              
+410           ScreenX = ScreenX + 1
+420       Next X
+430       ScreenY = ScreenY + 1
+440       If Y > 100 Then Exit For
+450   Next Y
+460   ScreenY = -8
 
-For Y = (MinY) To (MaxY)
-    ScreenX = -8
-    For X = (MinX) To (MaxX)
 
-        If InMapBounds(X, Y) Then
-If MapData(X, Y).Graphic(2).index Then
+470   ddevice.SetRenderTarget Agua_Sur, Agua_St, ByVal 0
+480   ddevice.Clear 0, ByVal 0, D3DCLEAR_TARGET, vbBlack, ByVal 0, ByVal 0
+      'Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE)
+490   Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE)
+500   Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
+510   ddevice.SetRenderState D3DRS_SRCBLEND, 5
+520   ddevice.SetRenderState D3DRS_DESTBLEND, 1
 
-    xb = (ScreenX - 1) * 32 + PixelOffsetX
-    yb = (ScreenY - 1) * 32 + PixelOffsetY
-   
-    If NewIndexData(MapData(X, Y).Graphic(2).index).Dinamica > 0 Then
-        With NewAnimationData(NewIndexData(MapData(X, Y).Graphic(2).index).Dinamica)
-        
+530   For Y = (MinY) To (MaxY)
+540       ScreenX = -8
+550       For X = (MinX) To (MaxX)
+
+560           If InMapBounds(X, Y) Then
+570   If MapData(X, Y).Graphic(2).index Then
+
+580       xb = (ScreenX - 1) * 32 + PixelOffsetX
+590       yb = (ScreenY - 1) * 32 + PixelOffsetY
+         
+600       If NewIndexData(MapData(X, Y).Graphic(2).index).Dinamica > 0 Then
+610           With NewAnimationData(NewIndexData(MapData(X, Y).Graphic(2).index).Dinamica)
+              
+             
+                  'MapData(X, y).Graphic(2).fC = MapData(X, y).Graphic(2).fC + ((timer_elapsed_time * 0.1) * .NumFrames / .Velocidad)
+620               If Not MapData(X, Y).TipoTerreno And eTipoTerreno.Agua Then
+630               MapData(X, Y).Graphic(2).fC = MapData(X, Y).Graphic(2).fC + (.NumFrames * (MEE * 0.0011) * Rnd)
+640               Else
+650               MapData(X, Y).Graphic(2).fC = MapData(X, Y).Graphic(2).fC + (.NumFrames * (MEE * 0.0005) * Rnd)
+                  
+660               End If
+670               If MapData(X, Y).Graphic(2).fC > .NumFrames Then
+680                   MapData(X, Y).Graphic(2).fC = (MapData(X, Y).Graphic(2).fC Mod .NumFrames) + 1
+690               End If
+700   tiempo = 1
+710               If MapData(X, Y).Graphic(2).fC < 1 Then MapData(X, Y).Graphic(2).fC = 1
+                  
+720               jx = .Indice(MapData(X, Y).Graphic(2).fC).X
+730               jy = .Indice(MapData(X, Y).Graphic(2).fC).Y
+740               jw = .Width
+750               jh = .Height
+760               jtw = .TileWidth
+770               jth = .TileHeight
+780               jg = (.Indice(MapData(X, Y).Graphic(2).fC).Grafico - .Indice(2).Grafico) + NewIndexData(MapData(X, Y).Graphic(2).index).OverWriteGrafico
+790           End With
+800       Else
+810           With EstaticData(NewIndexData(MapData(X, Y).Graphic(2).index).Estatic)
+820               jx = .L
+830               jy = .t
+840               jw = .W
+850               jh = .H
+860               jth = .th
+870               jtw = .tw
+880               jg = NewIndexData(MapData(X, Y).Graphic(2).index).OverWriteGrafico
+          
+890           End With
+900       End If
+                      
+910       Set Tex = DXPool.GetTexture(jg)
+          'Call DXPool.Texture_Dimension_Get(.texture_index, texture_width, texture_height)
+          
+920       Tex.GetLevelDesc 0, srdesc
+          
+930           SrcWidth = 32 'd3dtextures.texwidth
+940           Width = 32 'd3dtextures.texwidth
+             
+950           Height = 32 'd3dtextures.texheight
+960           SrcHeight = 32 'd3dtextures.texheight
+970           SrcBitmapWidth = srdesc.Width
+980           SrcBitmapHeight = srdesc.Height
+          'Set the RHWs (must always be 1)
+         
+990       VertexArray(0).rhw = 1
+1000      VertexArray(1).rhw = 1
+1010      VertexArray(2).rhw = 1
+1020      VertexArray(3).rhw = 1
+              
+1030          If MapData(X, Y).Luz <= 201 Or MapData(X, Y).Luz >= 218 Then
+              
+              
+              'Find the left side of the rectangle
+1040          VertexArray(0).X = xb
+1050          VertexArray(0).tu = (jx / SrcBitmapWidth)
        
-            'MapData(X, y).Graphic(2).fC = MapData(X, y).Graphic(2).fC + ((timer_elapsed_time * 0.1) * .NumFrames / .Velocidad)
-            If Not MapData(X, Y).TipoTerreno And eTipoTerreno.Agua Then
-            MapData(X, Y).Graphic(2).fC = MapData(X, Y).Graphic(2).fC + (.NumFrames * (MEE * 0.0011) * Rnd)
-            Else
-            MapData(X, Y).Graphic(2).fC = MapData(X, Y).Graphic(2).fC + (.NumFrames * (MEE * 0.0005) * Rnd)
-            
-            End If
-            If MapData(X, Y).Graphic(2).fC > .NumFrames Then
-                MapData(X, Y).Graphic(2).fC = (MapData(X, Y).Graphic(2).fC Mod .NumFrames) + 1
-            End If
-tiempo = 1
-            If MapData(X, Y).Graphic(2).fC < 1 Then MapData(X, Y).Graphic(2).fC = 1
-            
-            jx = .Indice(MapData(X, Y).Graphic(2).fC).X
-            jy = .Indice(MapData(X, Y).Graphic(2).fC).Y
-            jw = .Width
-            jh = .Height
-            jtw = .TileWidth
-            jth = .TileHeight
-            jg = (.Indice(MapData(X, Y).Graphic(2).fC).Grafico - .Indice(2).Grafico) + NewIndexData(MapData(X, Y).Graphic(2).index).OverWriteGrafico
-        End With
-    Else
-        With EstaticData(NewIndexData(MapData(X, Y).Graphic(2).index).Estatic)
-            jx = .L
-            jy = .t
-            jw = .W
-            jh = .H
-            jth = .th
-            jtw = .tw
-            jg = NewIndexData(MapData(X, Y).Graphic(2).index).OverWriteGrafico
-    
-        End With
-    End If
-                
-    Set Tex = DXPool.GetTexture(jg)
-    'Call DXPool.Texture_Dimension_Get(.texture_index, texture_width, texture_height)
-    
-    Tex.GetLevelDesc 0, srdesc
-    
-        SrcWidth = 32 'd3dtextures.texwidth
-        Width = 32 'd3dtextures.texwidth
+              'Find the top side of the rectangle
+1060          VertexArray(0).Y = yb
+1070          VertexArray(0).tv = (jy / SrcBitmapHeight)
+         
+              'Find the right side of the rectangle
+1080          VertexArray(1).X = xb + jw
+1090          VertexArray(1).tu = (jx + jw) / SrcBitmapWidth
        
-        Height = 32 'd3dtextures.texheight
-        SrcHeight = 32 'd3dtextures.texheight
-        SrcBitmapWidth = srdesc.Width
-        SrcBitmapHeight = srdesc.Height
-    'Set the RHWs (must always be 1)
-   
-    VertexArray(0).rhw = 1
-    VertexArray(1).rhw = 1
-    VertexArray(2).rhw = 1
-    VertexArray(3).rhw = 1
-        
-        If MapData(X, Y).Luz <= 201 Or MapData(X, Y).Luz >= 218 Then
-        
-        
-        'Find the left side of the rectangle
-        VertexArray(0).X = xb
-        VertexArray(0).tu = (jx / SrcBitmapWidth)
- 
-        'Find the top side of the rectangle
-        VertexArray(0).Y = yb
-        VertexArray(0).tv = (jy / SrcBitmapHeight)
-   
-        'Find the right side of the rectangle
-        VertexArray(1).X = xb + jw
-        VertexArray(1).tu = (jx + jw) / SrcBitmapWidth
- 
-        'These values will only equal each other when not a shadow
-        VertexArray(2).X = VertexArray(0).X
-        VertexArray(3).X = VertexArray(1).X
- 
-    'Find the bottom of the rectangle
-    VertexArray(2).Y = yb + jh
-    VertexArray(2).tv = (jy + jh) / SrcBitmapHeight
- 
-    'Because this is a perfect rectangle, all of the values below will equal one of the values we already got
-    VertexArray(1).Y = VertexArray(0).Y
-    VertexArray(1).tv = VertexArray(0).tv
-    VertexArray(2).tu = VertexArray(0).tu
-    VertexArray(3).Y = VertexArray(2).Y
-    VertexArray(3).tu = VertexArray(1).tu
-    VertexArray(3).tv = VertexArray(2).tv
-                            If ((MapData(X, Y).TipoTerreno And eTipoTerreno.Agua) Or (MapData(X, Y).TipoTerreno And eTipoTerreno.Lava)) Then
-
+              'These values will only equal each other when not a shadow
+1100          VertexArray(2).X = VertexArray(0).X
+1110          VertexArray(3).X = VertexArray(1).X
        
-                            Polygon_Ignore_Right = 0
-                            Polygon_Ignore_Left = 0
-                            Polygon_Ignore_Top = 0
-                            Polygon_Ignore_lower = 0
-                            Corner = 0
-                            
-                            If Y <> 1 Then
-                              If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Top = 1
-                            End If
-                            
-                            If Y <> 100 Then
-                              If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_lower = 1
-                            End If
-                            
-                            If X <> 100 Then
-                              If Not MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Right = 1
-                            End If
-                            
-                            If X <> 1 Then
-                              If Not MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Left = 1
-                            End If
-                            
-                          If Polygon_Ignore_Left = 0 Then
-                                If X > 1 And Y > 1 Then
-                                If MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And (Not MapData(X - 1, Y - 1).TipoTerreno And eTipoTerreno.Agua) Then
-                                    Corner = 2
-                                End If
-                                End If
-                                If X > 1 And Y < 100 Then
-                                If MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X - 1, Y + 1).TipoTerreno And eTipoTerreno.Agua) Then
-                                    Corner = 1
-                                End If
-                                End If
-                            End If
-                            If Polygon_Ignore_Right = 0 Then
-                                If X < 100 And Y > 1 Then
-                                If MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y - 1).TipoTerreno And eTipoTerreno.Agua) Then
-                                    Corner = 4
-                                End If
-                                End If
-                                If X < 100 And Y < 100 Then
-                                If MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y + 1).TipoTerreno And eTipoTerreno.Agua) Then
-                                    Corner = 3
-                                End If
-                                End If
-                            End If
-                            
+          'Find the bottom of the rectangle
+1120      VertexArray(2).Y = yb + jh
+1130      VertexArray(2).tv = (jy + jh) / SrcBitmapHeight
+       
+          'Because this is a perfect rectangle, all of the values below will equal one of the values we already got
+1140      VertexArray(1).Y = VertexArray(0).Y
+1150      VertexArray(1).tv = VertexArray(0).tv
+1160      VertexArray(2).tu = VertexArray(0).tu
+1170      VertexArray(3).Y = VertexArray(2).Y
+1180      VertexArray(3).tu = VertexArray(1).tu
+1190      VertexArray(3).tv = VertexArray(2).tv
+1200                              If ((MapData(X, Y).TipoTerreno And eTipoTerreno.Agua) Or (MapData(X, Y).TipoTerreno And eTipoTerreno.Lava)) Then
 
+             
+1210                              Polygon_Ignore_Right = 0
+1220                              Polygon_Ignore_Left = 0
+1230                              Polygon_Ignore_Top = 0
+1240                              Polygon_Ignore_lower = 0
+1250                              Corner = 0
+                                  
+1260                              If Y <> 1 Then
+1270                                If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Top = 1
+1280                              End If
+                                  
+1290                              If Y <> 100 Then
+1300                                If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_lower = 1
+1310                              End If
+                                  
+1320                              If X <> 100 Then
+1330                                If Not MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Right = 1
+1340                              End If
+                                  
+1350                              If X <> 1 Then
+1360                                If Not MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Left = 1
+1370                              End If
+                                  
+1380                            If Polygon_Ignore_Left = 0 Then
+1390                                  If X > 1 And Y > 1 Then
+1400                                  If MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And (Not MapData(X - 1, Y - 1).TipoTerreno And eTipoTerreno.Agua) Then
+1410                                      Corner = 2
+1420                                  End If
+1430                                  End If
+1440                                  If X > 1 And Y < 100 Then
+1450                                  If MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X - 1, Y + 1).TipoTerreno And eTipoTerreno.Agua) Then
+1460                                      Corner = 1
+1470                                  End If
+1480                                  End If
+1490                              End If
+1500                              If Polygon_Ignore_Right = 0 Then
+1510                                  If X < 100 And Y > 1 Then
+1520                                  If MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y - 1).TipoTerreno And eTipoTerreno.Agua) Then
+1530                                      Corner = 4
+1540                                  End If
+1550                                  End If
+1560                                  If X < 100 And Y < 100 Then
+1570                                  If MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y + 1).TipoTerreno And eTipoTerreno.Agua) Then
+1580                                      Corner = 3
+1590                                  End If
+1600                                  End If
+1610                              End If
+                                  
+
+
+                    
+                                  
+                                  
+1620                              VertexArray(1).X = VertexArray(1).X + PolygonX
+1630                              VertexArray(3).X = VertexArray(3).X + PolygonX
+
+
+1640                              If Polygon_Ignore_Top <> 1 Then
+1650                                  VertexArray(0).Y = VertexArray(0).Y + polygonCount(1)
+1660                                  VertexArray(1).Y = VertexArray(1).Y - polygonCount(1)
+1670                              End If
+
+1680                              If Polygon_Ignore_lower <> 1 Then
+1690                                  VertexArray(2).Y = VertexArray(2).Y + polygonCount(1)
+1700                                  VertexArray(3).Y = VertexArray(3).Y - polygonCount(1)
+1710                              End If
+                                  
+                                  
+                               
+
+
+                  
+1720                      End If
+         
+1730      If MapData(X, Y).light_value(0) <> 0 Then
+1740          VertexArray(0).Color = MapData(X, Y).light_value(0)
+1750      Else
+1760          VertexArray(0).Color = base_light
+1770      End If
+1780        If MapData(X, Y).light_value(1) <> 0 Then
+1790          VertexArray(1).Color = MapData(X, Y).light_value(1)
+1800      Else
+1810          VertexArray(1).Color = base_light
+1820      End If
+1830      If MapData(X, Y).light_value(2) <> 0 Then
+1840          VertexArray(2).Color = MapData(X, Y).light_value(2)
+1850      Else
+1860          VertexArray(2).Color = base_light
+1870      End If
+1880      If MapData(X, Y).light_value(3) <> 0 Then
+1890          VertexArray(3).Color = MapData(X, Y).light_value(3)
+1900      Else
+1910          VertexArray(3).Color = base_light
+1920      End If
+         
+1930     Else
+         
+              'Find the left side of the rectangle
+1940          VertexArray(1).X = xb
+1950          VertexArray(1).tu = (jx / SrcBitmapWidth)
+       
+              'Find the top side of the rectangle
+1960          VertexArray(1).Y = yb
+1970          VertexArray(1).tv = (jy / SrcBitmapHeight)
+         
+              'Find the right side of the rectangle
+1980          VertexArray(3).X = xb + jw
+1990          VertexArray(3).tu = (jx + jw) / SrcBitmapWidth
+       
+              'These values will only equal each other when not a shadow
+2000          VertexArray(0).X = VertexArray(1).X
+2010          VertexArray(2).X = VertexArray(3).X
+       
+          'Find the bottom of the rectangle
+2020      VertexArray(0).Y = yb + jh
+2030      VertexArray(0).tv = (jy + jh) / SrcBitmapHeight
+       
+          'Because this is a perfect rectangle, all of the values below will equal one of the values we already got
+2040      VertexArray(3).Y = VertexArray(1).Y
+2050      VertexArray(3).tv = VertexArray(1).tv
+2060      VertexArray(0).tu = VertexArray(1).tu
+2070      VertexArray(2).Y = VertexArray(0).Y
+2080      VertexArray(2).tu = VertexArray(3).tu
+2090      VertexArray(2).tv = VertexArray(0).tv
+         
+         
+2100                             If (MapData(X, Y).TipoTerreno And eTipoTerreno.Agua Or MapData(X, Y).TipoTerreno And eTipoTerreno.Lava) Then
+
+             
+2110                              Polygon_Ignore_Right = 0
+2120                              Polygon_Ignore_Left = 0
+2130                              Polygon_Ignore_Top = 0
+2140                              Polygon_Ignore_lower = 0
+2150                              Corner = 0
+                                  
+2160                              If Y <> 1 Then
+2170                                If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Top = 1
+2180                              End If
+                                  
+2190                              If Y <> 100 Then
+2200                                If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_lower = 1
+2210                              End If
+                                  
+2220                              If X <> 100 Then
+2230                                If Not MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Right = 1
+2240                              End If
+                                  
+2250                              If X <> 1 Then
+2260                                If Not MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Left = 1
+2270                              End If
+                                  
+2280                            If Polygon_Ignore_Left = 0 Then
+2290                                  If X > 1 And Y > 1 Then
+2300                                  If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And MapData(X - 1, Y - 1).TipoTerreno And eTipoTerreno.Agua Then
+2310                                      Polygon_Ignore_Left = 1
+2320                                      Corner = 1
+2330                                  End If
+2340                                  End If
+2350                                  If X > 1 And Y < 100 Then
+2360                                  If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And MapData(X - 1, Y + 1).TipoTerreno And eTipoTerreno.Agua Then
+2370                                      Polygon_Ignore_Left = 1
+2380                                      Corner = 1
+2390                                  End If
+2400                                  End If
+2410                              End If
+2420                              If Polygon_Ignore_Right = 0 Then
+2430                                  If X < 100 And Y > 1 Then
+2440                                  If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And MapData(X + 1, Y - 1).TipoTerreno And eTipoTerreno.Agua Then
+2450                                      Polygon_Ignore_Right = 1
+2460                                      Corner = 1
+2470                                  End If
+2480                                  End If
+2490                                  If X < 100 And Y < 100 Then
+2500                                  If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And MapData(X + 1, Y + 1).TipoTerreno And eTipoTerreno.Agua Then
+2510                                      Polygon_Ignore_Right = 1
+2520                                      Corner = 1
+2530                                  End If
+2540                                  End If
+2550                              End If
+                                  
+
+2560                              If Polygon_Ignore_Left <> 1 Then
+2570                                  VertexArray(1).X = VertexArray(1).X + PolygonX
+2580                                  VertexArray(0).X = VertexArray(0).X + PolygonX
+2590                              End If
+                                  
+
+2600                                  If Corner = 1 Then
+2610                                      VertexArray(1).Y = VertexArray(1).Y - 1
+2620                                      VertexArray(3).Y = VertexArray(3).Y - 1
+2630                                      VertexArray(0).Y = VertexArray(0).Y + 1
+2640                                      VertexArray(2).Y = VertexArray(2).Y + 1
+2650                                  End If
+
+                                  
+2660                          If Polygon_Ignore_Right <> 1 Then
+2670                              VertexArray(3).X = VertexArray(3).X + PolygonX
+2680                              VertexArray(2).X = VertexArray(2).X + PolygonX
+2690                          End If
+                              
+2700                              If Polygon_Ignore_Top <> 1 Then
+2710                                  VertexArray(3).Y = VertexArray(3).Y - polygonCount(1)
+2720                                  VertexArray(1).Y = VertexArray(1).Y + polygonCount(1)
+                                  
+2730                              End If
+
+2740                              If Polygon_Ignore_lower <> 1 Then
+2750                                  VertexArray(2).Y = VertexArray(2).Y - polygonCount(1)
+2760                                  VertexArray(0).Y = VertexArray(0).Y + polygonCount(1)
+2770                              End If
+                          
+                                
+
+                             
+
+
+2780              End If
+          
+2790      If MapData(X, Y).light_value(0) <> 0 Then
+2800          VertexArray(0).Color = MapData(X, Y).light_value(0)
+2810      Else
+2820          VertexArray(0).Color = base_light
+2830      End If
+2840        If MapData(X, Y).light_value(1) <> 0 Then
+2850          VertexArray(1).Color = MapData(X, Y).light_value(1)
+2860      Else
+2870          VertexArray(1).Color = base_light
+2880      End If
+2890      If MapData(X, Y).light_value(2) <> 0 Then
+2900          VertexArray(2).Color = MapData(X, Y).light_value(2)
+2910      Else
+2920          VertexArray(2).Color = base_light
+2930      End If
+2940      If MapData(X, Y).light_value(3) <> 0 Then
+2950          VertexArray(3).Color = MapData(X, Y).light_value(3)
+2960      Else
+2970          VertexArray(3).Color = base_light
+2980      End If
+         
+2990     End If
+
+
+          
+          'VertexArray(0).y = VertexArray(0).y - MapData(X, y).AlturaPoligonos(0)
+          'VertexArray(1).y = VertexArray(1).y - MapData(X, y).AlturaPoligonos(1)
+          'VertexArray(2).y = VertexArray(2).y - MapData(X, y).AlturaPoligonos(2)
+          'VertexArray(3).y = VertexArray(3).y - MapData(X, y).AlturaPoligonos(3)
+          
+3000      ddevice.SetTexture 0, Tex
+          
+
+
+3010      ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, VertexArray(0), 28
+          
+
+          
+
+          
+3020  End If
+
+
+                  'Layer 2 **********************************
+3030  End If
+3040          ScreenX = ScreenX + 1
+3050      Next X
+3060      ScreenY = ScreenY + 1
+3070      If Y > 100 Then Exit For
+3080  Next Y
+
+3090  ddevice.SetRenderTarget Back_Sur, Stencil, ByVal 0
+
+3100  ddevice.SetTexture 0, Agua_Tex
+
+3110  VertexArray(0).X = 0
+3120  VertexArray(0).Y = 0
+3130  VertexArray(0).tu = 0
+3140  VertexArray(0).tv = 0 '
+
+3150  VertexArray(1).X = ClienteWidth * 32
+3160  VertexArray(1).Y = 0
+3170  VertexArray(1).tu = 1
+3180  VertexArray(1).tv = 0
+
+3190  VertexArray(2).X = 0
+3200  VertexArray(2).Y = ClienteHeight * 32
+3210  VertexArray(2).tu = 0
+3220  VertexArray(2).tv = 1
+
+3230  VertexArray(3).X = ClienteWidth * 32
+3240  VertexArray(3).Y = ClienteHeight * 32
+3250  VertexArray(3).tu = 1
+3260  VertexArray(3).tv = 1
+      '
+3270  ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+
+3280  ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+
+3290  Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE)
+3300  Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
+
+
+
+3310  ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, VertexArray(0), 28
+
+3320  ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
+3330  ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
+
+3340  Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE Or D3DTA_DIFFUSE)
+3350  Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
+
+
+3360            tiempo = 2
+3370              ScreenY = -8
+3380  For Y = (MinY) To (MaxY)
+3390      ScreenX = -8
+3400      For X = (MinX) To (MaxX)
+
+3410          If InMapBounds(X, Y) Then
+                  
+
+                  
+                  'Layer 5
+3420              If MapData(X, Y).Graphic(5).index <> 0 And VerCapa5 Then
+3430                  If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+3440                  modGrh.Grh_iRenderN MapData(X, Y).Graphic(5), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
+                     
+3450                  Else
+3460                  modGrh.Grh_RenderN MapData(X, Y).Graphic(5), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
+3470                  End If
+3480              End If
+3490  End If
 
               
-                            
-                            
-                            VertexArray(1).X = VertexArray(1).X + PolygonX
-                            VertexArray(3).X = VertexArray(3).X + PolygonX
+3500          ScreenX = ScreenX + 1
+3510      Next X
+3520      ScreenY = ScreenY + 1
+3530      If Y > 100 Then Exit For
+3540  Next Y
+
+3550  ScreenY = -8
+3560  tiempo = 3
 
 
-                            If Polygon_Ignore_Top <> 1 Then
-                                VertexArray(0).Y = VertexArray(0).Y + polygonCount(1)
-                                VertexArray(1).Y = VertexArray(1).Y - polygonCount(1)
-                            End If
+3570  For Y = (MinY) To (MaxY)   '- 8+ 8
+3580      ScreenX = -8
+3590      For X = (MinX) To (MaxX)   '- 8 + 8
+3600          If InMapBounds(X, Y) Then
+3610              If X > 100 Or X < -3 Then Exit For ' 30/05/2006
 
-                            If Polygon_Ignore_lower <> 1 Then
-                                VertexArray(2).Y = VertexArray(2).Y + polygonCount(1)
-                                VertexArray(3).Y = VertexArray(3).Y - polygonCount(1)
-                            End If
-                            
-                            
-                         
+3620              iPPx = ((32 * ScreenX) - 32) + PixelOffsetX
+3630              iPPy = ((32 * ScreenY) - 32) + PixelOffsetY
+                   'Object Layer **********************************
 
+3640               If MapData(X, Y).OBJInfo.objindex <> 0 And VerObjetos Then
+3650                  If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+3660                      modGrh.Grh_iRenderN MapData(X, Y).ObjGrh, iPPx, iPPy, MapData(X, Y).light_value, True
+3670                  Else
+3680                      modGrh.Grh_RenderN MapData(X, Y).ObjGrh, iPPx, iPPy, MapData(X, Y).light_value, True
+3690                  End If
+3700               End If
+3710               If MapData(X, Y).DecorI > 0 And MapData(X, Y).DecorGrh.index > 0 And VerDecors Then
+3720                  If TipoSeleccionado = 1 Then
+3730                      If ObjetoSeleccionado.X = X And ObjetoSeleccionado.Y = Y Then
+3740                          If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
 
-            
-                    End If
-   
-    If MapData(X, Y).light_value(0) <> 0 Then
-        VertexArray(0).Color = MapData(X, Y).light_value(0)
-    Else
-        VertexArray(0).Color = base_light
-    End If
-      If MapData(X, Y).light_value(1) <> 0 Then
-        VertexArray(1).Color = MapData(X, Y).light_value(1)
-    Else
-        VertexArray(1).Color = base_light
-    End If
-    If MapData(X, Y).light_value(2) <> 0 Then
-        VertexArray(2).Color = MapData(X, Y).light_value(2)
-    Else
-        VertexArray(2).Color = base_light
-    End If
-    If MapData(X, Y).light_value(3) <> 0 Then
-        VertexArray(3).Color = MapData(X, Y).light_value(3)
-    Else
-        VertexArray(3).Color = base_light
-    End If
-   
-   Else
-   
-        'Find the left side of the rectangle
-        VertexArray(1).X = xb
-        VertexArray(1).tu = (jx / SrcBitmapWidth)
- 
-        'Find the top side of the rectangle
-        VertexArray(1).Y = yb
-        VertexArray(1).tv = (jy / SrcBitmapHeight)
-   
-        'Find the right side of the rectangle
-        VertexArray(3).X = xb + jw
-        VertexArray(3).tu = (jx + jw) / SrcBitmapWidth
- 
-        'These values will only equal each other when not a shadow
-        VertexArray(0).X = VertexArray(1).X
-        VertexArray(2).X = VertexArray(3).X
- 
-    'Find the bottom of the rectangle
-    VertexArray(0).Y = yb + jh
-    VertexArray(0).tv = (jy + jh) / SrcBitmapHeight
- 
-    'Because this is a perfect rectangle, all of the values below will equal one of the values we already got
-    VertexArray(3).Y = VertexArray(1).Y
-    VertexArray(3).tv = VertexArray(1).tv
-    VertexArray(0).tu = VertexArray(1).tu
-    VertexArray(2).Y = VertexArray(0).Y
-    VertexArray(2).tu = VertexArray(3).tu
-    VertexArray(2).tv = VertexArray(0).tv
-   
-   
-                           If (MapData(X, Y).TipoTerreno And eTipoTerreno.Agua Or MapData(X, Y).TipoTerreno And eTipoTerreno.Lava) Then
-
-       
-                            Polygon_Ignore_Right = 0
-                            Polygon_Ignore_Left = 0
-                            Polygon_Ignore_Top = 0
-                            Polygon_Ignore_lower = 0
-                            Corner = 0
-                            
-                            If Y <> 1 Then
-                              If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Top = 1
-                            End If
-                            
-                            If Y <> 100 Then
-                              If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_lower = 1
-                            End If
-                            
-                            If X <> 100 Then
-                              If Not MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X + 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Right = 1
-                            End If
-                            
-                            If X <> 1 Then
-                              If Not MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Agua And Not (MapData(X - 1, Y).TipoTerreno And eTipoTerreno.Lava) Then Polygon_Ignore_Left = 1
-                            End If
-                            
-                          If Polygon_Ignore_Left = 0 Then
-                                If X > 1 And Y > 1 Then
-                                If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And MapData(X - 1, Y - 1).TipoTerreno And eTipoTerreno.Agua Then
-                                    Polygon_Ignore_Left = 1
-                                    Corner = 1
-                                End If
-                                End If
-                                If X > 1 And Y < 100 Then
-                                If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And MapData(X - 1, Y + 1).TipoTerreno And eTipoTerreno.Agua Then
-                                    Polygon_Ignore_Left = 1
-                                    Corner = 1
-                                End If
-                                End If
-                            End If
-                            If Polygon_Ignore_Right = 0 Then
-                                If X < 100 And Y > 1 Then
-                                If Not MapData(X, Y - 1).TipoTerreno And eTipoTerreno.Agua And MapData(X + 1, Y - 1).TipoTerreno And eTipoTerreno.Agua Then
-                                    Polygon_Ignore_Right = 1
-                                    Corner = 1
-                                End If
-                                End If
-                                If X < 100 And Y < 100 Then
-                                If Not MapData(X, Y + 1).TipoTerreno And eTipoTerreno.Agua And MapData(X + 1, Y + 1).TipoTerreno And eTipoTerreno.Agua Then
-                                    Polygon_Ignore_Right = 1
-                                    Corner = 1
-                                End If
-                                End If
-                            End If
-                            
-
-                            If Polygon_Ignore_Left <> 1 Then
-                                VertexArray(1).X = VertexArray(1).X + PolygonX
-                                VertexArray(0).X = VertexArray(0).X + PolygonX
-                            End If
-                            
-
-                                If Corner = 1 Then
-                                    VertexArray(1).Y = VertexArray(1).Y - 1
-                                    VertexArray(3).Y = VertexArray(3).Y - 1
-                                    VertexArray(0).Y = VertexArray(0).Y + 1
-                                    VertexArray(2).Y = VertexArray(2).Y + 1
-                                End If
-
-                            
-                        If Polygon_Ignore_Right <> 1 Then
-                            VertexArray(3).X = VertexArray(3).X + PolygonX
-                            VertexArray(2).X = VertexArray(2).X + PolygonX
-                        End If
-                        
-                            If Polygon_Ignore_Top <> 1 Then
-                                VertexArray(3).Y = VertexArray(3).Y - polygonCount(1)
-                                VertexArray(1).Y = VertexArray(1).Y + polygonCount(1)
-                            
-                            End If
-
-                            If Polygon_Ignore_lower <> 1 Then
-                                VertexArray(2).Y = VertexArray(2).Y - polygonCount(1)
-                                VertexArray(0).Y = VertexArray(0).Y + polygonCount(1)
-                            End If
-                    
+3750                          modGrh.Grh_iRenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
+3760                          Else
+3770                          modGrh.Grh_RenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
+                              
+3780                          End If
+3790                      End If
+3800                  End If
+3810                  If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+3820                      modGrh.Grh_iRenderN MapData(X, Y).DecorGrh, iPPx, iPPy, MapData(X, Y).light_value, True
                           
+3830                  Else
+3840                      modGrh.Grh_RenderN MapData(X, Y).DecorGrh, iPPx, iPPy, MapData(X, Y).light_value, True
+3850                  End If
 
+3860               End If
+3870            tiempo = 4
+
+                        'Char layer **********************************
+3880                   If MapData(X, Y).CHarIndex <> 0 And VerNpcs Then
                        
+3890                       TempChar = CharList(MapData(X, Y).CHarIndex)
+
+3900                       PixelOffsetXTemp = PixelOffsetX
+3910                       PixelOffsetYTemp = PixelOffsetY
+                          
+3920                      If TipoSeleccionado = 2 Then
+3930                      If ObjetoSeleccionado.X = X And ObjetoSeleccionado.Y = Y Then
+3940                          If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+
+3950                          modGrh.Grh_iRenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
+3960                          Else
+3970                          modGrh.Grh_RenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
+                              
+3980                          End If
+3990                      End If
+4000                  End If
+                          
+                          
+                         'Dibuja solamente players
+4010                     If TempChar.Head(TempChar.Heading).index <> 0 Then
+4020                  If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+4030                       modGrh.Anim_iRender TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False
+                           'Draw Head
+4040                       modGrh.Grh_iRenderN TempChar.Head(TempChar.Heading), iPPx, iPPy + BodyData(TempChar.iBody).OffsetY + HeadData(TempChar.iHead).OffsetDibujoY, MapData(X, Y).light_value, True
+                         
+4050                  Else
+4060                        modGrh.Anim_Render TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False, BodyData(TempChar.iBody).OverWriteGrafico
+                           'Draw Head
+4070                       modGrh.Grh_RenderN TempChar.Head(TempChar.Heading), iPPx, iPPy + BodyData(TempChar.iBody).OffsetY + HeadData(TempChar.iHead).OffsetDibujoY, MapData(X, Y).light_value, True
+                                        
+4080                  End If
+4090                     Else
+                         
+4100                  If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+4110                       modGrh.Anim_iRender TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False, BodyData(TempChar.iBody).OverWriteGrafico
+4120                  Else
+4130                        modGrh.Anim_Render TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False, BodyData(TempChar.iBody).OverWriteGrafico
+4140                  End If
+4150              End If
+                  
+4160                   End If
 
 
-            End If
-    
-    If MapData(X, Y).light_value(0) <> 0 Then
-        VertexArray(0).Color = MapData(X, Y).light_value(0)
-    Else
-        VertexArray(0).Color = base_light
-    End If
-      If MapData(X, Y).light_value(1) <> 0 Then
-        VertexArray(1).Color = MapData(X, Y).light_value(1)
-    Else
-        VertexArray(1).Color = base_light
-    End If
-    If MapData(X, Y).light_value(2) <> 0 Then
-        VertexArray(2).Color = MapData(X, Y).light_value(2)
-    Else
-        VertexArray(2).Color = base_light
-    End If
-    If MapData(X, Y).light_value(3) <> 0 Then
-        VertexArray(3).Color = MapData(X, Y).light_value(3)
-    Else
-        VertexArray(3).Color = base_light
-    End If
-   
-   End If
+4170                   tiempo = 5
 
+                   'Layer 3 *****************************************
+4180               If MapData(X, Y).Graphic(3).index <> 0 And VerCapa3 Then
+4190                  If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+4200                   modGrh.Grh_iRenderN MapData(X, Y).Graphic(3), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
+4210              Else
 
-    
-    'VertexArray(0).y = VertexArray(0).y - MapData(X, y).AlturaPoligonos(0)
-    'VertexArray(1).y = VertexArray(1).y - MapData(X, y).AlturaPoligonos(1)
-    'VertexArray(2).y = VertexArray(2).y - MapData(X, y).AlturaPoligonos(2)
-    'VertexArray(3).y = VertexArray(3).y - MapData(X, y).AlturaPoligonos(3)
-    
-    ddevice.SetTexture 0, Tex
-    
-
-
-    ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, VertexArray(0), 28
-    
-
-    
-
-    
-End If
-
-
-            'Layer 2 **********************************
-End If
-        ScreenX = ScreenX + 1
-    Next X
-    ScreenY = ScreenY + 1
-    If Y > 100 Then Exit For
-Next Y
-
-ddevice.SetRenderTarget Back_Sur, Stencil, ByVal 0
-
-ddevice.SetTexture 0, Agua_Tex
-
-VertexArray(0).X = 0
-VertexArray(0).Y = 0
-VertexArray(0).tu = 0
-VertexArray(0).tv = 0 '
-
-VertexArray(1).X = ClienteWidth * 32
-VertexArray(1).Y = 0
-VertexArray(1).tu = 1
-VertexArray(1).tv = 0
-
-VertexArray(2).X = 0
-VertexArray(2).Y = ClienteHeight * 32
-VertexArray(2).tu = 0
-VertexArray(2).tv = 1
-
-VertexArray(3).X = ClienteWidth * 32
-VertexArray(3).Y = ClienteHeight * 32
-VertexArray(3).tu = 1
-VertexArray(3).tv = 1
-'
-ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-
-ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-
-Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE)
-Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
-
-
-
-ddevice.DrawPrimitiveUP D3DPT_TRIANGLESTRIP, 2, VertexArray(0), 28
-
-ddevice.SetRenderState D3DRS_SRCBLEND, D3DBLEND_SRCALPHA
-ddevice.SetRenderState D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA
-
-Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE Or D3DTA_DIFFUSE)
-Call ddevice.SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_CURRENT)
-
-
-          tiempo = 2
-            ScreenY = -8
-For Y = (MinY) To (MaxY)
-    ScreenX = -8
-    For X = (MinX) To (MaxX)
-
-        If InMapBounds(X, Y) Then
-            
-
-            
-            'Layer 5
-            If MapData(X, Y).Graphic(5).index <> 0 And VerCapa5 Then
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                modGrh.Grh_iRenderN MapData(X, Y).Graphic(5), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
-               
-                Else
-                modGrh.Grh_RenderN MapData(X, Y).Graphic(5), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
-                End If
-            End If
-End If
-
-        
-        ScreenX = ScreenX + 1
-    Next X
-    ScreenY = ScreenY + 1
-    If Y > 100 Then Exit For
-Next Y
-
-ScreenY = -8
-tiempo = 3
-
-
-For Y = (MinY) To (MaxY)   '- 8+ 8
-    ScreenX = -8
-    For X = (MinX) To (MaxX)   '- 8 + 8
-        If InMapBounds(X, Y) Then
-            If X > 100 Or X < -3 Then Exit For ' 30/05/2006
-
-            iPPx = ((32 * ScreenX) - 32) + PixelOffsetX
-            iPPy = ((32 * ScreenY) - 32) + PixelOffsetY
-             'Object Layer **********************************
-
-             If MapData(X, Y).OBJInfo.objindex <> 0 And VerObjetos Then
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                    modGrh.Grh_iRenderN MapData(X, Y).ObjGrh, iPPx, iPPy, MapData(X, Y).light_value, True
-                Else
-                    modGrh.Grh_RenderN MapData(X, Y).ObjGrh, iPPx, iPPy, MapData(X, Y).light_value, True
-                End If
-             End If
-             If MapData(X, Y).DecorI > 0 And MapData(X, Y).DecorGrh.index > 0 And VerDecors Then
-                If TipoSeleccionado = 1 Then
-                    If ObjetoSeleccionado.X = X And ObjetoSeleccionado.Y = Y Then
-                        If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-
-                        modGrh.Grh_iRenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
-                        Else
-                        modGrh.Grh_RenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
-                        
-                        End If
-                    End If
-                End If
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                    modGrh.Grh_iRenderN MapData(X, Y).DecorGrh, iPPx, iPPy, MapData(X, Y).light_value, True
-                    
-                Else
-                    modGrh.Grh_RenderN MapData(X, Y).DecorGrh, iPPx, iPPy, MapData(X, Y).light_value, True
-                End If
-
-             End If
-          tiempo = 4
-
-                  'Char layer **********************************
-                 If MapData(X, Y).CHarIndex <> 0 And VerNpcs Then
-                 
-                     TempChar = CharList(MapData(X, Y).CHarIndex)
-
-                     PixelOffsetXTemp = PixelOffsetX
-                     PixelOffsetYTemp = PixelOffsetY
-                    
-                    If TipoSeleccionado = 2 Then
-                    If ObjetoSeleccionado.X = X And ObjetoSeleccionado.Y = Y Then
-                        If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-
-                        modGrh.Grh_iRenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
-                        Else
-                        modGrh.Grh_RenderN SeleccionnGrh, iPPx, iPPy + (EstaticData(NewIndexData(SeleccionIndex).Estatic).H * 0.5), SeleccionadoArrayColor, True
-                        
-                        End If
-                    End If
-                End If
-                    
-                    
-                   'Dibuja solamente players
-                   If TempChar.Head(TempChar.Heading).index <> 0 Then
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                     modGrh.Anim_iRender TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False
-                     'Draw Head
-                     modGrh.Grh_iRenderN TempChar.Head(TempChar.Heading), iPPx, iPPy + BodyData(TempChar.iBody).OffsetY + HeadData(TempChar.iHead).OffsetDibujoY, MapData(X, Y).light_value, True
+4220                  modGrh.Grh_RenderN MapData(X, Y).Graphic(3), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
+4230              End If
                    
-                Else
-                      modGrh.Anim_Render TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False, BodyData(TempChar.iBody).OverWriteGrafico
-                     'Draw Head
-                     modGrh.Grh_RenderN TempChar.Head(TempChar.Heading), iPPx, iPPy + BodyData(TempChar.iBody).OffsetY + HeadData(TempChar.iHead).OffsetDibujoY, MapData(X, Y).light_value, True
-                                  
-                End If
-                   Else
+4240               End If
                    
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                     modGrh.Anim_iRender TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False, BodyData(TempChar.iBody).OverWriteGrafico
-                Else
-                      modGrh.Anim_Render TempChar.Body(TempChar.Heading), iPPx, iPPy, MapData(X, Y).light_value, True, False, BodyData(TempChar.iBody).OverWriteGrafico
-                End If
-            End If
-            
-                 End If
+4250               If MapData(X, Y).SPOTLIGHT.index > 0 Then
+4260                  SPOT_LIGHTS(MapData(X, Y).SPOTLIGHT.index).X = ((32 * ScreenX) - 32) + PixelOffsetX
+4270                  SPOT_LIGHTS(MapData(X, Y).SPOTLIGHT.index).Y = ((32 * ScreenY) - 32) + PixelOffsetY
+4280                  SPOT_LIGHTS(MapData(X, Y).SPOTLIGHT.index).Mustbe_Render = True
+4290                  If frmMain.MarcarsPOT.value Then
+4300                      nGrh.index = 247
+4310                      modGrh.Grh_RenderN nGrh, ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
+4320                  End If
+4330              End If
+                   
+4340               tiempo = 6
 
+4350              tiempo = 7
 
-                 tiempo = 5
+4360          End If
+              
 
-             'Layer 3 *****************************************
-             If MapData(X, Y).Graphic(3).index <> 0 And VerCapa3 Then
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                 modGrh.Grh_iRenderN MapData(X, Y).Graphic(3), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
-            Else
-                modGrh.Grh_RenderN MapData(X, Y).Graphic(3), ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
-            End If
-             
-             End If
-             
-             If MapData(X, Y).SPOTLIGHT.index > 0 Then
-                SPOT_LIGHTS(MapData(X, Y).SPOTLIGHT.index).X = ((32 * ScreenX) - 32) + PixelOffsetX
-                SPOT_LIGHTS(MapData(X, Y).SPOTLIGHT.index).Y = ((32 * ScreenY) - 32) + PixelOffsetY
-                SPOT_LIGHTS(MapData(X, Y).SPOTLIGHT.index).Mustbe_Render = True
-                If frmMain.MarcarsPOT.value Then
-                    nGrh.index = 247
-                    modGrh.Grh_RenderN nGrh, ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, MapData(X, Y).light_value, True
-                End If
-            End If
-             
-             tiempo = 6
+4370          ScreenX = ScreenX + 1
+4380      Next X
+4390      ScreenY = ScreenY + 1
+4400  Next Y
 
-            tiempo = 7
+      'Tiles blokeadas, techos, triggers , seleccion
+4410  ScreenY = -8
+4420  For Y = (MinY) To (MaxY)
+4430      ScreenX = -8
+4440      For X = (MinX) To (MaxX)
+4450          If X < 101 And X > 0 And Y < 101 And Y > 0 Then ' 30/05/2006
+4460              iPPx = ((32 * ScreenX) - 32) + PixelOffsetX
+4470              iPPy = ((32 * ScreenY) - 32) + PixelOffsetY
 
-        End If
-        
+                  
+4480                           If MapData(X, Y).particle_group Then
+4490                    modDXEngine.Particle_Group_Render MapData(X, Y).particle_group, iPPx, iPPy
 
-        ScreenX = ScreenX + 1
-    Next X
-    ScreenY = ScreenY + 1
-Next Y
+4500               End If
+4510              If frmMain.cVerLuces.value And MapData(X, Y).Luz > 0 Then
+                      'modDXEngine.DXEngine_TextRender 1, MapData(x, Y).Luz, iPPx, iPPy, D3DColorXRGB(255, 0, 0), DT_CENTER, 32, 32
+4520                  modDXEngine.DrawText iPPx, iPPy, MapData(X, Y).Luz, D3DRED
+4530              ElseIf frmMain.chkParticle.value And MapData(X, Y).particle_group Then
+4540                  DrawText iPPx, iPPy, CStr(MapData(X, Y).parti_index), D3DWHITE
+4550              ElseIf frmMain.ChkInterior.value And MapData(X, Y).InteriorVal > 0 Then
+4560                  DrawText iPPx, iPPy, CStr(MapData(X, Y).InteriorVal), D3DWHITE
+4570              End If
+                  
+                  
+4580              If MapData(X, Y).Graphic(4).index <> 0 _
+                  And (frmMain.mnuVerCapa4.Checked = True) Then
+4590                  If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
+4600                      modGrh.Grh_RenderN MapData(X, Y).Graphic(4), iPPx, iPPy, MapData(X, Y).light_value, True
+4610              Else
+                  
+4620                  modGrh.Grh_iRenderN MapData(X, Y).Graphic(4), iPPx, iPPy, MapData(X, Y).light_value, True
+4630  End If
+4640              End If
+4650              If MapData(X, Y).TileExit.Map <> 0 And VerTranslados Then
+4660                  nGrh.index = 245
+4670                  modGrh.Grh_RenderN nGrh, iPPx, iPPy, MapData(X, Y).light_value, True
+4680              End If
+                  
+4690              If MapData(X, Y).light_index Then
+4700                  nGrh.index = 247
+4710                  modGrh.Grh_RenderN nGrh, iPPx, iPPy, colorlist, True
+4720              End If
+                  
+                  'Show blocked tiles
+4730              If VerBlockeados And MapData(X, Y).Blocked = 1 Then
+4740                  nGrh.index = 247
+4750                  modGrh.Grh_RenderN nGrh, iPPx, iPPy, MapData(X, Y).light_value, True
+4760              End If
+4770              If VerGrilla Then
+                      'Grilla 24/11/2008 by GS
+4780                  modDXEngine.DXEngine_DrawBox ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, 1, 32, RGB(255, 255, 255)
+4790                  modDXEngine.DXEngine_DrawBox ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, 32, 1, RGB(255, 255, 255)
+4800              End If
+4810              If VerTriggers Then
+                      'Call DrawText(PixelPos(ScreenX), PixelPos(ScreenY), Str(MapData(X, Y).Trigger), vbRed)
+4820                  If frmMain.lListado(8).Visible Then
+4830                      If MapData(X, Y).TipoTerreno <> 0 Then
+4840                     modDXEngine.DrawText ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, "T:" & CStr(MapData(X, Y).TipoTerreno), D3DWHITE
+4850                     End If
+4860                  Else
+4870                      If MapData(X, Y).Trigger <> 0 Then
+4880                      modDXEngine.DrawText ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, "G:" & CStr(MapData(X, Y).Trigger), D3DWHITE
+4890                      End If
+4900                  End If
+4910              End If
+4920              If Seleccionando Then
+                      'If ScreenX >= SeleccionIX And ScreenX <= SeleccionFX And ScreenY >= SeleccionIY And ScreenY <= SeleccionFY Then
+4930                      If X >= SeleccionIX And Y >= SeleccionIY Then
+4940                          If X <= SeleccionFX And Y <= SeleccionFY Then
+4950                              modDXEngine.DXEngine_DrawBox ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, 32, 32, RGB(100, 255, 255)
+4960                          End If
+4970                      End If
+4980              End If
 
-'Tiles blokeadas, techos, triggers , seleccion
-ScreenY = -8
-For Y = (MinY) To (MaxY)
-    ScreenX = -8
-    For X = (MinX) To (MaxX)
-        If X < 101 And X > 0 And Y < 101 And Y > 0 Then ' 30/05/2006
-            iPPx = ((32 * ScreenX) - 32) + PixelOffsetX
-            iPPy = ((32 * ScreenY) - 32) + PixelOffsetY
+4990          End If
+5000          ScreenX = ScreenX + 1
+5010      Next X
+5020      ScreenY = ScreenY + 1
+5030  Next Y
+      Dim Xx(0 To 3) As Long
+5040  tiempo = 100
+5050  If (frmMain.cSeleccionarSuperficie.value Or frmMain.cQuitarEnEstaCapa.value Or frmMain.cQuitarEnTodasLasCapas.value Or ((frmMain.cInsertarTrigger.value Or frmMain.cQuitarTrigger.value Or frmMain.cVerTriggers.value) And (frmMain.lListado(8).Visible Or frmMain.lListado(4).Visible))) And SobreIndex > 0 Then
 
-            
-                         If MapData(X, Y).particle_group Then
-                  modDXEngine.Particle_Group_Render MapData(X, Y).particle_group, iPPx, iPPy
+5060      Xx(0) = 0
+5070      Xx(1) = 0
+5080      Xx(2) = 0
+5090      Xx(3) = -1
+          Dim o As tnGrh
+5100      o.index = SobreIndex
+          
+5110     modGrh.Grh_RenderN o, ((SobreX - (MinX + 9)) * 32), ((SobreY - (MinY + 9)) * 32), Xx, IIf(frmMain.cCapas.ListIndex = 2 Or frmMain.cCapas.ListIndex = 4, True, False)
 
-             End If
-            If frmMain.cVerLuces.value And MapData(X, Y).Luz > 0 Then
-                'modDXEngine.DXEngine_TextRender 1, MapData(x, Y).Luz, iPPx, iPPy, D3DColorXRGB(255, 0, 0), DT_CENTER, 32, 32
-                modDXEngine.DrawText iPPx, iPPy, MapData(X, Y).Luz, D3DRED
-            ElseIf frmMain.chkParticle.value And MapData(X, Y).particle_group Then
-                DrawText iPPx, iPPy, CStr(MapData(X, Y).parti_index), D3DWHITE
-            ElseIf frmMain.ChkInterior.value And MapData(X, Y).InteriorVal > 0 Then
-                DrawText iPPx, iPPy, CStr(MapData(X, Y).InteriorVal), D3DWHITE
-            End If
-            
-            
-            If MapData(X, Y).Graphic(4).index <> 0 _
-            And (frmMain.mnuVerCapa4.Checked = True) Then
-                If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-                    modGrh.Grh_RenderN MapData(X, Y).Graphic(4), iPPx, iPPy, MapData(X, Y).light_value, True
-            Else
-            
-                modGrh.Grh_iRenderN MapData(X, Y).Graphic(4), iPPx, iPPy, MapData(X, Y).light_value, True
-End If
-            End If
-            If MapData(X, Y).TileExit.Map <> 0 And VerTranslados Then
-                nGrh.index = 245
-                modGrh.Grh_RenderN nGrh, iPPx, iPPy, MapData(X, Y).light_value, True
-            End If
-            
-            If MapData(X, Y).light_index Then
-                nGrh.index = 247
-                modGrh.Grh_RenderN nGrh, iPPx, iPPy, colorlist, True
-            End If
-            
-            'Show blocked tiles
-            If VerBlockeados And MapData(X, Y).Blocked = 1 Then
-                nGrh.index = 247
-                modGrh.Grh_RenderN nGrh, iPPx, iPPy, MapData(X, Y).light_value, True
-            End If
-            If VerGrilla Then
-                'Grilla 24/11/2008 by GS
-                modDXEngine.DXEngine_DrawBox ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, 1, 32, RGB(255, 255, 255)
-                modDXEngine.DXEngine_DrawBox ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, 32, 1, RGB(255, 255, 255)
-            End If
-            If VerTriggers Then
-                'Call DrawText(PixelPos(ScreenX), PixelPos(ScreenY), Str(MapData(X, Y).Trigger), vbRed)
-                If frmMain.lListado(8).Visible Then
-                    If MapData(X, Y).TipoTerreno <> 0 Then
-                   modDXEngine.DrawText ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, "T:" & CStr(MapData(X, Y).TipoTerreno), D3DWHITE
-                   End If
-                Else
-                    If MapData(X, Y).Trigger <> 0 Then
-                    modDXEngine.DrawText ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, "G:" & CStr(MapData(X, Y).Trigger), D3DWHITE
-                    End If
-                End If
-            End If
-            If Seleccionando Then
-                'If ScreenX >= SeleccionIX And ScreenX <= SeleccionFX And ScreenY >= SeleccionIY And ScreenY <= SeleccionFY Then
-                    If X >= SeleccionIX And Y >= SeleccionIY Then
-                        If X <= SeleccionFX And Y <= SeleccionFY Then
-                            modDXEngine.DXEngine_DrawBox ((32 * ScreenX) - 32) + PixelOffsetX, ((32 * ScreenY) - 32) + PixelOffsetY, 32, 32, RGB(100, 255, 255)
-                        End If
-                    End If
-            End If
-
-        End If
-        ScreenX = ScreenX + 1
-    Next X
-    ScreenY = ScreenY + 1
-Next Y
-Dim Xx(0 To 3) As Long
-tiempo = 100
-If (frmMain.cSeleccionarSuperficie.value Or frmMain.cQuitarEnEstaCapa.value Or frmMain.cQuitarEnTodasLasCapas.value Or ((frmMain.cInsertarTrigger.value Or frmMain.cQuitarTrigger.value Or frmMain.cVerTriggers.value) And (frmMain.lListado(8).Visible Or frmMain.lListado(4).Visible))) And SobreIndex > 0 Then
-
-    Xx(0) = 0
-    Xx(1) = 0
-    Xx(2) = 0
-    Xx(3) = -1
-    Dim o As tnGrh
-    o.index = SobreIndex
-    
-   modGrh.Grh_RenderN o, ((SobreX - (MinX + 9)) * 32), ((SobreY - (MinY + 9)) * 32), Xx, IIf(frmMain.cCapas.ListIndex = 2 Or frmMain.cCapas.ListIndex = 4, True, False)
-
-End If
+5120  End If
 
 
 
 
-Exit Sub
+5130  Exit Sub
 
 errs:
-Debug.Print Err.Description & "_" & X & "_" & Y & "_" & tiempo
+5140  Debug.Print Err.Description & "_" & X & "_" & Y & "_" & tiempo & "_" & Erl
 
 End Sub
 

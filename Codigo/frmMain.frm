@@ -3881,11 +3881,6 @@ Attribute VB_Exposed = False
 Option Explicit
 Public Statz As Boolean
 
-
-
-
-
-
 Private Sub bI_Click()
     If bI.value Then
         lListado(0).Visible = False

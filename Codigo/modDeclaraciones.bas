@@ -498,7 +498,7 @@ Public numDecor As Integer
 Public SeleccionadoArrayColor(3) As Long
 Public ObjetoSeleccionado As tcardinal
 Public TipoSeleccionado As Byte
-Public Const SeleccionIndex As Integer = 4187
+Public Const SeleccionIndex As Integer = 702
 Public SeleccionnGrh As tnGrh
 'Holds info about each tile position
 Public Type MapBlock

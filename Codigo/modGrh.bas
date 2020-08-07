@@ -285,6 +285,7 @@ Public Sub Grh_RenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_
             jg = (.Indice(Grh.fC).Grafico - .Indice(1).Grafico) + NewIndexData(Grh.index).OverWriteGrafico
         End With
     Else
+        If NewIndexData(Grh.index).Estatic <= 0 Then Exit Sub
         With EstaticData(NewIndexData(Grh.index).Estatic)
             jx = .L
             jy = .t
