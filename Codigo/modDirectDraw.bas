@@ -229,7 +229,7 @@ tY = UserPos.Y + CY
 
 End Sub
 
-Sub MakeChar(CharIndex As Integer, Body As Integer, Head As Integer, Heading As Byte, X As Integer, Y As Integer)
+Sub MakeChar(CHarIndex As Integer, Body As Integer, Head As Integer, Heading As Byte, X As Integer, Y As Integer)
 '*************************************************
 'Author: Unkwown
 'Last modified: 28/05/06 by GS
@@ -237,67 +237,67 @@ Sub MakeChar(CharIndex As Integer, Body As Integer, Head As Integer, Heading As 
 On Error Resume Next
 
 'Update LastChar
-If CharIndex > LastChar Then LastChar = CharIndex
+If CHarIndex > LastChar Then LastChar = CHarIndex
 NumChars = NumChars + 1
 
 'Update head, body, ect.
-CharList(CharIndex).iHead = Head
-CharList(CharIndex).iBody = Body
-CharList(CharIndex).Body(1).index = BodyData(Body).mMovement(1)
-CharList(CharIndex).Body(2).index = BodyData(Body).mMovement(2)
-CharList(CharIndex).Body(3).index = BodyData(Body).mMovement(3)
-CharList(CharIndex).Body(4).index = BodyData(Body).mMovement(4)
+CharList(CHarIndex).iHead = Head
+CharList(CHarIndex).iBody = Body
+CharList(CHarIndex).Body(1).index = BodyData(Body).mMovement(1)
+CharList(CHarIndex).Body(2).index = BodyData(Body).mMovement(2)
+CharList(CHarIndex).Body(3).index = BodyData(Body).mMovement(3)
+CharList(CHarIndex).Body(4).index = BodyData(Body).mMovement(4)
 If Head > 0 Then
-CharList(CharIndex).Head(1).index = HeadData(Head).Frame(1)
-CharList(CharIndex).Head(2).index = HeadData(Head).Frame(2)
-CharList(CharIndex).Head(3).index = HeadData(Head).Frame(3)
-CharList(CharIndex).Head(4).index = HeadData(Head).Frame(4)
+CharList(CHarIndex).Head(1).index = HeadData(Head).Frame(1)
+CharList(CHarIndex).Head(2).index = HeadData(Head).Frame(2)
+CharList(CHarIndex).Head(3).index = HeadData(Head).Frame(3)
+CharList(CHarIndex).Head(4).index = HeadData(Head).Frame(4)
 Else
-CharList(CharIndex).Head(1).index = 0
-CharList(CharIndex).Head(2).index = 0
-CharList(CharIndex).Head(3).index = 0
-CharList(CharIndex).Head(4).index = 0
+CharList(CHarIndex).Head(1).index = 0
+CharList(CHarIndex).Head(2).index = 0
+CharList(CHarIndex).Head(3).index = 0
+CharList(CHarIndex).Head(4).index = 0
 End If
 If Heading = 0 Then Heading = 3
-CharList(CharIndex).Heading = Heading
+CharList(CHarIndex).Heading = Heading
 
 'Reset moving stats
-CharList(CharIndex).Moving = 0
-CharList(CharIndex).MoveOffset.X = 0
-CharList(CharIndex).MoveOffset.Y = 0
+CharList(CHarIndex).Moving = 0
+CharList(CHarIndex).MoveOffset.X = 0
+CharList(CHarIndex).MoveOffset.Y = 0
 
 'Update position
-CharList(CharIndex).Pos.X = X
-CharList(CharIndex).Pos.Y = Y
+CharList(CHarIndex).Pos.X = X
+CharList(CHarIndex).Pos.Y = Y
 
 'Make active
-CharList(CharIndex).Active = 1
+CharList(CHarIndex).Active = 1
 
 'Plot on map
-MapData(X, Y).CharIndex = CharIndex
+MapData(X, Y).CHarIndex = CHarIndex
 
 bRefreshRadar = True ' GS
 
 End Sub
 
-Sub EraseChar(CharIndex As Integer)
+Sub EraseChar(CHarIndex As Integer)
 '*************************************************
 'Author: Unkwown
 'Last modified: 28/05/06 by GS
 '*************************************************
-If CharIndex = 0 Then Exit Sub
+If CHarIndex = 0 Then Exit Sub
 'Make un-active
-CharList(CharIndex).Active = 0
+CharList(CHarIndex).Active = 0
 
 'Update lastchar
-If CharIndex = LastChar Then
+If CHarIndex = LastChar Then
     Do Until CharList(LastChar).Active = 1
         LastChar = LastChar - 1
         If LastChar = 0 Then Exit Do
     Loop
 End If
 
-MapData(CharList(CharIndex).Pos.X, CharList(CharIndex).Pos.Y).CharIndex = 0
+MapData(CharList(CHarIndex).Pos.X, CharList(CHarIndex).Pos.Y).CHarIndex = 0
 
 'Update NumChars
 NumChars = NumChars - 1
@@ -306,7 +306,7 @@ bRefreshRadar = True ' GS
 
 End Sub
 
-Sub MoveCharbyPos(CharIndex As Integer, nX As Integer, nY As Integer)
+Sub MoveCharbyPos(CHarIndex As Integer, nX As Integer, nY As Integer)
 '*************************************************
 'Author: Unkwown
 'Last modified: 28/05/06 by GS
@@ -317,8 +317,8 @@ Dim addx As Integer
 Dim addy As Integer
 Dim nHeading As Byte
 
-X = CharList(CharIndex).Pos.X
-Y = CharList(CharIndex).Pos.Y
+X = CharList(CHarIndex).Pos.X
+Y = CharList(CHarIndex).Pos.Y
 
 addx = nX - X
 addy = nY - Y
@@ -339,16 +339,16 @@ If Sgn(addy) = 1 Then
     nHeading = SOUTH
 End If
 
-MapData(nX, nY).CharIndex = CharIndex
-CharList(CharIndex).Pos.X = nX
-CharList(CharIndex).Pos.Y = nY
-MapData(X, Y).CharIndex = 0
+MapData(nX, nY).CHarIndex = CHarIndex
+CharList(CHarIndex).Pos.X = nX
+CharList(CHarIndex).Pos.Y = nY
+MapData(X, Y).CHarIndex = 0
 
-CharList(CharIndex).MoveOffset.X = -1 * (TilePixelWidth * addx)
-CharList(CharIndex).MoveOffset.Y = -1 * (TilePixelHeight * addy)
+CharList(CHarIndex).MoveOffset.X = -1 * (TilePixelWidth * addx)
+CharList(CHarIndex).MoveOffset.Y = -1 * (TilePixelHeight * addy)
 
-CharList(CharIndex).Moving = 1
-CharList(CharIndex).Heading = nHeading
+CharList(CHarIndex).Moving = 1
+CharList(CHarIndex).Heading = nHeading
 
 bRefreshRadar = True ' GS
 
@@ -391,7 +391,7 @@ If MapData(X, Y).Blocked = 1 Then
 End If
 
 'Check for character
-If MapData(X, Y).CharIndex > 0 Then
+If MapData(X, Y).CHarIndex > 0 Then
     LegalPos = False
     Exit Function
 End If
@@ -770,7 +770,7 @@ Public Sub RenderScreen(TileX As Integer, TileY As Integer, PixelOffsetX As Inte
 550       For X = (MinX) To (MaxX)
 
 560           If InMapBounds(X, Y) Then
-570   If MapData(X, Y).Graphic(2).index Then
+570             If MapData(X, Y).Graphic(2).index And VerCapa2 Then
 
 580       xb = (ScreenX - 1) * 32 + PixelOffsetX
 590       yb = (ScreenY - 1) * 32 + PixelOffsetY
@@ -1247,9 +1247,9 @@ Public Sub RenderScreen(TileX As Integer, TileY As Integer, PixelOffsetX As Inte
 3870            tiempo = 4
 
                         'Char layer **********************************
-3880                   If MapData(X, Y).CharIndex <> 0 And VerNpcs Then
+3880                   If MapData(X, Y).CHarIndex <> 0 And VerNpcs Then
                        
-3890                       TempChar = CharList(MapData(X, Y).CharIndex)
+3890                       TempChar = CharList(MapData(X, Y).CHarIndex)
 
 3900                       PixelOffsetXTemp = PixelOffsetX
 3910                       PixelOffsetYTemp = PixelOffsetY
@@ -4349,9 +4349,9 @@ For Y = (MinY) To (MaxY)   '- 8+ 8
              tiempo = 4
                   'Char layer **********************************
 
-                 If MapData(X, Y).CharIndex <> 0 And VerNpcs Then
+                 If MapData(X, Y).CHarIndex <> 0 And VerNpcs Then
                  
-                     TempChar = CharList(MapData(X, Y).CharIndex)
+                     TempChar = CharList(MapData(X, Y).CHarIndex)
 
                      PixelOffsetXTemp = PixelOffsetX
                      PixelOffsetYTemp = PixelOffsetY
