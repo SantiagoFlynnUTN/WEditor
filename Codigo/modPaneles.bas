@@ -413,6 +413,7 @@ R.Right = .Ancho
 ddevice.Clear 1, R, D3DCLEAR_TARGET, &H0, ByVal 0, 0
 For P = 1 To .NumIndex
     
+    'dibuja en el vista previa
     modDXEngine.DibujareEnHwnd2 frmMain.PreviewGrh.hWnd, .index(P).Num, R, .index(P).X, .index(P).Y, False
 
 

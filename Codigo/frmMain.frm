@@ -4286,6 +4286,7 @@ Private Sub cInsertarParticula_Click()
     End If
 End Sub
 
+
 Private Sub cInsertarTrans_Click()
 '*************************************************
 'Author: ^[GS]^
@@ -5700,7 +5701,7 @@ Private Sub mnuNuevoMapa_Click()
 'Last modified: 20/05/06
 '*************************************************
 On Error Resume Next
-Dim LoopC As Integer
+Dim loopc As Integer
 
 If MsgBox("¿Deseas crear un mapa grafico?", vbYesNo, "Tipo de Mapa") = vbYes Then
     TIPOMAPAX = 1
@@ -5710,8 +5711,8 @@ End If
 
 DeseaGuardarMapa Dialog.FileName
 
-For LoopC = 0 To frmMain.MapPest.Count
-    frmMain.MapPest(LoopC).Visible = False
+For loopc = 0 To frmMain.MapPest.Count
+    frmMain.MapPest(loopc).Visible = False
 Next
 
 frmMain.Dialog.FileName = Empty

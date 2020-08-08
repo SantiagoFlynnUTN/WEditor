@@ -359,14 +359,14 @@ Function NextOpenChar() As Integer
 'Author: Unkwown
 'Last modified: 20/05/06
 '*************************************************
-Dim LoopC As Integer
+Dim loopc As Integer
 
-LoopC = 1
-Do While CharList(LoopC).Active
-    LoopC = LoopC + 1
+loopc = 1
+Do While CharList(loopc).Active
+    loopc = loopc + 1
 Loop
 
-NextOpenChar = LoopC
+NextOpenChar = loopc
 
 End Function
 
@@ -462,13 +462,20 @@ Public Sub PegarSeleccion() '(mx As Integer, my As Integer)
     DeSeleccionOY = SobreY
     ReDim DeSeleccionMap(DeSeleccionAncho, DeSeleccionAlto) As MapBlock
     
+    If Mx + UBound(DeSeleccionMap, 1) > 100 Then
+        DeSeleccionAncho = 100 - Mx + 1
+    End If
+    If My + UBound(DeSeleccionMap, 2) > 100 Then
+        DeSeleccionAlto = 100 - My + 1
+    End If
+    
     For X = 0 To DeSeleccionAncho - 1
         For Y = 0 To DeSeleccionAlto - 1
             DeSeleccionMap(X, Y) = MapData(X + SobreX, Y + SobreY)
         Next
     Next
-    For X = 0 To SeleccionAncho - 1
-        For Y = 0 To SeleccionAlto - 1
+    For X = 0 To DeSeleccionAncho - 1
+        For Y = 0 To DeSeleccionAlto - 1
              MapData(X + SobreX, Y + SobreY) = SeleccionMap(X, Y)
         Next
     Next
