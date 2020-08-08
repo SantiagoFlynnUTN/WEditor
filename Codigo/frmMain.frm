@@ -3882,9 +3882,9 @@ Option Explicit
 Public Statz As Boolean
 
 Private Sub bI_Click()
-    If bI.value Then
-        lListado(0).Visible = False
-        lListado(5).Visible = True
+    If bI.value Then 'index button
+        lListado(0).Visible = False 'list texturas
+        lListado(5).Visible = True  'list index
     Else
         lListado(5).Visible = False
         lListado(0).Visible = True
@@ -3893,7 +3893,7 @@ End Sub
 
 
 
-Private Sub cALLC_Click()
+Private Sub cALLC_Click() 'luces
 If cALLC.value Then
     'Activamos
     If cHorizontal.value Then
@@ -3925,7 +3925,7 @@ Else
 End If
 End Sub
 
-Private Sub cBL_Click()
+Private Sub cBL_Click() 'luces
 If cBL.value Then
     'Activamos
     If cHorizontal.value Then
@@ -3989,7 +3989,7 @@ Else
 End If
 End Sub
 
-Private Sub cCantFunc_Change(index As Integer)
+Private Sub cCantFunc_Change(index As Integer) 'editar cantidad objetos
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 20/05/06
@@ -4011,8 +4011,8 @@ Private Sub cCapas_Change()
     If Val(cCapas.Text) < 1 Then
       cCapas.Text = 1
     End If
-    If Val(cCapas.Text) > 4 Then
-      cCapas.Text = 4
+    If Val(cCapas.Text) > 5 Then
+      cCapas.Text = 5
     End If
     cCapas.Tag = vbNullString
 End Sub
@@ -4535,23 +4535,49 @@ End Sub
 
 
 Private Sub PegarInterior()
-Dim X As Long
-Dim Y As Long
-Dim CX As Long
-Dim CY As Long
-CX = 0
-For X = SeleccionIX To SeleccionFX
-CX = CX + 1
-If CX <= SIx Then
-    CY = 0
-    For Y = SeleccionIY To SeleccionFY
-    CY = CY + 1
-    If CY <= SIy Then
-    MapData(X, Y).InteriorVal = SelInterior(CX, CY)
-    End If
-    Next Y
+
+Dim XtilesSel As Integer
+Dim YtilesSel As Integer
+Dim i As Integer
+Dim j As Integer
+
+XtilesSel = UBound(SelInterior, 1)
+YtilesSel = UBound(SelInterior, 2)
+
+'si me excedo del limite del mapa, escribo solo lo necesario
+If Mx + XtilesSel > 100 Then
+    XtilesSel = 100 - Mx + 1
 End If
-Next X
+If My + YtilesSel > 100 Then
+    YtilesSel = 100 - My + 1
+End If
+
+modEdicion.Deshacer_Add "pegar interiores"
+
+For i = 0 To XtilesSel - 1
+    For j = 0 To YtilesSel - 1
+        MapData(Mx + i, My + j).InteriorVal = SelInterior(i + 1, j + 1)
+    Next j
+Next i
+
+
+'Dim X As Long
+'Dim Y As Long
+'Dim CX As Long
+'Dim CY As Long
+'CX = 0
+'For X = SeleccionIX To SeleccionFX
+'CX = CX + 1
+'If CX <= SIx Then
+'    CY = 0
+'    For Y = SeleccionIY To SeleccionFY
+'    CY = CY + 1
+'    If CY <= SIy Then
+'    MapData(X, Y).InteriorVal = SelInterior(CX, CY)
+'    End If
+'    Next Y
+'End If
+'Next X
 
 
 End Sub

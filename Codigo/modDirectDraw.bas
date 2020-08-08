@@ -157,8 +157,7 @@ End Type
 
 Sub ConvertTPtoCP(StartPixelLeft As Integer, StartPixelTop As Integer, CX As Single, CY As Single, ByVal tX As Integer, ByVal tY As Integer)
 '*************************************************
-'Author: Unkwown
-'Last modified: 20/05/06
+'converts a tile pos to cursor pos
 '*************************************************
 
 Dim HWindowX As Integer
@@ -187,8 +186,9 @@ CY = (ly * TilePixelHeight) + StartPixelTop
 End Sub
 Sub ConvertCPtoTP(StartPixelLeft As Integer, StartPixelTop As Integer, ByVal CX As Single, ByVal CY As Single, tX As Integer, tY As Integer)
 '*************************************************
-'Author: Unkwown
-'Last modified: 20/05/06
+
+'converts cursor pos to tile pos
+
 '*************************************************
 Dim HWindowX As Integer
 Dim HWindowY As Integer
