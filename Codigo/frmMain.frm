@@ -5247,9 +5247,11 @@ End If
 If TipoSeleccionado = 1 Then
     frmEditorDecor.Show
     frmEditorDecor.Parse
+    TipoSeleccionado = 0
 ElseIf TipoSeleccionado = 2 Then
     FrmEditorNpc.Show
     FrmEditorNpc.Parse
+    TipoSeleccionado = 0
 End If
 End Sub
 
