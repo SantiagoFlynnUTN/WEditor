@@ -1361,7 +1361,7 @@ Public Sub RenderScreen(TileX As Integer, TileY As Integer, PixelOffsetX As Inte
 4630  End If
 4640              End If
 4650              If MapData(X, Y).TileExit.Map <> 0 And VerTranslados Then
-4660                  nGrh.index = 245
+4660                  nGrh.index = 63
 4670                  modGrh.Grh_RenderN nGrh, iPPx, iPPy, MapData(X, Y).light_value, True
 4680              End If
                   
@@ -1372,7 +1372,7 @@ Public Sub RenderScreen(TileX As Integer, TileY As Integer, PixelOffsetX As Inte
                   
                   'Show blocked tiles
 4730              If VerBlockeados And MapData(X, Y).Blocked = 1 Then
-4740                  nGrh.index = 247
+4740                  nGrh.index = 65
 4750                  modGrh.Grh_RenderN nGrh, iPPx, iPPy, MapData(X, Y).light_value, True
 4760              End If
 4770              If VerGrilla Then
