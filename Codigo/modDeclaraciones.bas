@@ -33,6 +33,7 @@ Public TIPOMAPAX As Byte
 Public PngInit(0 To 16) As Byte
 Public PngEnd(0 To 6) As Byte
 Public zCurrentIndex As Integer
+Public cCapaSel As Byte
 
 Public Declare Sub CopyMemory _
                 Lib "kernel32" _
@@ -201,6 +202,7 @@ Public VerCapa2 As Boolean
 Public VerCapa3 As Boolean
 Public VerCapa4 As Boolean
 Public VerCapa5 As Boolean
+Public VerCapa9 As Boolean
 Public VerTranslados As Boolean
 Public VerObjetos As Boolean
 Public VerNpcs As Boolean
@@ -347,19 +349,19 @@ Public Const YMinMapSize As Byte = 1
 'Holds a local position
 Public Type Position
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 Public Type tPOs
     X As Long
-    Y As Long
+    y As Long
 End Type
 
 'Holds a world position
 Public Type WorldPos
     Map As Integer
     X As Integer
-    Y As Integer
+    y As Integer
 End Type
 
 
@@ -405,7 +407,7 @@ Public Light_Count As Integer
 
 Public Type Light
     X As Integer
-    Y As Integer
+    y As Integer
     Active As Boolean 'Do we ignore this light?
     id As Long
     map_x As Long 'Coordinates
@@ -446,7 +448,7 @@ End Type
 Public VerDecors As Boolean
 Public Type tcardinal
     X As Byte
-    Y As Byte
+    y As Byte
 End Type
 Public Const CANT_GRAF_DECOR As Byte = 5
 
@@ -484,7 +486,7 @@ End Type
 Public Type tDecKey
     Tipo_Objeto As Byte 'Que es lo q tiene clave, es un decor? objeto? alguna otra cosa usara clave?
     X As Byte 'Si es un decor tiene una POS
-    Y As Byte
+    y As Byte
     Contenedor As Integer 'Si es un decor tiene un mapa, si es un objeto, podria ser un mapa o un char?
     Tipo_Clave As Byte ' No se si va a servir esto.
     Clave As Long
@@ -669,8 +671,8 @@ Public Const PATH_GRAPHICS As String = "Graficos"
 Public Const PATH_INIT As String = "Init"
 
 'Good old BitBlt
-Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
-Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal Y As Long, ByVal crColor As Long) As Long
+Public Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal X As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
+Public Declare Function SetPixel Lib "gdi32" (ByVal hdc As Long, ByVal X As Long, ByVal y As Long, ByVal crColor As Long) As Long
 
 'Sound stuff
 Public Declare Function mciSendString Lib "winmm.dll" Alias "mciSendStringA" (ByVal lpstrCommand As String, ByVal lpstrReturnString As String, ByVal uRetrunLength As Long, ByVal hwndCallback As Long) As Long

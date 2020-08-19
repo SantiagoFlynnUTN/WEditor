@@ -94,6 +94,14 @@ Begin VB.Form frmMain
       TabIndex        =   3
       Top             =   1920
       Width           =   4395
+      Begin VB.CheckBox c6 
+         Caption         =   "Layer 3bis"
+         Height          =   195
+         Left            =   3120
+         TabIndex        =   176
+         Top             =   4200
+         Width           =   1215
+      End
       Begin VB.CheckBox chkDecorBloq 
          BackColor       =   &H00808080&
          Caption         =   "Bloquear Decor"
@@ -491,7 +499,7 @@ Begin VB.Form frmMain
          Height          =   330
          ItemData        =   "frmMain.frx":356A
          Left            =   1080
-         List            =   "frmMain.frx":357D
+         List            =   "frmMain.frx":3580
          TabIndex        =   0
          TabStop         =   0   'False
          Text            =   "1"
@@ -513,7 +521,9 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000014&
          Height          =   330
+         ItemData        =   "frmMain.frx":3596
          Left            =   2880
+         List            =   "frmMain.frx":3598
          TabIndex        =   52
          Text            =   "1"
          Top             =   3120
@@ -633,9 +643,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   2
-         ItemData        =   "frmMain.frx":3590
+         ItemData        =   "frmMain.frx":359A
          Left            =   3360
-         List            =   "frmMain.frx":3592
+         List            =   "frmMain.frx":359C
          TabIndex        =   46
          Text            =   "1"
          Top             =   3120
@@ -677,9 +687,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   0
-         ItemData        =   "frmMain.frx":3594
+         ItemData        =   "frmMain.frx":359E
          Left            =   3360
-         List            =   "frmMain.frx":3596
+         List            =   "frmMain.frx":35A0
          TabIndex        =   36
          Text            =   "1"
          Top             =   3120
@@ -720,9 +730,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   2580
          Index           =   1
-         ItemData        =   "frmMain.frx":3598
+         ItemData        =   "frmMain.frx":35A2
          Left            =   120
-         List            =   "frmMain.frx":359A
+         List            =   "frmMain.frx":35A4
          TabIndex        =   34
          Tag             =   "-1"
          Top             =   120
@@ -743,9 +753,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   3180
          Index           =   4
-         ItemData        =   "frmMain.frx":359C
+         ItemData        =   "frmMain.frx":35A6
          Left            =   120
-         List            =   "frmMain.frx":359E
+         List            =   "frmMain.frx":35A8
          Style           =   1  'Checkbox
          TabIndex        =   33
          Tag             =   "-1"
@@ -1194,9 +1204,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   1
-         ItemData        =   "frmMain.frx":35A0
+         ItemData        =   "frmMain.frx":35AA
          Left            =   840
-         List            =   "frmMain.frx":35A2
+         List            =   "frmMain.frx":35AC
          TabIndex        =   56
          Text            =   "1"
          Top             =   3120
@@ -1237,9 +1247,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   2580
          Index           =   2
-         ItemData        =   "frmMain.frx":35A4
+         ItemData        =   "frmMain.frx":35AE
          Left            =   120
-         List            =   "frmMain.frx":35A6
+         List            =   "frmMain.frx":35B0
          TabIndex        =   58
          Tag             =   "-1"
          Top             =   120
@@ -1261,9 +1271,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   1
-         ItemData        =   "frmMain.frx":35A8
+         ItemData        =   "frmMain.frx":35B2
          Left            =   3360
-         List            =   "frmMain.frx":35AA
+         List            =   "frmMain.frx":35B4
          TabIndex        =   59
          Text            =   "500"
          Top             =   3120
@@ -1473,9 +1483,9 @@ Begin VB.Form frmMain
          End
          Begin VB.ListBox lLuces 
             Height          =   1425
-            ItemData        =   "frmMain.frx":35AC
+            ItemData        =   "frmMain.frx":35B6
             Left            =   2160
-            List            =   "frmMain.frx":35E3
+            List            =   "frmMain.frx":35ED
             TabIndex        =   94
             Top             =   600
             Width           =   1575
@@ -2107,9 +2117,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   0
-         ItemData        =   "frmMain.frx":36E6
+         ItemData        =   "frmMain.frx":36F0
          Left            =   840
-         List            =   "frmMain.frx":36E8
+         List            =   "frmMain.frx":36F2
          TabIndex        =   37
          Text            =   "1"
          Top             =   3120
@@ -2130,9 +2140,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   2580
          Index           =   3
-         ItemData        =   "frmMain.frx":36EA
+         ItemData        =   "frmMain.frx":36F4
          Left            =   120
-         List            =   "frmMain.frx":36EC
+         List            =   "frmMain.frx":36F6
          TabIndex        =   45
          Tag             =   "-1"
          Top             =   120
@@ -2846,7 +2856,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":36EE
+      Image           =   "frmMain.frx":36F8
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2890,7 +2900,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":3CB4
+      Image           =   "frmMain.frx":3CBE
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2922,7 +2932,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":427A
+      Image           =   "frmMain.frx":4284
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2954,7 +2964,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":477B
+      Image           =   "frmMain.frx":4785
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2986,7 +2996,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":4B2F
+      Image           =   "frmMain.frx":4B39
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -3018,7 +3028,7 @@ Begin VB.Form frmMain
       ScrollBars      =   2  'Vertical
       TabIndex        =   4
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":4EB0
+      Text            =   "frmMain.frx":4EBA
       Top             =   6300
       Width           =   3825
    End
@@ -3090,7 +3100,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":4EF0
+      Image           =   "frmMain.frx":4EFA
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -3122,7 +3132,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":52A4
+      Image           =   "frmMain.frx":52AE
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -3287,18 +3297,18 @@ Begin VB.Form frmMain
       End
       Begin VB.ComboBox SizeC 
          Height          =   315
-         ItemData        =   "frmMain.frx":586A
+         ItemData        =   "frmMain.frx":5874
          Left            =   360
-         List            =   "frmMain.frx":587D
+         List            =   "frmMain.frx":5887
          TabIndex        =   151
          Top             =   1560
          Width           =   1455
       End
       Begin VB.ComboBox LayerC 
          Height          =   315
-         ItemData        =   "frmMain.frx":5898
+         ItemData        =   "frmMain.frx":58A2
          Left            =   360
-         List            =   "frmMain.frx":58AB
+         List            =   "frmMain.frx":58B5
          TabIndex        =   150
          Top             =   1200
          Width           =   1455
@@ -3434,9 +3444,28 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   5
-      Image           =   "frmMain.frx":58DC
+      Image           =   "frmMain.frx":58E6
       ImgSize         =   24
       cBack           =   -2147483633
+   End
+   Begin VB.Label Label14 
+      Alignment       =   2  'Center
+      BackColor       =   &H80000007&
+      BeginProperty Font 
+         Name            =   "Arial Rounded MT Bold"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000E&
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   177
+      Top             =   1200
+      Width           =   2415
    End
    Begin VB.Label Label13 
       Alignment       =   2  'Center
@@ -3702,6 +3731,9 @@ Begin VB.Form frmMain
          Begin VB.Menu MnuVerCapa5 
             Caption         =   "Capa &5 (Sobre layer 1 y 2, previo 3)"
             Checked         =   -1  'True
+         End
+         Begin VB.Menu MnuVerCapa9 
+            Caption         =   "Capa &9 (sobre Layer3)"
          End
       End
       Begin VB.Menu mnuVerTranslados 
@@ -4011,10 +4043,26 @@ Private Sub cCapas_Change()
     If Val(cCapas.Text) < 1 Then
       cCapas.Text = 1
     End If
-    If Val(cCapas.Text) > 5 Then
-      cCapas.Text = 5
+    If Val(cCapas.Text) > 9 Then
+      cCapas.Text = 9
     End If
+    If Val(cCapas.Text) > 5 And Val(cCapas.Text) < 9 Then
+        cCapas.Text = 5
+    End If
+    cCapaSel = Val(cCapas.Text)
     cCapas.Tag = vbNullString
+End Sub
+
+Private Sub cCapas_Click()
+    If Val(cCapas.List(cCapas.ListIndex)) > 0 And Val(cCapas.List(cCapas.ListIndex)) <= 5 Then
+        cCapaSel = Val(cCapas.List(cCapas.ListIndex))
+    ElseIf Val(cCapas.List(cCapas.ListIndex)) = 9 Then
+        cCapaSel = 9
+    Else
+        cCapas.ListIndex = 0
+        cCapaSel = 1
+    End If
+    
 End Sub
 
 Private Sub cCapas_KeyPress(KeyAscii As Integer)
@@ -4026,7 +4074,7 @@ If IsNumeric(Chr(KeyAscii)) = False Then KeyAscii = 0
 End Sub
 Private Sub cCopiarInterior()
 Dim X As Long
-Dim Y As Long
+Dim y As Long
 
 Dim o As Long
 Dim H As Long
@@ -4043,14 +4091,14 @@ CX = 0
 For X = SeleccionIX To SeleccionFX
 CX = CX + 1
 CY = 0
-    For Y = SeleccionIY To SeleccionFY
+    For y = SeleccionIY To SeleccionFY
       CY = CY + 1
-        SelInterior(CX, CY) = MapData(X, Y).InteriorVal
-    Next Y
+        SelInterior(CX, CY) = MapData(X, y).InteriorVal
+    Next y
 Next X
 End Sub
 Private Sub cCopiarLuces_Click()
-Dim Y As Long
+Dim y As Long
 Dim X As Long
 Dim o As Long
 Dim H As Long
@@ -4064,22 +4112,22 @@ SelLuz.Xx = o
 SelLuz.xY = H
 
     For X = SeleccionIX To SeleccionFX
-        For Y = SeleccionIY To SeleccionFY
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(0) = MapData(X, Y).light_value(0)
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(1) = MapData(X, Y).light_value(1)
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(2) = MapData(X, Y).light_value(2)
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(3) = MapData(X, Y).light_value(3)
+        For y = SeleccionIY To SeleccionFY
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(0) = MapData(X, y).light_value(0)
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(1) = MapData(X, y).light_value(1)
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(2) = MapData(X, y).light_value(2)
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(3) = MapData(X, y).light_value(3)
             
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).Luz = MapData(X, Y).Luz
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).Luz = MapData(X, y).Luz
             
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(0) = MapData(X, Y).LV(0)
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(1) = MapData(X, Y).LV(1)
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(2) = MapData(X, Y).LV(2)
-            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(3) = MapData(X, Y).LV(3)
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(0) = MapData(X, y).LV(0)
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(1) = MapData(X, y).LV(1)
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(2) = MapData(X, y).LV(2)
+            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(3) = MapData(X, y).LV(3)
             
             
                 
-        Next Y
+        Next y
     Next X
     
 End If
@@ -4584,7 +4632,7 @@ Next i
 End Sub
 Private Sub cPegarLuces_Click()
 
-Dim Y As Long
+Dim y As Long
 Dim X As Long
 Dim tX As Integer
 Dim tY As Integer
@@ -4595,22 +4643,22 @@ tY = SelLuz.nY
 If SelLuz.Xx = 0 Then Exit Sub
 
 For X = tX To tX + SelLuz.Xx
-For Y = tY To tY + SelLuz.xY
-    If X <= 100 And Y <= 100 Then
+For y = tY To tY + SelLuz.xY
+    If X <= 100 And y <= 100 Then
     
-        MapData(X, Y).light_value(0) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(0)
-        MapData(X, Y).light_value(1) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(1)
-        MapData(X, Y).light_value(2) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(2)
-        MapData(X, Y).light_value(3) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(3)
+        MapData(X, y).light_value(0) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(0)
+        MapData(X, y).light_value(1) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(1)
+        MapData(X, y).light_value(2) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(2)
+        MapData(X, y).light_value(3) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(3)
         
-        MapData(X, Y).LV(0) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(0)
-        MapData(X, Y).LV(1) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(1)
-        MapData(X, Y).LV(2) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(2)
-        MapData(X, Y).LV(3) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(3)
+        MapData(X, y).LV(0) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(0)
+        MapData(X, y).LV(1) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(1)
+        MapData(X, y).LV(2) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(2)
+        MapData(X, y).LV(3) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(3)
         
-         MapData(X, Y).Luz = SelLuz.TLP(X - tX + 1, Y - tY + 1).Luz
+         MapData(X, y).Luz = SelLuz.TLP(X - tX + 1, y - tY + 1).Luz
     End If
-Next Y
+Next y
 Next X
 End Sub
 
@@ -5139,7 +5187,7 @@ End Sub
 
 
 
-Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, y As Single)
     'If Seleccionando Then CopiarSeleccion
 
     
@@ -5213,7 +5261,7 @@ End If
 
 
 End Sub
-Private Sub lListado_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lListado_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 29/05/06
@@ -5223,7 +5271,7 @@ If index = 3 And Button = 2 Then
 End If
 End Sub
 
-Private Sub lListado_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lListado_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 22/05/06
@@ -5240,7 +5288,7 @@ End Sub
 
 Private Sub mele_decor_Click()
 
-If TipoSeleccionado = 0 Or ObjetoSeleccionado.X = 0 Or ObjetoSeleccionado.Y = 0 Then
+If TipoSeleccionado = 0 Or ObjetoSeleccionado.X = 0 Or ObjetoSeleccionado.y = 0 Then
     MsgBox "No tienes ningun elemento seleccionado."
     Exit Sub
 End If
@@ -5703,7 +5751,7 @@ Private Sub mnuNuevoMapa_Click()
 'Last modified: 20/05/06
 '*************************************************
 On Error Resume Next
-Dim loopc As Integer
+Dim LoopC As Integer
 
 If MsgBox("¿Deseas crear un mapa grafico?", vbYesNo, "Tipo de Mapa") = vbYes Then
     TIPOMAPAX = 1
@@ -5713,8 +5761,8 @@ End If
 
 DeseaGuardarMapa Dialog.FileName
 
-For loopc = 0 To frmMain.MapPest.Count
-    frmMain.MapPest(loopc).Visible = False
+For LoopC = 0 To frmMain.MapPest.Count
+    frmMain.MapPest(LoopC).Visible = False
 Next
 
 frmMain.Dialog.FileName = Empty
@@ -5941,7 +5989,11 @@ Private Sub mnuQuitarSuperficieDeCapa_Click()
 'Author: ^[GS]^
 'Last modified: 20/05/06
 '*************************************************
-Call modEdicion.Quitar_Capa(cCapas.Text)
+If cCapaSel > 0 And cCapaSel <= 5 Then
+    Call modEdicion.Quitar_Capa(cCapaSel)
+ElseIf cCapaSel = 9 Then
+    Call modEdicion.Quitar_Capa(2)
+End If
 End Sub
 
 Private Sub mnuQuitarTODO_Click()
@@ -6121,6 +6173,10 @@ Private Sub MnuVerCapa5_Click()
     End If
 End Sub
 
+Private Sub MnuVerCapa9_Click()
+MnuVerCapa9.Checked = (MnuVerCapa9.Checked = False)
+End Sub
+
 Private Sub mnuVerGrilla_Click()
 '*************************************************
 'Author: ^[GS]^
@@ -6210,33 +6266,33 @@ MsgBox "ERROR EN ABRIR" & "_" & B & "_" & Err.Description
 
 End Sub
 
-Private Sub picRadar_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRadar_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 29/05/06
 '*************************************************
 If X < MinXBorder Then X = 11
 If X > MaxXBorder Then X = 89
-If Y < MinYBorder Then Y = 10
-If Y > MaxYBorder Then Y = 92
+If y < MinYBorder Then y = 10
+If y > MaxYBorder Then y = 92
 
 UserPos.X = X
-UserPos.Y = Y
+UserPos.y = y
 bRefreshRadar = True
 End Sub
 
-Private Sub picRadar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picRadar_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 28/05/06
 '*************************************************
 MiRadarX = X
-MiRadarY = Y
+MiRadarY = y
 End Sub
 
 
 
-Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: Unkwown
 'Last modified: 20/05/06 - GS
@@ -6248,7 +6304,7 @@ Dim tY As Integer
 
 If Not MapaCargado Then Exit Sub
 
-ConvertCPtoTP 0, 0, X, Y, tX, tY
+ConvertCPtoTP 0, 0, X, y, tX, tY
 Mx = tX
 My = tY
 
@@ -6270,7 +6326,7 @@ SelLuz.nY = tY
 End Sub
 
 
-Private Sub MainViewpic_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub MainViewpic_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
 '*************************************************
 'Author: Unkwown
 'Last modified: 20/05/06 - GS
@@ -6283,7 +6339,7 @@ Dim tY As Integer
 If Not MapaCargado Then Exit Sub
 HotKeysAllow = True
 
-ConvertCPtoTP 0, 0, X, Y, tX, tY
+ConvertCPtoTP 0, 0, X, y, tX, tY
 Mx = tX
 My = tY
 
@@ -6325,7 +6381,7 @@ If frmMain.mnuGuardarUltimaConfig.Checked = True Then
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Decors", IIf(frmMain.mVerDecors.Checked = True, "1", "0")
     
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Bloqueos", IIf(frmMain.mnuVerBloqueos.Checked = True, "1", "0")
-    WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "LastPos", UserPos.X & "-" & UserPos.Y
+    WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "LastPos", UserPos.X & "-" & UserPos.y
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "UtilizarDeshacer", IIf(frmMain.mnuUtilizarDeshacer.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "AutoCapturarTrans", IIf(frmMain.mnuAutoCapturarTranslados.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "AutoCapturarSup", IIf(frmMain.mnuAutoCapturarSuperficie.Checked = True, "1", "0")
@@ -6352,12 +6408,12 @@ If PONERSPOT Then
 End If
 End Sub
 
-Private Sub PreviewGrh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub PreviewGrh_MouseUp(Button As Integer, Shift As Integer, X As Single, y As Single)
 Dim kx As Integer
 Dim ky As Integer
 If SelTexWe = 0 Then Exit Sub
 kx = X / Screen.TwipsPerPixelX
-ky = Y / Screen.TwipsPerPixelY
+ky = y / Screen.TwipsPerPixelY
 If Button = vbLeftButton Then
 
 
@@ -6370,7 +6426,7 @@ Dim P As Long
         For P = 1 To TexWE(SelTexWe).NumIndex
             With EstaticData(NewIndexData(TexWE(SelTexWe).index(P).Num).Estatic)
                 
-                If kx >= TexWE(SelTexWe).index(P).X And kx <= TexWE(SelTexWe).index(P).X + .W And ky >= TexWE(SelTexWe).index(P).Y And ky <= TexWE(SelTexWe).index(P).Y + .H Then
+                If kx >= TexWE(SelTexWe).index(P).X And kx <= TexWE(SelTexWe).index(P).X + .W And ky >= TexWE(SelTexWe).index(P).y And ky <= TexWE(SelTexWe).index(P).y + .H Then
                 
                     SelTexFrame = P
                     Exit For

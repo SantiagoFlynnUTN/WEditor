@@ -115,14 +115,14 @@ If HotKeysAllow = False Then Exit Sub
     End If
     
     If GetKeyState(vbKeyUp) < 0 Then
-        If UserPos.Y < 1 Then Exit Sub ' 10
-        If LegalPos(UserPos.X, UserPos.Y - 1) And WalkMode = True Then
+        If UserPos.y < 1 Then Exit Sub ' 10
+        If LegalPos(UserPos.X, UserPos.y - 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            UserPos.y = UserPos.y - 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y - 1
+            UserPos.y = UserPos.y - 1
         End If
         bRefreshRadar = True ' Radar
         frmMain.SetFocus
@@ -131,10 +131,10 @@ If HotKeysAllow = False Then Exit Sub
 
     If GetKeyState(vbKeyRight) < 0 Then
         If UserPos.X > 100 Then Exit Sub ' 89
-        If LegalPos(UserPos.X + 1, UserPos.Y) And WalkMode = True Then
+        If LegalPos(UserPos.X + 1, UserPos.y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
             UserPos.X = UserPos.X + 1
@@ -145,14 +145,14 @@ If HotKeysAllow = False Then Exit Sub
     End If
 
     If GetKeyState(vbKeyDown) < 0 Then
-        If UserPos.Y > 100 Then Exit Sub ' 92
-        If LegalPos(UserPos.X, UserPos.Y + 1) And WalkMode = True Then
+        If UserPos.y > 100 Then Exit Sub ' 92
+        If LegalPos(UserPos.X, UserPos.y + 1) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
-            UserPos.Y = UserPos.Y + 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            UserPos.y = UserPos.y + 1
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
-            UserPos.Y = UserPos.Y + 1
+            UserPos.y = UserPos.y + 1
         End If
         bRefreshRadar = True ' Radar
         frmMain.SetFocus
@@ -161,10 +161,10 @@ If HotKeysAllow = False Then Exit Sub
 
     If GetKeyState(vbKeyLeft) < 0 Then
         If UserPos.X < 1 Then Exit Sub ' 12
-        If LegalPos(UserPos.X - 1, UserPos.Y) And WalkMode = True Then
+        If LegalPos(UserPos.X - 1, UserPos.y) And WalkMode = True Then
             If dLastWalk + 50 > GetTickCount Then Exit Sub
             UserPos.X = UserPos.X - 1
-            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.Y
+            MoveCharbyPos UserCharIndex, UserPos.X, UserPos.y
             dLastWalk = GetTickCount
         ElseIf WalkMode = False Then
             UserPos.X = UserPos.X - 1
@@ -264,7 +264,7 @@ Private Sub CargarMapIni()
           
 26        MaxGrhs = 15000
 28        UserPos.X = 50
-30        UserPos.Y = 50
+30        UserPos.y = 50
 32        PantallaX = 19
 34        PantallaY = 22
 36        MsgBox "Falta el archivo 'WorldEditor.ini' de configuración.", vbInformation
@@ -327,12 +327,12 @@ Private Sub CargarMapIni()
 
 116   tStr = Leer.GetValue("MOSTRAR", "LastPos") ' x-y
 118   UserPos.X = Val(general_field_read(1, tStr, Asc("-")))
-120   UserPos.Y = Val(general_field_read(2, tStr, Asc("-")))
+120   UserPos.y = Val(general_field_read(2, tStr, Asc("-")))
 122   If UserPos.X < XMinMapSize Or UserPos.X > XMaxMapSize Then
 124       UserPos.X = 50
 126   End If
-128   If UserPos.Y < YMinMapSize Or UserPos.Y > YMaxMapSize Then
-130       UserPos.Y = 50
+128   If UserPos.y < YMinMapSize Or UserPos.y > YMaxMapSize Then
+130       UserPos.y = 50
 132   End If
 
       ' Menu Mostrar
@@ -570,17 +570,18 @@ alturaAgua = 6
                 OffsetCounterX = 0
                 AddtoUserPos.X = 0
             End If
-        ElseIf AddtoUserPos.Y <> 0 Then
-            OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.Y))
-            If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.Y) Then
+        ElseIf AddtoUserPos.y <> 0 Then
+            OffsetCounterY = OffsetCounterY - (8 * Sgn(AddtoUserPos.y))
+            If Abs(OffsetCounterY) >= Abs(TilePixelHeight * AddtoUserPos.y) Then
                 OffsetCounterY = 0
-                AddtoUserPos.Y = 0
+                AddtoUserPos.y = 0
             End If
         End If
 
         If (GetTickCount - dTiempoGT) >= 1000 Then
             CaptionWorldEditor frmMain.Dialog.FileName, (MapInfo.Changed = 1)
-            frmMain.Caption = cFPS
+            'frmMain.Caption = cFPS
+            frmMain.Label14 = "Fps: " & cFPS
             cFPS = 1
             dTiempoGT = GetTickCount
 
@@ -626,11 +627,11 @@ alturaAgua = 6
             DXEngine_BeginRender
             If TIPOMAPAX = 0 Then
                 
-                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+                Call RenderScreen(UserPos.X - AddtoUserPos.X, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
 
 
             Else
-                Call RenderNewMap(UserPos.X - AddtoUserPos.X, UserPos.Y - AddtoUserPos.Y, OffsetCounterX, OffsetCounterY)
+                Call RenderNewMap(UserPos.X - AddtoUserPos.X, UserPos.y - AddtoUserPos.y, OffsetCounterX, OffsetCounterY)
             End If
             
             modDXEngine.SPOTLIGHTS_RENDER
@@ -711,12 +712,12 @@ End If
 If WalkMode = False Then
     'Erase character
     Call EraseChar(UserCharIndex)
-    MapData(UserPos.X, UserPos.Y).CHarIndex = 0
+    MapData(UserPos.X, UserPos.y).CHarIndex = 0
 Else
     'MakeCharacter
-    If LegalPos(UserPos.X, UserPos.Y) Then
-        Call MakeChar(NextOpenChar(), 11, 5, SOUTH, UserPos.X, UserPos.Y)
-        UserCharIndex = MapData(UserPos.X, UserPos.Y).CHarIndex
+    If LegalPos(UserPos.X, UserPos.y) Then
+        Call MakeChar(NextOpenChar(), 11, 5, SOUTH, UserPos.X, UserPos.y)
+        UserCharIndex = MapData(UserPos.X, UserPos.y).CHarIndex
         frmMain.mnuModoCaminata.Checked = True
     Else
         MsgBox "ERROR: Ubicacion ilegal."
@@ -726,7 +727,7 @@ End If
 fin:
 End Sub
 
-Public Sub FixCoasts(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal Y As Integer)
+Public Sub FixCoasts(ByVal GrhIndex As Integer, ByVal X As Integer, ByVal y As Integer)
 '*************************************************
 'Author: Unkwown
 'Last modified: 20/05/06
@@ -770,16 +771,16 @@ Public Sub RefreshAllChars()
 On Error Resume Next
 Dim LoopC As Integer
 
-frmMain.ApuntadorRadar.Move UserPos.X - 12, UserPos.Y - 10
+frmMain.ApuntadorRadar.Move UserPos.X - 12, UserPos.y - 10
 frmMain.picRadar.Cls
 
 For LoopC = 1 To LastChar
     If CharList(LoopC).Active = 1 Then
-        MapData(CharList(LoopC).Pos.X, CharList(LoopC).Pos.Y).CHarIndex = LoopC
+        MapData(CharList(LoopC).Pos.X, CharList(LoopC).Pos.y).CHarIndex = LoopC
         If CharList(LoopC).Heading <> 0 Then
             frmMain.picRadar.ForeColor = vbGreen
-            frmMain.picRadar.Line (0 + CharList(LoopC).Pos.X, 0 + CharList(LoopC).Pos.Y)-(2 + CharList(LoopC).Pos.X, 0 + CharList(LoopC).Pos.Y)
-            frmMain.picRadar.Line (0 + CharList(LoopC).Pos.X, 1 + CharList(LoopC).Pos.Y)-(2 + CharList(LoopC).Pos.X, 1 + CharList(LoopC).Pos.Y)
+            frmMain.picRadar.Line (0 + CharList(LoopC).Pos.X, 0 + CharList(LoopC).Pos.y)-(2 + CharList(LoopC).Pos.X, 0 + CharList(LoopC).Pos.y)
+            frmMain.picRadar.Line (0 + CharList(LoopC).Pos.X, 1 + CharList(LoopC).Pos.y)-(2 + CharList(LoopC).Pos.X, 1 + CharList(LoopC).Pos.y)
         End If
     End If
 Next LoopC
