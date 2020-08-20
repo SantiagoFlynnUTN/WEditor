@@ -94,14 +94,6 @@ Begin VB.Form frmMain
       TabIndex        =   3
       Top             =   1920
       Width           =   4395
-      Begin VB.CheckBox c6 
-         Caption         =   "Layer 3bis"
-         Height          =   195
-         Left            =   3120
-         TabIndex        =   176
-         Top             =   4200
-         Width           =   1215
-      End
       Begin VB.CheckBox chkDecorBloq 
          BackColor       =   &H00808080&
          Caption         =   "Bloquear Decor"
@@ -3463,7 +3455,7 @@ Begin VB.Form frmMain
       ForeColor       =   &H8000000E&
       Height          =   495
       Left            =   1680
-      TabIndex        =   177
+      TabIndex        =   176
       Top             =   1200
       Width           =   2415
    End
@@ -5657,6 +5649,8 @@ Private Sub mnuInformes_Click()
 frmInformes.Show
 End Sub
 
+
+
 Private Sub mnuInsertarSuperficieAlAzar_Click()
 '*************************************************
 'Author: ^[GS]^
@@ -6373,6 +6367,7 @@ If frmMain.mnuGuardarUltimaConfig.Checked = True Then
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa2", IIf(frmMain.mnuVerCapa2.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa3", IIf(frmMain.mnuVerCapa3.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa4", IIf(frmMain.mnuVerCapa4.Checked = True, "1", "0")
+    WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa9", IIf(frmMain.mnuVerCapa4.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Translados", IIf(frmMain.mnuVerTranslados.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Objetos", IIf(frmMain.mnuVerObjetos.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "NPCs", IIf(frmMain.mnuVerNPCs.Checked = True, "1", "0")

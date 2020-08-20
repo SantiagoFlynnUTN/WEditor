@@ -340,6 +340,7 @@ Private Sub CargarMapIni()
 136   frmMain.mnuVerCapa2.Checked = IIf(Val(Leer.GetValue("MOSTRAR", "Capa2")) = 1, True, False)
 138   frmMain.mnuVerCapa3.Checked = IIf(Val(Leer.GetValue("MOSTRAR", "Capa3")) = 1, True, False)
 140   frmMain.mnuVerCapa4.Checked = IIf(Val(Leer.GetValue("MOSTRAR", "Capa4")) = 1, True, False)
+      frmMain.MnuVerCapa9.Checked = IIf(Val(Leer.GetValue("MOSTRAR", "Capa9")) = 1, True, False)
 142   frmMain.mnuVerTranslados.Checked = IIf(Val(Leer.GetValue("MOSTRAR", "Translados")) = 1, True, False)
 144   frmMain.mnuVerObjetos.Checked = IIf(Val(Leer.GetValue("MOSTRAR", "Objetos")) = 1, True, False)
 146   frmMain.mnuVerNPCs.Checked = IIf(Val(Leer.GetValue("MOSTRAR", "NPCs")) = 1, True, False)
@@ -363,6 +364,8 @@ Private Sub CargarMapIni()
 172   ClienteWidth = Val(Leer.GetValue("MOSTRAR", "ClienteWidth"))
 174   If ClienteHeight <= 0 Then ClienteHeight = (Screen.Height \ Screen.TwipsPerPixelY - frmMain.MainViewPic.top) / 32 - 3
 176   If ClienteWidth <= 0 Then ClienteWidth = (Screen.Width \ Screen.TwipsPerPixelX - frmMain.MainViewPic.left) / 32
+
+      cCapaSel = 1
 
 178   Exit Sub
 

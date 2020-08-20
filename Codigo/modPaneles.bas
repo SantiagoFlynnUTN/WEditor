@@ -120,7 +120,6 @@ Public Sub VerFuncion(ByVal Numero As Byte, ByVal Ver As Boolean, Optional Norma
             frmMain.cFiltro(0).Visible = Ver
             frmMain.cCapas.Visible = Ver
             frmMain.cGrh.Visible = Ver
-            frmMain.c6.Visible = Ver
             frmMain.cQuitarEnEstaCapa.Visible = Ver
             frmMain.cQuitarEnTodasLasCapas.Visible = Ver
             frmMain.cSeleccionarSuperficie.Visible = Ver

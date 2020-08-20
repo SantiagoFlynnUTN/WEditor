@@ -923,7 +923,13 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
         End If
         
         ' Capas
-        frmMain.StatTxt.Text = frmMain.StatTxt.Text & ENDL & "Capa1: " & MapData(tX, tY).Graphic(1).index & " - Capa2: " & MapData(tX, tY).Graphic(2).index & " - Capa3: " & MapData(tX, tY).Graphic(3).index & " - Capa4: " & MapData(tX, tY).Graphic(4).index & " - Capa5: " & MapData(tX, tY).Graphic(5).index
+        frmMain.StatTxt.Text = frmMain.StatTxt.Text & ENDL _
+            & "Capa1: " & MapData(tX, tY).Graphic(1).index _
+            & " - Capa2/9: " & MapData(tX, tY).Graphic(2).index _
+            & " - Capa3: " & MapData(tX, tY).Graphic(3).index _
+            & " - Capa4: " & MapData(tX, tY).Graphic(4).index _
+            & " - Capa5: " & MapData(tX, tY).Graphic(5).index _
+            
         Debug.Print "Capa1: " & MapData(tX, tY).Graphic(1).index & " - Capa2: " & MapData(tX, tY).Graphic(2).index & " - Capa3: " & MapData(tX, tY).Graphic(3).index & " - Capa4: " & MapData(tX, tY).Graphic(4).index
         If frmMain.mnuAutoCapturarSuperficie.Checked = True And frmMain.cSeleccionarSuperficie.value = False Then
             If MapData(tX, tY).Graphic(5).index <> 0 Then
@@ -999,7 +1005,7 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         MapData(tX, tY).Graphic(1).index = 0
                         Exit Sub
                     End If
-                ElseIf cCapaSel > 1 And cCapaSel >= 5 Then
+                ElseIf cCapaSel > 1 And cCapaSel <= 5 Then
                     If MapData(tX, tY).Graphic(cCapaSel).index <> 0 Then
                         modEdicion.Deshacer_Add "Quitar Capa " & cCapaSel ' Hago deshacer
                         MapInfo.Changed = 1 'Set changed flag
