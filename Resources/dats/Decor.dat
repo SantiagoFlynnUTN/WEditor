@@ -40,7 +40,7 @@ NumDecors=42
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=3592-0-0-0-0
+DecorGrh=1-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=0
@@ -236,7 +236,7 @@ Name=Puerta normal 1 sin llave
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=803-804-0-0-0
+DecorGrh=1116-1116-0-0-0
 Atacable=0
 Clave=0
 Objeto=0
@@ -244,15 +244,15 @@ DecorType=4
 EstadoDefault=1	
 PosAccion=0-0-0
 TileH=1
-TileW=2
-OffX=-1
+TileW=1
+OffX=0
 
 [DECOR15] ' Puerta Normal 2 Sin Llave
 Name=Puerta normal 2 sin llave
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=803-804-0-0-0 ' abierta-cerrada-cerradallave
+DecorGrh=1110-1115-0-0-0 ' abierta-cerrada-cerradallave
 Atacable=0
 Clave=0
 Objeto=0
@@ -260,7 +260,7 @@ DecorType=4
 EstadoDefault=1	
 PosAccion=0-0-0
 TileH=1
-TileW=2
+TileW=3
 
 [DECOR16] ' Puerta Normal 1 Con Llave
 MaxHP=0

@@ -5284,10 +5284,9 @@ If TipoSeleccionado = 0 Or ObjetoSeleccionado.X = 0 Or ObjetoSeleccionado.y = 0 
     MsgBox "No tienes ningun elemento seleccionado."
     Exit Sub
 End If
-If TipoSeleccionado = 1 Then
+ If TipoSeleccionado = 1 Then
     frmEditorDecor.Show
     frmEditorDecor.Parse
-    TipoSeleccionado = 0
 ElseIf TipoSeleccionado = 2 Then
     FrmEditorNpc.Show
     FrmEditorNpc.Parse
