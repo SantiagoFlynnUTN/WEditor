@@ -21,7 +21,7 @@ Atacable=0				' Si se puede atacar
 Clave=0					' Puertas?
 Objeto=0				' Que objeto se desprende de la decor
 DecorType=0				' Que tipo de Decor es
-EstadoDefault=0						' Cual es el estado normal de esta decor
+EstadoDefault=0						' Cual es el estado normal de esta decor, arrancan en 1.
 PosAccion=0-0-0			' Posicion si tuviera que hacer algun tipo de accion
 TileH=0					' Dimension Y
 TileW=0					' Dimension X
@@ -32,7 +32,7 @@ TileTransY				' tiles transparentes Y
 ' @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 ' @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 [INIT]
-NumDecors=42
+NumDecors=25
 
 ' @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -252,7 +252,7 @@ Name=Puerta normal 2 sin llave
 MaxHP=0
 Respawn=0
 Value=0
-DecorGrh=1110-1115-0-0-0 ' abierta-cerrada-cerradallave
+DecorGrh=1110-1115-0-0-0 ' (1) abierta- (2) cerrada- (3) cerradallave
 Atacable=0
 Clave=0
 Objeto=0
@@ -261,6 +261,7 @@ EstadoDefault=1
 PosAccion=0-0-0
 TileH=1
 TileW=3
+OffX=-1
 
 [DECOR16] ' Puerta Normal 1 Con Llave
 MaxHP=0
@@ -355,7 +356,7 @@ Name=Arbol
 MaxHP=0
 Respawn=0
 Value=1
-DecorGrh=1363-0-0-0-0
+DecorGrh=986-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=	' ### OBJINDEX_LEÑA ###
@@ -370,7 +371,7 @@ Name=Arbol
 MaxHP=0
 Respawn=0
 Value=1
-DecorGrh=1364-0-0-0-0
+DecorGrh=987-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=	' ### OBJINDEX_LEÑA ###
@@ -385,7 +386,7 @@ Name=Arbol
 MaxHP=0
 Respawn=0
 Value=1
-DecorGrh=1365-0-0-0-0
+DecorGrh=988-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=	' ### OBJINDEX_LEÑA ###
@@ -400,262 +401,7 @@ Name=Arbol
 MaxHP=0
 Respawn=0
 Value=1
-DecorGrh=1366-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR26] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1367-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR27] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1368-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR28] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1369-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR29] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1370-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR30] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1371-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR31] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1372-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR32] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1373-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR33] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1374-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR34] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1375-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR35] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1376-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR36] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1377-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR37] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1378-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR38] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1379-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR39] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1380-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR40] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1381-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR41] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1382-0-0-0-0
-Atacable=0
-Clave=0
-Objeto=	' ### OBJINDEX_LEÑA ###
-DecorType=2
-EstadoDefault=0			
-PosAccion=0-0-0
-TileH=1
-TileW=1
-
-[DECOR42] ' Arbol Leña Ciudad 1
-Name=Arbol 
-MaxHP=0
-Respawn=0
-Value=1
-DecorGrh=1383-0-0-0-0
+DecorGrh=989-0-0-0-0
 Atacable=0
 Clave=0
 Objeto=	' ### OBJINDEX_LEÑA ###

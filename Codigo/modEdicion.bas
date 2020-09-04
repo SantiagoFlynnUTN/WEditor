@@ -1246,6 +1246,7 @@ Sub ClickEdit(Button As Integer, tX As Integer, tY As Integer)
                         MapInfo.Changed = 1 'Set changed flag
                         MapData(tX, tY).DecorI = objindex
                         MapData(tX, tY).DecorGrh.index = DecorData(objindex).DecorGrh(1)
+                        MapData(tX, tY).DecorInfo.EstadoDefault = 1
                         If frmMain.chkDecorBloq.value = 1 Then MapData(tX, tY).Blocked = 1
                     End If
                 End If
