@@ -458,22 +458,17 @@ Private SelStartY() As Integer
 Private NumSel As Integer
 
 
-
-
-
-
-
-Private Sub Actual_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Actual_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If fSelecter Then
         If agraficow > 0 And agraficoh > 0 Then
-            If (X / Screen.TwipsPerPixelX) <= agraficow And (y / Screen.TwipsPerPixelY) <= agraficoh Then
+            If (X / Screen.TwipsPerPixelX) <= agraficow And (Y / Screen.TwipsPerPixelY) <= agraficoh Then
                 modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
                 If bGrilla Then AplicarGrilla 0, 0, agraficow, agraficoh, Actual, vbGreen
                 Actual.ForeColor = vbWhite
                 Actual.DrawWidth = 2
-                Actual.Line (iiFx, iiFy)-(iiFx, y)
-                Actual.Line (iiFx, y)-(X, y)
-                Actual.Line (X, iiFy)-(X, y)
+                Actual.Line (iiFx, iiFy)-(iiFx, Y)
+                Actual.Line (iiFx, Y)-(X, Y)
+                Actual.Line (X, iiFy)-(X, Y)
                 Actual.Line (iiFx, iiFy)-(X, iiFy)
                 Actual.ForeColor = vbBlack
                 Actual.DrawWidth = 1
@@ -483,7 +478,7 @@ Private Sub Actual_MouseMove(Button As Integer, Shift As Integer, X As Single, y
     
 End Sub
 
-Private Sub Actual_MouseUp(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Actual_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 
 Dim z As Integer
 
@@ -497,7 +492,7 @@ NumSel = 0
 
 
 iX = (X / Screen.TwipsPerPixelX)
-iY = (y / Screen.TwipsPerPixelY)
+iY = (Y / Screen.TwipsPerPixelY)
 Actual.Cls
 If iX < agraficow And iY < agraficoh Then
 modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
@@ -537,14 +532,14 @@ If Button = vbLeftButton Then
                     With NewAnimationData(NewIndexData(z).Dinamica)
                         For j = 1 To .NumFrames
                             If iX >= .Indice(j).X And iX < (.Indice(j).X + .Width) Then
-                                If iY >= .Indice(j).y And iY < .Indice(j).y + .Height Then
+                                If iY >= .Indice(j).Y And iY < .Indice(j).Y + .Height Then
                                     If (.Indice(j).Grafico = aGrafico) Or (.Indice(j).Grafico = 0) Then
 
                                         'ENCONTRADO!!!
                                         'Si lo encontramos seleccionamos los frames q esten en ese grafico y si tocamos
                                         'el de pasar, pasa solo el frame1.
                                         For H = 1 To .NumFrames
-                                            AplicarGrilla .Indice(H).X, .Indice(H).y, .Indice(H).X + .Width, .Indice(H).y + .Height, fTextureMaker.Actual, vbGreen
+                                            AplicarGrilla .Indice(H).X, .Indice(H).Y, .Indice(H).X + .Width, .Indice(H).Y + .Height, fTextureMaker.Actual, vbGreen
                                         
                                         Next H
                                         Exit For
@@ -607,14 +602,14 @@ If fSelecter = False Then
     ifX = iX
     ifY = iY
     iiFx = X
-    iiFy = y
+    iiFy = Y
     Selecto = False
 Else
     If agraficoh > 0 And agraficow > 0 Then
     lifX = iX
     lifY = iY
     liiFx = X
-    liiFy = y
+    liiFy = Y
     ProcesarLimites ifX, ifY, lifX, lifY
     If lifX > ifX And lifY > ifY Then
 modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
@@ -632,7 +627,7 @@ End If
 End If
 End If
 End Sub
-Public Sub ProcesarLimites(ByVal X As Integer, ByVal y As Integer, ByVal W As Integer, ByVal H As Integer)
+Public Sub ProcesarLimites(ByVal X As Integer, ByVal Y As Integer, ByVal W As Integer, ByVal H As Integer)
 Dim z As Long
 Dim iC As Integer
 Dim fC As Integer
@@ -648,7 +643,7 @@ agw = agraficow \ 32
 iC = (X - 1) \ 32
 fC = (W - 1) \ 32
 FF = (H - 1) \ 32
-inF = (y - 1) \ 32
+inF = (Y - 1) \ 32
 
 
 
@@ -906,7 +901,7 @@ Dim Xn As Integer
 Dim Xx As Integer
 Dim Yn As Integer
 Dim Yx As Integer
-Dim y As Long
+Dim Y As Long
 Dim X As Long
 List1.Clear
     TexAc = Combo1.ListIndex + 1
@@ -920,26 +915,26 @@ List1.Clear
             
             tIndex(P).Num = TexWE(TexAc).index(P).Num
             tIndex(P).X = TexWE(TexAc).index(P).X
-            tIndex(P).y = TexWE(TexAc).index(P).y
+            tIndex(P).Y = TexWE(TexAc).index(P).Y
             
             Xn = (tIndex(P).X \ 32) + 1
-            Yn = (tIndex(P).y \ 32) + 1
+            Yn = (tIndex(P).Y \ 32) + 1
             Xx = Xn + ((EstaticData(NewIndexData(tIndex(P).Num).Estatic).W - 1) \ 32)
             Yx = Yn + ((EstaticData(NewIndexData(tIndex(P).Num).Estatic).H - 1) \ 32)
              
             For X = Xn To Xx
-                For y = Yn To Yx
+                For Y = Yn To Yx
                     
-                    TexArray(((y - 1) * 16) + (X)) = tIndex(P).Num
-                    TexInicialX(((y - 1) * 16) + (X)) = tIndex(P).X
-                    TexInicialY(((y - 1) * 16) + (X)) = tIndex(P).y
+                    TexArray(((Y - 1) * 16) + (X)) = tIndex(P).Num
+                    TexInicialX(((Y - 1) * 16) + (X)) = tIndex(P).X
+                    TexInicialY(((Y - 1) * 16) + (X)) = tIndex(P).Y
                     
                     
-                Next y
+                Next Y
             Next X
             
             
-            List1.AddItem tIndex(P).Num & "[" & tIndex(P).X & "," & tIndex(P).y & "]"
+            List1.AddItem tIndex(P).Num & "[" & tIndex(P).X & "," & tIndex(P).Y & "]"
         Next P
     End If
     Text3 = tAncho
@@ -974,7 +969,7 @@ Private Sub Command2_Click()
 Dim Tmp As Integer
 Dim P As Long
 Dim X As Long
-Dim y As Long
+Dim Y As Long
 Dim lx As Long
 
 Dim k As Integer
@@ -989,17 +984,17 @@ If TexArray(Tmp) = 0 Then
     
         With EstaticData(NewIndexData(Val(Text2.Text)).Estatic)
         
-            For y = nfy To nfy + ((.H \ 32) - 1)
+            For Y = nfy To nfy + ((.H \ 32) - 1)
                 
                 For X = nfx To nfx + ((.W \ 32) - 1)
-                    Tmp = (y * 16) + (X + 1)
+                    Tmp = (Y * 16) + (X + 1)
                     
                      TexArray(Tmp) = Val(Text2.Text)
                     
                     TexInicialX(Tmp) = nfx * 32
                     TexInicialY(Tmp) = nfy * 32
                 Next X
-            Next y
+            Next Y
             
             If ((nfx + ((.W \ 32))) * 32) > tAncho Then tAncho = ((nfx + ((.W \ 32))) * 32)
             If ((nfy + ((.H \ 32))) * 32) > tAlto Then tAlto = ((nfy + ((.H \ 32))) * 32)
@@ -1008,21 +1003,21 @@ If TexArray(Tmp) = 0 Then
             ReDim Preserve tIndex(1 To tNumIndex)
             tIndex(tNumIndex).Num = Val(Text2.Text)
             tIndex(tNumIndex).X = nfx * 32
-            tIndex(tNumIndex).y = nfy * 32
+            tIndex(tNumIndex).Y = nfy * 32
             
             
         End With
         ElseIf NewIndexData(Val(Text2.Text)).Dinamica > 0 Then
             With NewAnimationData(NewIndexData(Val(Text2.Text)).Dinamica)
-            For y = nfy To nfy + ((.Height \ 32) - 1)
+            For Y = nfy To nfy + ((.Height \ 32) - 1)
                 
                 For X = nfx To nfx + ((.Width \ 32) - 1)
-                    Tmp = (y * 16) + (X + 1)
+                    Tmp = (Y * 16) + (X + 1)
                     TexArray(Tmp) = Val(Text2.Text)
                     TexInicialX(Tmp) = nfx * 32
                     TexInicialY(Tmp) = nfy * 32
                 Next X
-            Next y
+            Next Y
             If ((nfx + ((.Width \ 32))) * 32) > tAncho Then tAncho = ((nfx + ((.Width \ 32))) * 32)
             If ((nfy + ((.Height \ 32))) * 32) > tAlto Then tAlto = ((nfy + ((.Height \ 32))) * 32)
                 
@@ -1030,7 +1025,7 @@ If TexArray(Tmp) = 0 Then
             ReDim Preserve tIndex(1 To tNumIndex)
             tIndex(tNumIndex).Num = Val(Text2.Text)
             tIndex(tNumIndex).X = nfx * 32
-            tIndex(tNumIndex).y = nfy * 32
+            tIndex(tNumIndex).Y = nfy * 32
                 
                 
             End With
@@ -1047,7 +1042,7 @@ If TexArray(Tmp) = 0 Then
 Text3.Text = tAncho
 Text4.Text = tAlto
 Label7.Caption = "Num Index: " & tNumIndex
-List1.AddItem tNumIndex & " - " & Val(Text2.Text) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).y & "]"
+List1.AddItem tNumIndex & " - " & Val(Text2.Text) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).Y & "]"
 End If
 
 Else
@@ -1081,23 +1076,23 @@ If TexArray(Tmp) = 0 Then
     If SelInd(k) > 0 And SelInd(k) < numNewIndex Then
         With EstaticData(NewIndexData(SelInd(k)).Estatic)
         
-            For y = (nfy + SelStartY(k)) To (nfy + SelStartY(k)) + ((.H \ 32) - 1)
+            For Y = (nfy + SelStartY(k)) To (nfy + SelStartY(k)) + ((.H \ 32) - 1)
                 
                 For X = (nfx + SelStartX(k)) To (nfx + SelStartX(k)) + ((.W \ 32) - 1)
-                    Tmp = (y * 16) + (X + 1)
+                    Tmp = (Y * 16) + (X + 1)
                     
                      TexArray(Tmp) = SelInd(k)
                     
                     TexInicialX(Tmp) = (nfx + SelStartX(k)) * 32
                     TexInicialY(Tmp) = (nfy + SelStartY(k)) * 32
                 Next X
-            Next y
+            Next Y
             
             tNumIndex = tNumIndex + 1
             ReDim Preserve tIndex(1 To tNumIndex)
             tIndex(tNumIndex).Num = SelInd(k)
             tIndex(tNumIndex).X = ((nfx + SelStartX(k)) * 32) - tmpLeft
-            tIndex(tNumIndex).y = ((nfy + SelStartY(k)) * 32) - tmpTop
+            tIndex(tNumIndex).Y = ((nfy + SelStartY(k)) * 32) - tmpTop
             
             
         End With
@@ -1109,7 +1104,7 @@ If TexArray(Tmp) = 0 Then
 Text3.Text = tAncho
 Text4.Text = tAlto
 Label7.Caption = "Num Index: " & tNumIndex
-List1.AddItem tNumIndex & " - " & SelInd(k) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).y & "]"
+List1.AddItem tNumIndex & " - " & SelInd(k) & "[" & tIndex(tNumIndex).X & "," & tIndex(tNumIndex).Y & "]"
 End If
 Next k
 End If
@@ -1127,7 +1122,7 @@ R.Right = tAncho
 ddevice.Clear 1, R, D3DCLEAR_TARGET, &H0, ByVal 0, 0
 For P = 1 To tNumIndex
     
-    modDXEngine.DibujareEnHwnd2 Nuevo.hWnd, tIndex(P).Num, R, tIndex(P).X, tIndex(P).y, False
+    modDXEngine.DibujareEnHwnd2 Nuevo.hWnd, tIndex(P).Num, R, tIndex(P).X, tIndex(P).Y, False
 
 
 Next P
@@ -1153,7 +1148,7 @@ With TexWE(TexAc)
     For P = 1 To tNumIndex
         .index(P).Num = tIndex(P).Num
         .index(P).X = tIndex(P).X
-        .index(P).y = tIndex(P).y
+        .index(P).Y = tIndex(P).Y
     Next P
 End With
 Combo1.List(TexAc - 1) = Text14 & " [" & TexAc & "]"
@@ -1195,7 +1190,7 @@ Dim H As Integer
 Dim P As Long
 Dim j As Long
 Dim X As Long
-Dim y As Long
+Dim Y As Long
 Tmp = (nfy * 16) + (nfx + 1)
 If TexArray(Tmp) > 0 Then
     nfx = TexInicialX(Tmp) \ 32
@@ -1208,7 +1203,7 @@ End If
 For P = 1 To tNumIndex
     If tIndex(P).Num = TexArray(Tmp) Then
         If tIndex(P).X = TexInicialX(Tmp) Then
-            If tIndex(P).y = TexInicialY(Tmp) Then
+            If tIndex(P).Y = TexInicialY(Tmp) Then
                 'FOUND IT
               For j = P To tNumIndex - 1
               
@@ -1219,14 +1214,14 @@ For P = 1 To tNumIndex
               
               
               For X = nfx To (nfx - 1) + (((W - 1) \ 32) + 1)
-                For y = nfy To (nfy - 1) + (((H - 1) \ 32) + 1)
+                For Y = nfy To (nfy - 1) + (((H - 1) \ 32) + 1)
                     
-                    TexArray((y * 16) + (X + 1)) = 0
-                    TexInicialY((y * 16) + (X + 1)) = 0
-                    TexInicialX((y * 16) + (X + 1)) = 0
+                    TexArray((Y * 16) + (X + 1)) = 0
+                    TexInicialY((Y * 16) + (X + 1)) = 0
+                    TexInicialX((Y * 16) + (X + 1)) = 0
                     
                 
-                Next y
+                Next Y
               Next X
               
               'Buscamos por el MAS ALTO Y ANCHO
@@ -1236,8 +1231,8 @@ For P = 1 To tNumIndex
                 If (tIndex(j).X + EstaticData(NewIndexData(tIndex(j).Num).Estatic).W) > tAncho Then
                     tAncho = (tIndex(j).X + EstaticData(NewIndexData(tIndex(j).Num).Estatic).W)
                 End If
-                If (tIndex(j).y + EstaticData(NewIndexData(tIndex(j).Num).Estatic).H) > tAlto Then
-                    tAlto = (tIndex(j).y + EstaticData(NewIndexData(tIndex(j).Num).Estatic).H)
+                If (tIndex(j).Y + EstaticData(NewIndexData(tIndex(j).Num).Estatic).H) > tAlto Then
+                    tAlto = (tIndex(j).Y + EstaticData(NewIndexData(tIndex(j).Num).Estatic).H)
                 End If
               Next j
               Exit For
@@ -1249,7 +1244,7 @@ Next P
 
 List1.Clear
 For P = 1 To tNumIndex
-    List1.AddItem tIndex(P).Num & "[" & tIndex(P).X & "," & tIndex(P).y & "]"
+    List1.AddItem tIndex(P).Num & "[" & tIndex(P).X & "," & tIndex(P).Y & "]"
 
 Next P
 Text4 = tAlto
@@ -1263,7 +1258,7 @@ Private Sub Form_Load()
     GuardoTexturita = True
     
 End Sub
-Private Sub AplicarGrilla(ByVal X As Integer, ByVal y As Integer, ByVal W As Integer, ByVal H As Integer, ByRef P As PictureBox, ByVal Color As Long)
+Private Sub AplicarGrilla(ByVal X As Integer, ByVal Y As Integer, ByVal W As Integer, ByVal H As Integer, ByRef P As PictureBox, ByVal Color As Long)
 Dim i As Long
 Dim j As Long
 Dim iX As Long
@@ -1275,14 +1270,14 @@ Dim iH As Long
 Dim fFila As Integer
 Dim fCol As Integer
 X = X * Screen.TwipsPerPixelX
-y = y * Screen.TwipsPerPixelY
+Y = Y * Screen.TwipsPerPixelY
 W = W * Screen.TwipsPerPixelX
 H = H * Screen.TwipsPerPixelY
 
 
 
 Col = (X) \ (32 * Screen.TwipsPerPixelX)
-Fila = (y) \ (32 * Screen.TwipsPerPixelY)
+Fila = (Y) \ (32 * Screen.TwipsPerPixelY)
 
 iX = Col * (32 * Screen.TwipsPerPixelX)
 iY = Fila * (32 * Screen.TwipsPerPixelY)
@@ -1331,14 +1326,14 @@ Private Sub lvButtons_H_Click()
     
 End Sub
 
-Private Sub Nuevo_MouseUp(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Nuevo_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim Tmp As Integer
 Dim W As Integer
 Dim H As Integer
 Nuevo.Cls
 updatenuevo
 atx = X / Screen.TwipsPerPixelX
-aty = y / Screen.TwipsPerPixelY
+aty = Y / Screen.TwipsPerPixelY
 
 nfx = atx \ 32
 nfy = aty \ 32

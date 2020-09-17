@@ -421,7 +421,7 @@ ddevice.Clear 1, R, D3DCLEAR_TARGET, &H0, ByVal 0, 0
 For P = 1 To .NumIndex
     
     'dibuja en el vista previa
-    modDXEngine.DibujareEnHwnd2 frmMain.PreviewGrh.hWnd, .index(P).Num, R, .index(P).X, .index(P).y, False
+    modDXEngine.DibujareEnHwnd2 frmMain.PreviewGrh.hWnd, .index(P).Num, R, .index(P).X, .index(P).Y, False
 
 
 Next P
@@ -439,10 +439,10 @@ frmMain.PreviewGrh.ForeColor = vbCyan
 frmMain.PreviewGrh.DrawWidth = 1
 For P = 1 To .NumIndex
 
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)-(.index(P).X * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-(.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)
+    frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
 
 
 Next P
@@ -451,14 +451,34 @@ If SelTexFrame > 0 Then
 P = SelTexFrame
 frmMain.PreviewGrh.ForeColor = vbYellow
 frmMain.PreviewGrh.DrawWidth = 2
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)-(.index(P).X * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+    frmMain.PreviewGrh.Line (.index(P).X, .index(P).Y)-(.index(P).X, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))
+    frmMain.PreviewGrh.Line (.index(P).X, .index(P).Y)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), .index(P).Y)
+    frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), .index(P).Y)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))
+    frmMain.PreviewGrh.Line (.index(P).X, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))
 
 
 
 End If
 
 End With
+End Sub
+
+Private Sub Actual_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If fSelecter Then
+        If agraficow > 0 And agraficoh > 0 Then
+            If (X / Screen.TwipsPerPixelX) <= agraficow And (Y / Screen.TwipsPerPixelY) <= agraficoh Then
+                modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
+                If bGrilla Then AplicarGrilla 0, 0, agraficow, agraficoh, Actual, vbGreen
+                Actual.ForeColor = vbWhite
+                Actual.DrawWidth = 2
+                Actual.Line (iiFx, iiFy)-(iiFx, Y)
+                Actual.Line (iiFx, Y)-(X, Y)
+                Actual.Line (X, iiFy)-(X, Y)
+                Actual.Line (iiFx, iiFy)-(X, iiFy)
+                Actual.ForeColor = vbBlack
+                Actual.DrawWidth = 1
+            End If
+        End If
+    End If
+    
 End Sub

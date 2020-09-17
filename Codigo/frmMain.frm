@@ -3048,8 +3048,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000008&
          Height          =   3840
          Left            =   45
-         ScaleHeight     =   3840
-         ScaleWidth      =   3840
+         ScaleHeight     =   256
+         ScaleMode       =   0  'User
+         ScaleWidth      =   256
          TabIndex        =   2
          Top             =   0
          Visible         =   0   'False
@@ -3904,6 +3905,9 @@ Attribute VB_Exposed = False
 '**************************************************************
 Option Explicit
 Public Statz As Boolean
+Dim iX As Integer
+Dim iY As Integer
+
 
 Private Sub bI_Click()
     If bI.value Then 'index button
@@ -4066,7 +4070,7 @@ If IsNumeric(Chr(KeyAscii)) = False Then KeyAscii = 0
 End Sub
 Private Sub cCopiarInterior()
 Dim X As Long
-Dim y As Long
+Dim Y As Long
 
 Dim o As Long
 Dim H As Long
@@ -4083,14 +4087,14 @@ CX = 0
 For X = SeleccionIX To SeleccionFX
 CX = CX + 1
 CY = 0
-    For y = SeleccionIY To SeleccionFY
+    For Y = SeleccionIY To SeleccionFY
       CY = CY + 1
-        SelInterior(CX, CY) = MapData(X, y).InteriorVal
-    Next y
+        SelInterior(CX, CY) = MapData(X, Y).InteriorVal
+    Next Y
 Next X
 End Sub
 Private Sub cCopiarLuces_Click()
-Dim y As Long
+Dim Y As Long
 Dim X As Long
 Dim o As Long
 Dim H As Long
@@ -4104,22 +4108,22 @@ SelLuz.Xx = o
 SelLuz.xY = H
 
     For X = SeleccionIX To SeleccionFX
-        For y = SeleccionIY To SeleccionFY
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(0) = MapData(X, y).light_value(0)
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(1) = MapData(X, y).light_value(1)
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(2) = MapData(X, y).light_value(2)
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).light_value(3) = MapData(X, y).light_value(3)
+        For Y = SeleccionIY To SeleccionFY
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(0) = MapData(X, Y).light_value(0)
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(1) = MapData(X, Y).light_value(1)
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(2) = MapData(X, Y).light_value(2)
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).light_value(3) = MapData(X, Y).light_value(3)
             
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).Luz = MapData(X, y).Luz
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).Luz = MapData(X, Y).Luz
             
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(0) = MapData(X, y).LV(0)
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(1) = MapData(X, y).LV(1)
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(2) = MapData(X, y).LV(2)
-            SelLuz.TLP(X - SeleccionIX + 1, y - SeleccionIY + 1).LV(3) = MapData(X, y).LV(3)
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(0) = MapData(X, Y).LV(0)
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(1) = MapData(X, Y).LV(1)
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(2) = MapData(X, Y).LV(2)
+            SelLuz.TLP(X - SeleccionIX + 1, Y - SeleccionIY + 1).LV(3) = MapData(X, Y).LV(3)
             
             
                 
-        Next y
+        Next Y
     Next X
     
 End If
@@ -4624,7 +4628,7 @@ Next i
 End Sub
 Private Sub cPegarLuces_Click()
 
-Dim y As Long
+Dim Y As Long
 Dim X As Long
 Dim tX As Integer
 Dim tY As Integer
@@ -4635,22 +4639,22 @@ tY = SelLuz.nY
 If SelLuz.Xx = 0 Then Exit Sub
 
 For X = tX To tX + SelLuz.Xx
-For y = tY To tY + SelLuz.xY
-    If X <= 100 And y <= 100 Then
+For Y = tY To tY + SelLuz.xY
+    If X <= 100 And Y <= 100 Then
     
-        MapData(X, y).light_value(0) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(0)
-        MapData(X, y).light_value(1) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(1)
-        MapData(X, y).light_value(2) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(2)
-        MapData(X, y).light_value(3) = SelLuz.TLP(X - tX + 1, y - tY + 1).light_value(3)
+        MapData(X, Y).light_value(0) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(0)
+        MapData(X, Y).light_value(1) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(1)
+        MapData(X, Y).light_value(2) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(2)
+        MapData(X, Y).light_value(3) = SelLuz.TLP(X - tX + 1, Y - tY + 1).light_value(3)
         
-        MapData(X, y).LV(0) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(0)
-        MapData(X, y).LV(1) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(1)
-        MapData(X, y).LV(2) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(2)
-        MapData(X, y).LV(3) = SelLuz.TLP(X - tX + 1, y - tY + 1).LV(3)
+        MapData(X, Y).LV(0) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(0)
+        MapData(X, Y).LV(1) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(1)
+        MapData(X, Y).LV(2) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(2)
+        MapData(X, Y).LV(3) = SelLuz.TLP(X - tX + 1, Y - tY + 1).LV(3)
         
-         MapData(X, y).Luz = SelLuz.TLP(X - tX + 1, y - tY + 1).Luz
+         MapData(X, Y).Luz = SelLuz.TLP(X - tX + 1, Y - tY + 1).Luz
     End If
-Next y
+Next Y
 Next X
 End Sub
 
@@ -5179,7 +5183,7 @@ End Sub
 
 
 
-Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub Form_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
     'If Seleccionando Then CopiarSeleccion
 
     
@@ -5253,7 +5257,7 @@ End If
 
 
 End Sub
-Private Sub lListado_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub lListado_MouseDown(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 29/05/06
@@ -5263,7 +5267,7 @@ If index = 3 And Button = 2 Then
 End If
 End Sub
 
-Private Sub lListado_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub lListado_MouseMove(index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 22/05/06
@@ -5280,7 +5284,7 @@ End Sub
 
 Private Sub mele_decor_Click()
 
-If TipoSeleccionado = 0 Or ObjetoSeleccionado.X = 0 Or ObjetoSeleccionado.y = 0 Then
+If TipoSeleccionado = 0 Or ObjetoSeleccionado.X = 0 Or ObjetoSeleccionado.Y = 0 Then
     MsgBox "No tienes ningun elemento seleccionado."
     Exit Sub
 End If
@@ -6259,33 +6263,33 @@ MsgBox "ERROR EN ABRIR" & "_" & B & "_" & Err.Description
 
 End Sub
 
-Private Sub picRadar_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub picRadar_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 29/05/06
 '*************************************************
 If X < MinXBorder Then X = 11
 If X > MaxXBorder Then X = 89
-If y < MinYBorder Then y = 10
-If y > MaxYBorder Then y = 92
+If Y < MinYBorder Then Y = 10
+If Y > MaxYBorder Then Y = 92
 
 UserPos.X = X
-UserPos.y = y
+UserPos.Y = Y
 bRefreshRadar = True
 End Sub
 
-Private Sub picRadar_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub picRadar_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 28/05/06
 '*************************************************
 MiRadarX = X
-MiRadarY = y
+MiRadarY = Y
 End Sub
 
 
 
-Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub MainViewPic_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: Unkwown
 'Last modified: 20/05/06 - GS
@@ -6297,7 +6301,7 @@ Dim tY As Integer
 
 If Not MapaCargado Then Exit Sub
 
-ConvertCPtoTP 0, 0, X, y, tX, tY
+ConvertCPtoTP 0, 0, X, Y, tX, tY
 Mx = tX
 My = tY
 
@@ -6319,7 +6323,7 @@ SelLuz.nY = tY
 End Sub
 
 
-Private Sub MainViewpic_MouseMove(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub MainViewpic_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '*************************************************
 'Author: Unkwown
 'Last modified: 20/05/06 - GS
@@ -6332,7 +6336,7 @@ Dim tY As Integer
 If Not MapaCargado Then Exit Sub
 HotKeysAllow = True
 
-ConvertCPtoTP 0, 0, X, y, tX, tY
+ConvertCPtoTP 0, 0, X, Y, tX, tY
 Mx = tX
 My = tY
 
@@ -6375,7 +6379,7 @@ If frmMain.mnuGuardarUltimaConfig.Checked = True Then
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Decors", IIf(frmMain.mVerDecors.Checked = True, "1", "0")
     
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Bloqueos", IIf(frmMain.mnuVerBloqueos.Checked = True, "1", "0")
-    WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "LastPos", UserPos.X & "-" & UserPos.y
+    WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "LastPos", UserPos.X & "-" & UserPos.Y
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "UtilizarDeshacer", IIf(frmMain.mnuUtilizarDeshacer.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "AutoCapturarTrans", IIf(frmMain.mnuAutoCapturarTranslados.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "AutoCapturarSup", IIf(frmMain.mnuAutoCapturarSuperficie.Checked = True, "1", "0")
@@ -6402,14 +6406,98 @@ If PONERSPOT Then
 End If
 End Sub
 
-Private Sub PreviewGrh_MouseUp(Button As Integer, Shift As Integer, X As Single, y As Single)
+Private Sub PreviewGrh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+If iX = 0 Then
+iX = X
+End If
+If iY = 0 Then
+iY = Y
+End If
+End Sub
+
+Private Sub PreviewGrh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+
+If SelTexWe > 0 Then
+
+        If TexWE(SelTexWe).NumIndex > 0 Then
+            If X <= TexWE(SelTexWe).Ancho And Y <= TexWE(SelTexWe).Largo And iX > 0 And iY > 0 Then
+                VistaPreviaDeSup
+                'modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
+               ' If bGrilla Then AplicarGrilla 0, 0, agraficow, agraficoh, Actual, vbGreen
+                PreviewGrh.ForeColor = vbWhite
+                PreviewGrh.DrawWidth = 2
+                PreviewGrh.Line (iX, iY)-(iX, Y)
+                PreviewGrh.Line (iX, Y)-(X, Y)
+                PreviewGrh.Line (X, iY)-(X, Y)
+                PreviewGrh.Line (iX, iY)-(X, iY)
+                PreviewGrh.ForeColor = vbBlack
+                PreviewGrh.DrawWidth = 1
+            End If
+        End If
+End If
+End Sub
+
+Private Sub PreviewGrh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim kx As Integer
 Dim ky As Integer
-If SelTexWe = 0 Then Exit Sub
-kx = X / Screen.TwipsPerPixelX
-ky = y / Screen.TwipsPerPixelY
-If Button = vbLeftButton Then
 
+If SelTexWe = 0 Then Exit Sub
+
+Dim i As Integer
+Dim j As Integer
+Dim dx As Integer
+Dim dy As Integer
+Dim tilesW As Integer
+Dim tilesH As Integer
+Dim offX As Integer
+Dim offY As Integer
+Dim index As Integer
+Dim jj As Integer
+
+
+dx = X - iX
+dy = Y - iY
+offX = iX / 32
+offY = iY / 32
+tilesW = (dx / 32) + 1
+tilesH = (dy / 32) + 1
+
+
+If dx > 0 And dy > 0 Then
+With TexWE(NumTexWe)
+    .Ancho = tilesW * 32
+    .Largo = tilesH * 32
+    .tw = tilesW
+    .th = tilesH
+    .NumIndex = (tilesH * tilesW)
+
+ReDim .index(1 To .NumIndex + 1)
+jj = 0
+For i = 1 To tilesW
+    For j = 1 To tilesH
+
+        .index(i + jj).Num = PoneIndexEnTex(SelTexWe, offX + i, offY + j, 1, 1)
+        .index(i + jj).X = (i - 1) * 32
+        .index(i + jj).Y = (j - 1) * 32
+        jj = jj + 1
+    Next j
+    jj = jj - 1
+Next i
+
+End With
+
+SelTexWe = NumTexWe
+AnalizeTexture SelTexWe
+
+
+'calculo el ancho/alto del cuadrado
+'creo una textura temporal con el cuadrado
+'PoneIndexEnTex(ByVal Tex As Integer, ByVal aX As Integer, ByVal aY As Integer, ByVal oX As Integer, ByVal oY As Integer) As Integer
+Else
+
+kx = X
+ky = Y
+If Button = vbLeftButton Then
 
 
 Dim P As Long
@@ -6420,7 +6508,7 @@ Dim P As Long
         For P = 1 To TexWE(SelTexWe).NumIndex
             With EstaticData(NewIndexData(TexWE(SelTexWe).index(P).Num).Estatic)
                 
-                If kx >= TexWE(SelTexWe).index(P).X And kx <= TexWE(SelTexWe).index(P).X + .W And ky >= TexWE(SelTexWe).index(P).y And ky <= TexWE(SelTexWe).index(P).y + .H Then
+                If kx >= TexWE(SelTexWe).index(P).X And kx <= TexWE(SelTexWe).index(P).X + .W And ky >= TexWE(SelTexWe).index(P).Y And ky <= TexWE(SelTexWe).index(P).Y + .H Then
                 
                     SelTexFrame = P
                     Exit For
@@ -6436,13 +6524,18 @@ SelTexFrame = 0
 
 End If
 
+End If
+
+iX = 0
+iY = 0
+
 VistaPreviaDeSup
+
 End Sub
 
 Private Sub PreviewGrh_Paint()
 Call modPaneles.VistaPreviaDeSup
 End Sub
-
 Private Sub QUITARSPOT_Click()
 If QUITARSPOT Then
     PONERSPOT.value = False
