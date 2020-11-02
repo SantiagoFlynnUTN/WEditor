@@ -458,11 +458,6 @@ Private SelStartY() As Integer
 Private NumSel As Integer
 
 
-
-
-
-
-
 Private Sub Actual_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     If fSelecter Then
         If agraficow > 0 And agraficoh > 0 Then
@@ -913,7 +908,7 @@ List1.Clear
     tAlto = TexWE(TexAc).Largo
     tAncho = TexWE(TexAc).Ancho
     If TexWE(TexAc).NumIndex > 0 Then
-        ReDim tIndex(1 To TexWE(TexAc).NumIndex + 1)
+        ReDim tIndex(1 To TexWE(TexAc).NumIndex)
         tNumIndex = TexWE(TexAc).NumIndex
         For P = 1 To TexWE(TexAc).NumIndex
         

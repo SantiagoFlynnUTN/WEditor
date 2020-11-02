@@ -46,15 +46,19 @@ Public Sub EstSelectPanel(ByVal Numero As Byte, ByVal Activado As Boolean)
         If frmMain.mnuVerAutomatico.Checked = True Then
             Select Case Numero
                 Case 0
-                    If frmMain.cCapas.Text = 4 Then
+                    If cCapaSel = 4 Then
                         frmMain.mnuVerCapa4.Tag = CInt(frmMain.mnuVerCapa4.Checked)
                         frmMain.mnuVerCapa4.Checked = True
-                    ElseIf frmMain.cCapas.Text = 3 Then
+                    ElseIf cCapaSel = 3 Then
                         frmMain.mnuVerCapa3.Tag = CInt(frmMain.mnuVerCapa3.Checked)
                         frmMain.mnuVerCapa3.Checked = True
-                    ElseIf frmMain.cCapas.Text = 2 Then
+                    ElseIf cCapaSel = 2 Then
                         frmMain.mnuVerCapa2.Tag = CInt(frmMain.mnuVerCapa2.Checked)
                         frmMain.mnuVerCapa2.Checked = True
+                    ElseIf cCapaSel = 9 Then
+                        frmMain.MnuVerCapa9.Tag = CInt(frmMain.MnuVerCapa9.Checked)
+                        frmMain.MnuVerCapa9.Checked = True
+                        
                     End If
                 Case 2
                     frmMain.cVerBloqueos.Tag = CInt(frmMain.cVerBloqueos.value)
@@ -72,12 +76,15 @@ Public Sub EstSelectPanel(ByVal Numero As Byte, ByVal Activado As Boolean)
         If frmMain.mnuVerAutomatico.Checked = True Then
             Select Case Numero
                 Case 0
-                    If frmMain.cCapas.Text = 4 Then
+                    If cCapaSel = 4 Then
                         If LenB(frmMain.mnuVerCapa3.Tag) <> 0 Then frmMain.mnuVerCapa4.Checked = CBool(-1)
-                    ElseIf frmMain.cCapas.Text = 3 Then
+                    ElseIf cCapaSel = 3 Then
                         If LenB(frmMain.mnuVerCapa3.Tag) <> 0 Then frmMain.mnuVerCapa3.Checked = CBool(frmMain.mnuVerCapa3.Tag)
-                    ElseIf frmMain.cCapas.Text = 2 Then
+                    ElseIf cCapaSel = 2 Then
                         If LenB(frmMain.mnuVerCapa2.Tag) <> 0 Then frmMain.mnuVerCapa2.Checked = CBool(frmMain.mnuVerCapa2.Tag)
+                    ElseIf cCapaSel = 9 Then
+                        If LenB(frmMain.MnuVerCapa9.Tag) <> 0 Then frmMain.MnuVerCapa9.Checked = CBool(frmMain.MnuVerCapa9.Tag)
+                        
                     End If
                 Case 2
                     If LenB(frmMain.cVerBloqueos.Tag) = 0 Then frmMain.cVerBloqueos.Tag = 0
@@ -413,6 +420,7 @@ R.Right = .Ancho
 ddevice.Clear 1, R, D3DCLEAR_TARGET, &H0, ByVal 0, 0
 For P = 1 To .NumIndex
     
+    'dibuja en el vista previa
     modDXEngine.DibujareEnHwnd2 frmMain.PreviewGrh.hWnd, .index(P).Num, R, .index(P).X, .index(P).Y, False
 
 
@@ -443,14 +451,34 @@ If SelTexFrame > 0 Then
 P = SelTexFrame
 frmMain.PreviewGrh.ForeColor = vbYellow
 frmMain.PreviewGrh.DrawWidth = 2
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-(.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, .index(P).Y * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
-    frmMain.PreviewGrh.Line (.index(P).X * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W) * Screen.TwipsPerPixelX, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H) * Screen.TwipsPerPixelY)
+    frmMain.PreviewGrh.Line (.index(P).X, .index(P).Y)-(.index(P).X, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))
+    frmMain.PreviewGrh.Line (.index(P).X, .index(P).Y)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), .index(P).Y)
+    frmMain.PreviewGrh.Line ((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), .index(P).Y)-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))
+    frmMain.PreviewGrh.Line (.index(P).X, (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))-((.index(P).X + EstaticData(NewIndexData(.index(P).Num).Estatic).W), (.index(P).Y + EstaticData(NewIndexData(.index(P).Num).Estatic).H))
 
 
 
 End If
 
 End With
+End Sub
+
+Private Sub Actual_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+    If fSelecter Then
+        If agraficow > 0 And agraficoh > 0 Then
+            If (X / Screen.TwipsPerPixelX) <= agraficow And (Y / Screen.TwipsPerPixelY) <= agraficoh Then
+                modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
+                If bGrilla Then AplicarGrilla 0, 0, agraficow, agraficoh, Actual, vbGreen
+                Actual.ForeColor = vbWhite
+                Actual.DrawWidth = 2
+                Actual.Line (iiFx, iiFy)-(iiFx, Y)
+                Actual.Line (iiFx, Y)-(X, Y)
+                Actual.Line (X, iiFy)-(X, Y)
+                Actual.Line (iiFx, iiFy)-(X, iiFy)
+                Actual.ForeColor = vbBlack
+                Actual.DrawWidth = 1
+            End If
+        End If
+    End If
+    
 End Sub

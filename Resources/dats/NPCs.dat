@@ -16,7 +16,7 @@
 '  NpcReyCastillo = 14
 
 [INIT]
-NumNPCs=9
+NumNPCs=18
 
 [NPC1] 'NPC
 Name=Doroteo
@@ -31,7 +31,7 @@ MenuIndex=6
 [NPC2] 'NPC
 Name=Argal
 Info=Provisiones
-Desc=�Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
 Head=7
 Body=11
 Heading=3
@@ -60,7 +60,7 @@ MenuIndex=3
 
 [NPC3] 'Quest de Inthak
 Name=Korgan
-Desc=Aventurero �Estas preparado?
+Desc=Aventurero ¿Estas preparado?
 Head=8
 Body=11
 Heading=3
@@ -76,7 +76,7 @@ Quests3=12
 [NPC4] ' Sacerdote
 Name=Padre Valyst
 NpcType=1
-Desc=Hola hijo m�o, soy el Sacerdote de este pueblo.
+Desc=Hola hijo mío, soy el Sacerdote de este pueblo.
 Head=14
 Body=11
 Heading=3
@@ -166,7 +166,7 @@ Movement=1
 [NPC9] ' Sacerdote
 Name=Vendedora de Pociones
 Info=Provisiones
-Desc=�Hola buen amigo! cuento con las mejores pociones de estas comarcas.
+Desc=¡Hola buen amigo! cuento con las mejores pociones de estas comarcas.
 Head=7
 Body=11
 Heading=3
@@ -180,4 +180,240 @@ Obj2=98-10000
 Obj3=99-10000
 Obj4=100-10000
 Obj5=96-10000
+MenuIndex=3
+
+[NPC10] 'NPC
+Name=Guerrero
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=142
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=13
+Obj1=10-100
+Obj2=11-100
+Obj3=13-100
+Obj4=24-100
+Obj5=25-100
+Obj6=27-100
+Obj7=46-100
+Obj8=56-100
+Obj9=111-100
+Obj10=118-100
+Obj11=158-100
+Obj12=268-100
+Obj13=269-100
+MenuIndex=3
+
+[NPC11] 'NPC
+Name=Cazador
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=158
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=14
+Obj1=9-100
+Obj2=12-100
+Obj3=23-100
+Obj4=26-100
+Obj5=45-100
+Obj6=51-100
+Obj7=55-100
+Obj8=110-100
+Obj9=117-100
+Obj10=129-100
+Obj11=137-100
+Obj12=157-100
+Obj13=274-100
+Obj14=275-100
+MenuIndex=3
+
+[NPC12] 'NPC
+Name=Paladin
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=126
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=11
+Obj1=8-100
+Obj2=22-100
+Obj3=44-100
+Obj4=54-100
+Obj5=109-100
+Obj6=116-100
+Obj7=128-100
+Obj8=136-100
+Obj9=156-100
+Obj10=264-100
+Obj11=265-100
+MenuIndex=3
+
+[NPC13] 'NPC
+Name=Asesino
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=176
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=11
+Obj1=7-100
+Obj2=21-100
+Obj3=43-100
+Obj4=53-100
+Obj5=108-100
+Obj6=115-100
+Obj7=127-100
+Obj8=135-100
+Obj9=155-100
+Obj10=276-100
+Obj11=277-100
+MenuIndex=3
+
+[NPC14] 'NPC
+Name=Clero
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=146
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=11
+Obj1=6-100
+Obj2=20-100
+Obj3=42-100
+Obj4=52-100
+Obj5=107-100
+Obj6=114-100
+Obj7=126-100
+Obj8=134-100
+Obj9=153-100
+Obj10=270-100
+Obj11=271-100
+MenuIndex=3
+
+[NPC15] 'NPC
+Name=Bardo
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=166
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=13
+Obj1=4-100
+Obj2=5-100
+Obj3=18-100
+Obj4=19-100
+Obj5=41-100
+Obj6=51-100
+Obj7=106-100
+Obj8=113-100
+Obj9=125-100
+Obj10=133-100
+Obj11=152-100
+Obj12=260-100
+Obj13=261-100
+MenuIndex=3
+
+[NPC16] 'NPC
+Name=Druida
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=118
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=11
+Obj1=2-100
+Obj2=3-100
+Obj3=16-100
+Obj4=17-100
+Obj5=40-100
+Obj6=50-100
+Obj7=112-100
+Obj8=132-100
+Obj9=151-100
+Obj10=262-100
+Obj11=263-100
+MenuIndex=3
+
+[NPC17] 'NPC
+Name=Mago
+Info=Provisiones
+Desc=¡Hola buen amigo! cuento con las mejores frutas de estas comarcas.
+Head=7
+Body=134
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=11
+Obj1=1-100
+Obj2=15-100
+Obj3=39-100
+Obj4=123-100
+Obj5=131-100
+Obj6=150-100
+Obj7=266-100
+Obj8=267-100
+Obj9=278-100
+Obj10=49-100
+MenuIndex=3
+
+[NPC18] 'NPC
+Name=Items Varios
+Info=Provisiones
+Desc=Vendo items varios
+Head=7
+Body=192
+Heading=3
+Movement=1
+Comercia=1
+ReSpawn=0
+TipoItems=1
+NROITEMS=16
+Obj1=47-100
+Obj2=48-100
+Obj3=60-100
+Obj4=61-100
+Obj5=62-100
+Obj6=104-100
+Obj7=29-100
+Obj8=35-100
+Obj9=36-100
+Obj10=44-100
+Obj11=46-100
+Obj12=45-100
+Obj13=147-100
+Obj14=148-100
+Obj15=149-100
+Obj16=150-100
 MenuIndex=3

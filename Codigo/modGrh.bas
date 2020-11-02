@@ -203,26 +203,34 @@ Public Sub Grh_iRenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen
     Dim jtw As Single
     Dim jth As Single
     Dim jg As Integer
-    If NewIndexData(Grh.index).Dinamica > 0 Then
-        With NewAnimationData(NewIndexData(Grh.index).Dinamica)
+    Dim tIndex As Integer
+    
+    If Grh.index < 0 Then
+        tIndex = -Grh.index
+    Else
+        tIndex = Grh.index
+    End If
+    
+    If NewIndexData(tIndex).Dinamica > 0 Then
+        With NewAnimationData(NewIndexData(tIndex).Dinamica)
             Grh.fC = Grh.fC + (timer_ticks_per_frame * .NumFrames / .Velocidad)
             If Grh.fC > .NumFrames Then Grh.fC = (Grh.fC Mod .NumFrames) + 1
             If Grh.fC <= 0 Then Grh.fC = 1
             jx = .Indice(Grh.fC).X
-            jy = .Indice(Grh.fC).Y
+            jy = .Indice(Grh.fC).y
             jw = .Width
             jh = .Height
             jtw = .TileWidth
             jth = .TileHeight
-            jg = (.Indice(Grh.fC).Grafico - .Indice(1).Grafico) + NewIndexData(Grh.index).OverWriteGrafico
+            jg = (.Indice(Grh.fC).Grafico - .Indice(1).Grafico) + NewIndexData(tIndex).OverWriteGrafico
         End With
     Else
-        With EstaticData(NewIndexData(Grh.index).Estatic)
+        With EstaticData(NewIndexData(tIndex).Estatic)
             jx = .L
             jy = .t
             jh = .H
             jw = .W
-            jg = NewIndexData(Grh.index).OverWriteGrafico
+            jg = NewIndexData(tIndex).OverWriteGrafico
             jtw = .tw
             jth = .th
         End With
@@ -271,26 +279,37 @@ Public Sub Grh_RenderN(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_
     Dim jtw As Single
     Dim jth As Single
     Dim jg As Integer
-    If NewIndexData(Grh.index).Dinamica > 0 Then
-        With NewAnimationData(NewIndexData(Grh.index).Dinamica)
+    Dim tIndex As Integer
+    
+    If Grh.index < 0 Then
+        tIndex = -Grh.index
+
+        
+    Else
+        tIndex = Grh.index
+    End If
+    
+    If NewIndexData(tIndex).Dinamica > 0 Then
+        With NewAnimationData(NewIndexData(tIndex).Dinamica)
             Grh.fC = Grh.fC + (timer_ticks_per_frame * .NumFrames / .Velocidad)
             If Grh.fC > .NumFrames Then Grh.fC = (Grh.fC Mod .NumFrames) + 1
             If Grh.fC <= 0 Then Grh.fC = 1
             jx = .Indice(Grh.fC).X
-            jy = .Indice(Grh.fC).Y
+            jy = .Indice(Grh.fC).y
             jw = .Width
             jh = .Height
             jtw = .TileWidth
             jth = .TileHeight
-            jg = (.Indice(Grh.fC).Grafico - .Indice(1).Grafico) + NewIndexData(Grh.index).OverWriteGrafico
+            jg = (.Indice(Grh.fC).Grafico - .Indice(1).Grafico) + NewIndexData(tIndex).OverWriteGrafico
         End With
     Else
-        With EstaticData(NewIndexData(Grh.index).Estatic)
+        If NewIndexData(tIndex).Estatic <= 0 Then Exit Sub
+        With EstaticData(NewIndexData(tIndex).Estatic)
             jx = .L
             jy = .t
             jh = .H
             jw = .W
-            jg = NewIndexData(Grh.index).OverWriteGrafico
+            jg = NewIndexData(tIndex).OverWriteGrafico
             jtw = .tw
             jth = .th
         End With
@@ -345,7 +364,7 @@ Public Sub Anim_iRender(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen
         If Grh.fC > .NumFrames Then Grh.fC = (Grh.fC Mod .NumFrames) + 1
         If Grh.fC <= 0 Then Grh.fC = 1
         jx = .Indice(Grh.fC).X
-        jy = .Indice(Grh.fC).Y
+        jy = .Indice(Grh.fC).y
         jw = .Width
         jh = .Height
         jtw = .TileWidth
@@ -398,7 +417,7 @@ Public Sub Anim_Render(ByRef Grh As tnGrh, ByVal screen_x As Long, ByVal screen_
         If Grh.fC > .NumFrames Then Grh.fC = (Grh.fC Mod .NumFrames) + 1
         If Grh.fC <= 0 Then Grh.fC = 1
         jx = .Indice(Grh.fC).X
-        jy = .Indice(Grh.fC).Y
+        jy = .Indice(Grh.fC).y
         jw = .Width
         jh = .Height
         jtw = .TileWidth
@@ -433,7 +452,7 @@ End Sub
 
 
 
-Public Function GUI_Grh_Render(ByVal grh_index As Long, X As Long, Y As Long, Optional ByVal Angle As Single, Optional ByVal alpha_blend As Boolean, Optional ByVal Color As Long) As Boolean
+Public Function GUI_Grh_Render(ByVal grh_index As Long, X As Long, y As Long, Optional ByVal Angle As Single, Optional ByVal alpha_blend As Boolean, Optional ByVal Color As Long) As Boolean
 '**************************************************************
 'Author: Aaron Perkins
 'Last Modify Date: 5/15/2003
@@ -453,7 +472,7 @@ Public Function GUI_Grh_Render(ByVal grh_index As Long, X As Long, Y As Long, Op
 
     Grh_Initialize temp_grh, grh_index, alpha_blend, Angle
     
-    Grh_Render temp_grh, X, Y, rpg_list
+    Grh_Render temp_grh, X, y, rpg_list
     
     GUI_Grh_Render = True
 End Function

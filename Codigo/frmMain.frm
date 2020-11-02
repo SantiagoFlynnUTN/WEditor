@@ -491,7 +491,7 @@ Begin VB.Form frmMain
          Height          =   330
          ItemData        =   "frmMain.frx":356A
          Left            =   1080
-         List            =   "frmMain.frx":357D
+         List            =   "frmMain.frx":3580
          TabIndex        =   0
          TabStop         =   0   'False
          Text            =   "1"
@@ -513,7 +513,9 @@ Begin VB.Form frmMain
          EndProperty
          ForeColor       =   &H80000014&
          Height          =   330
+         ItemData        =   "frmMain.frx":3596
          Left            =   2880
+         List            =   "frmMain.frx":3598
          TabIndex        =   52
          Text            =   "1"
          Top             =   3120
@@ -633,9 +635,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   2
-         ItemData        =   "frmMain.frx":3590
+         ItemData        =   "frmMain.frx":359A
          Left            =   3360
-         List            =   "frmMain.frx":3592
+         List            =   "frmMain.frx":359C
          TabIndex        =   46
          Text            =   "1"
          Top             =   3120
@@ -677,9 +679,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   0
-         ItemData        =   "frmMain.frx":3594
+         ItemData        =   "frmMain.frx":359E
          Left            =   3360
-         List            =   "frmMain.frx":3596
+         List            =   "frmMain.frx":35A0
          TabIndex        =   36
          Text            =   "1"
          Top             =   3120
@@ -720,9 +722,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   2580
          Index           =   1
-         ItemData        =   "frmMain.frx":3598
+         ItemData        =   "frmMain.frx":35A2
          Left            =   120
-         List            =   "frmMain.frx":359A
+         List            =   "frmMain.frx":35A4
          TabIndex        =   34
          Tag             =   "-1"
          Top             =   120
@@ -743,9 +745,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   3180
          Index           =   4
-         ItemData        =   "frmMain.frx":359C
+         ItemData        =   "frmMain.frx":35A6
          Left            =   120
-         List            =   "frmMain.frx":359E
+         List            =   "frmMain.frx":35A8
          Style           =   1  'Checkbox
          TabIndex        =   33
          Tag             =   "-1"
@@ -1194,9 +1196,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   1
-         ItemData        =   "frmMain.frx":35A0
+         ItemData        =   "frmMain.frx":35AA
          Left            =   840
-         List            =   "frmMain.frx":35A2
+         List            =   "frmMain.frx":35AC
          TabIndex        =   56
          Text            =   "1"
          Top             =   3120
@@ -1237,9 +1239,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   2580
          Index           =   2
-         ItemData        =   "frmMain.frx":35A4
+         ItemData        =   "frmMain.frx":35AE
          Left            =   120
-         List            =   "frmMain.frx":35A6
+         List            =   "frmMain.frx":35B0
          TabIndex        =   58
          Tag             =   "-1"
          Top             =   120
@@ -1261,9 +1263,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   1
-         ItemData        =   "frmMain.frx":35A8
+         ItemData        =   "frmMain.frx":35B2
          Left            =   3360
-         List            =   "frmMain.frx":35AA
+         List            =   "frmMain.frx":35B4
          TabIndex        =   59
          Text            =   "500"
          Top             =   3120
@@ -1473,9 +1475,9 @@ Begin VB.Form frmMain
          End
          Begin VB.ListBox lLuces 
             Height          =   1425
-            ItemData        =   "frmMain.frx":35AC
+            ItemData        =   "frmMain.frx":35B6
             Left            =   2160
-            List            =   "frmMain.frx":35E3
+            List            =   "frmMain.frx":35ED
             TabIndex        =   94
             Top             =   600
             Width           =   1575
@@ -2107,9 +2109,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   330
          Index           =   0
-         ItemData        =   "frmMain.frx":36E6
+         ItemData        =   "frmMain.frx":36F0
          Left            =   840
-         List            =   "frmMain.frx":36E8
+         List            =   "frmMain.frx":36F2
          TabIndex        =   37
          Text            =   "1"
          Top             =   3120
@@ -2130,9 +2132,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000014&
          Height          =   2580
          Index           =   3
-         ItemData        =   "frmMain.frx":36EA
+         ItemData        =   "frmMain.frx":36F4
          Left            =   120
-         List            =   "frmMain.frx":36EC
+         List            =   "frmMain.frx":36F6
          TabIndex        =   45
          Tag             =   "-1"
          Top             =   120
@@ -2846,7 +2848,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":36EE
+      Image           =   "frmMain.frx":36F8
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2890,7 +2892,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":3CB4
+      Image           =   "frmMain.frx":3CBE
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2922,7 +2924,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":427A
+      Image           =   "frmMain.frx":4284
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2954,7 +2956,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":477B
+      Image           =   "frmMain.frx":4785
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -2986,7 +2988,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":4B2F
+      Image           =   "frmMain.frx":4B39
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -3018,7 +3020,7 @@ Begin VB.Form frmMain
       ScrollBars      =   2  'Vertical
       TabIndex        =   4
       TabStop         =   0   'False
-      Text            =   "frmMain.frx":4EB0
+      Text            =   "frmMain.frx":4EBA
       Top             =   6300
       Width           =   3825
    End
@@ -3046,8 +3048,9 @@ Begin VB.Form frmMain
          ForeColor       =   &H80000008&
          Height          =   3840
          Left            =   45
-         ScaleHeight     =   3840
-         ScaleWidth      =   3840
+         ScaleHeight     =   256
+         ScaleMode       =   0  'User
+         ScaleWidth      =   256
          TabIndex        =   2
          Top             =   0
          Visible         =   0   'False
@@ -3090,7 +3093,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":4EF0
+      Image           =   "frmMain.frx":4EFA
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -3122,7 +3125,7 @@ Begin VB.Form frmMain
       Value           =   0   'False
       CustomClick     =   1
       ImgAlign        =   5
-      Image           =   "frmMain.frx":52A4
+      Image           =   "frmMain.frx":52AE
       ImgSize         =   24
       cBack           =   -2147483633
    End
@@ -3287,18 +3290,18 @@ Begin VB.Form frmMain
       End
       Begin VB.ComboBox SizeC 
          Height          =   315
-         ItemData        =   "frmMain.frx":586A
+         ItemData        =   "frmMain.frx":5874
          Left            =   360
-         List            =   "frmMain.frx":587D
+         List            =   "frmMain.frx":5887
          TabIndex        =   151
          Top             =   1560
          Width           =   1455
       End
       Begin VB.ComboBox LayerC 
          Height          =   315
-         ItemData        =   "frmMain.frx":5898
+         ItemData        =   "frmMain.frx":58A2
          Left            =   360
-         List            =   "frmMain.frx":58AB
+         List            =   "frmMain.frx":58B5
          TabIndex        =   150
          Top             =   1200
          Width           =   1455
@@ -3434,9 +3437,28 @@ Begin VB.Form frmMain
       Mode            =   1
       Value           =   0   'False
       ImgAlign        =   5
-      Image           =   "frmMain.frx":58DC
+      Image           =   "frmMain.frx":58E6
       ImgSize         =   24
       cBack           =   -2147483633
+   End
+   Begin VB.Label Label14 
+      Alignment       =   2  'Center
+      BackColor       =   &H80000007&
+      BeginProperty Font 
+         Name            =   "Arial Rounded MT Bold"
+         Size            =   15.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H8000000E&
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   176
+      Top             =   1200
+      Width           =   2415
    End
    Begin VB.Label Label13 
       Alignment       =   2  'Center
@@ -3703,6 +3725,9 @@ Begin VB.Form frmMain
             Caption         =   "Capa &5 (Sobre layer 1 y 2, previo 3)"
             Checked         =   -1  'True
          End
+         Begin VB.Menu MnuVerCapa9 
+            Caption         =   "Capa &9 (sobre Layer3)"
+         End
       End
       Begin VB.Menu mnuVerTranslados 
          Caption         =   "...&Translados"
@@ -3880,16 +3905,14 @@ Attribute VB_Exposed = False
 '**************************************************************
 Option Explicit
 Public Statz As Boolean
-
-
-
-
+Dim iX As Integer
+Dim iY As Integer
 
 
 Private Sub bI_Click()
-    If bI.value Then
-        lListado(0).Visible = False
-        lListado(5).Visible = True
+    If bI.value Then 'index button
+        lListado(0).Visible = False 'list texturas
+        lListado(5).Visible = True  'list index
     Else
         lListado(5).Visible = False
         lListado(0).Visible = True
@@ -3898,7 +3921,7 @@ End Sub
 
 
 
-Private Sub cALLC_Click()
+Private Sub cALLC_Click() 'luces
 If cALLC.value Then
     'Activamos
     If cHorizontal.value Then
@@ -3930,7 +3953,7 @@ Else
 End If
 End Sub
 
-Private Sub cBL_Click()
+Private Sub cBL_Click() 'luces
 If cBL.value Then
     'Activamos
     If cHorizontal.value Then
@@ -3994,7 +4017,7 @@ Else
 End If
 End Sub
 
-Private Sub cCantFunc_Change(index As Integer)
+Private Sub cCantFunc_Change(index As Integer) 'editar cantidad objetos
 '*************************************************
 'Author: ^[GS]^
 'Last modified: 20/05/06
@@ -4016,10 +4039,26 @@ Private Sub cCapas_Change()
     If Val(cCapas.Text) < 1 Then
       cCapas.Text = 1
     End If
-    If Val(cCapas.Text) > 4 Then
-      cCapas.Text = 4
+    If Val(cCapas.Text) > 9 Then
+      cCapas.Text = 9
     End If
+    If Val(cCapas.Text) > 5 And Val(cCapas.Text) < 9 Then
+        cCapas.Text = 5
+    End If
+    cCapaSel = Val(cCapas.Text)
     cCapas.Tag = vbNullString
+End Sub
+
+Private Sub cCapas_Click()
+    If Val(cCapas.List(cCapas.ListIndex)) > 0 And Val(cCapas.List(cCapas.ListIndex)) <= 5 Then
+        cCapaSel = Val(cCapas.List(cCapas.ListIndex))
+    ElseIf Val(cCapas.List(cCapas.ListIndex)) = 9 Then
+        cCapaSel = 9
+    Else
+        cCapas.ListIndex = 0
+        cCapaSel = 1
+    End If
+    
 End Sub
 
 Private Sub cCapas_KeyPress(KeyAscii As Integer)
@@ -4291,6 +4330,7 @@ Private Sub cInsertarParticula_Click()
     End If
 End Sub
 
+
 Private Sub cInsertarTrans_Click()
 '*************************************************
 'Author: ^[GS]^
@@ -4540,23 +4580,49 @@ End Sub
 
 
 Private Sub PegarInterior()
-Dim X As Long
-Dim Y As Long
-Dim CX As Long
-Dim CY As Long
-CX = 0
-For X = SeleccionIX To SeleccionFX
-CX = CX + 1
-If CX <= SIx Then
-    CY = 0
-    For Y = SeleccionIY To SeleccionFY
-    CY = CY + 1
-    If CY <= SIy Then
-    MapData(X, Y).InteriorVal = SelInterior(CX, CY)
-    End If
-    Next Y
+
+Dim XtilesSel As Integer
+Dim YtilesSel As Integer
+Dim i As Integer
+Dim j As Integer
+
+XtilesSel = UBound(SelInterior, 1)
+YtilesSel = UBound(SelInterior, 2)
+
+'si me excedo del limite del mapa, escribo solo lo necesario
+If Mx + XtilesSel > 100 Then
+    XtilesSel = 100 - Mx + 1
 End If
-Next X
+If My + YtilesSel > 100 Then
+    YtilesSel = 100 - My + 1
+End If
+
+modEdicion.Deshacer_Add "pegar interiores"
+
+For i = 0 To XtilesSel - 1
+    For j = 0 To YtilesSel - 1
+        MapData(Mx + i, My + j).InteriorVal = SelInterior(i + 1, j + 1)
+    Next j
+Next i
+
+
+'Dim X As Long
+'Dim Y As Long
+'Dim CX As Long
+'Dim CY As Long
+'CX = 0
+'For X = SeleccionIX To SeleccionFX
+'CX = CX + 1
+'If CX <= SIx Then
+'    CY = 0
+'    For Y = SeleccionIY To SeleccionFY
+'    CY = CY + 1
+'    If CY <= SIy Then
+'    MapData(X, Y).InteriorVal = SelInterior(CX, CY)
+'    End If
+'    Next Y
+'End If
+'Next X
 
 
 End Sub
@@ -5222,12 +5288,13 @@ If TipoSeleccionado = 0 Or ObjetoSeleccionado.X = 0 Or ObjetoSeleccionado.Y = 0 
     MsgBox "No tienes ningun elemento seleccionado."
     Exit Sub
 End If
-If TipoSeleccionado = 1 Then
+ If TipoSeleccionado = 1 Then
     frmEditorDecor.Show
     frmEditorDecor.Parse
 ElseIf TipoSeleccionado = 2 Then
     FrmEditorNpc.Show
     FrmEditorNpc.Parse
+    TipoSeleccionado = 0
 End If
 End Sub
 
@@ -5585,6 +5652,8 @@ Private Sub mnuInformes_Click()
 frmInformes.Show
 End Sub
 
+
+
 Private Sub mnuInsertarSuperficieAlAzar_Click()
 '*************************************************
 'Author: ^[GS]^
@@ -5917,7 +5986,11 @@ Private Sub mnuQuitarSuperficieDeCapa_Click()
 'Author: ^[GS]^
 'Last modified: 20/05/06
 '*************************************************
-Call modEdicion.Quitar_Capa(cCapas.Text)
+If cCapaSel > 0 And cCapaSel <= 5 Then
+    Call modEdicion.Quitar_Capa(cCapaSel)
+ElseIf cCapaSel = 9 Then
+    Call modEdicion.Quitar_Capa(2)
+End If
 End Sub
 
 Private Sub mnuQuitarTODO_Click()
@@ -6095,6 +6168,10 @@ Private Sub MnuVerCapa5_Click()
     MnuVerCapa5.Checked = True
     VerCapa5 = True
     End If
+End Sub
+
+Private Sub MnuVerCapa9_Click()
+MnuVerCapa9.Checked = (MnuVerCapa9.Checked = False)
 End Sub
 
 Private Sub mnuVerGrilla_Click()
@@ -6293,6 +6370,7 @@ If frmMain.mnuGuardarUltimaConfig.Checked = True Then
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa2", IIf(frmMain.mnuVerCapa2.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa3", IIf(frmMain.mnuVerCapa3.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa4", IIf(frmMain.mnuVerCapa4.Checked = True, "1", "0")
+    WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa9", IIf(frmMain.mnuVerCapa4.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Translados", IIf(frmMain.mnuVerTranslados.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Objetos", IIf(frmMain.mnuVerObjetos.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "NPCs", IIf(frmMain.mnuVerNPCs.Checked = True, "1", "0")
@@ -6328,14 +6406,98 @@ If PONERSPOT Then
 End If
 End Sub
 
+Private Sub PreviewGrh_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+If iX = 0 Then
+iX = X
+End If
+If iY = 0 Then
+iY = Y
+End If
+End Sub
+
+Private Sub PreviewGrh_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
+
+If SelTexWe > 0 Then
+
+        If TexWE(SelTexWe).NumIndex > 0 Then
+            If X <= TexWE(SelTexWe).Ancho And Y <= TexWE(SelTexWe).Largo And iX > 0 And iY > 0 Then
+                VistaPreviaDeSup
+                'modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
+               ' If bGrilla Then AplicarGrilla 0, 0, agraficow, agraficoh, Actual, vbGreen
+                PreviewGrh.ForeColor = vbWhite
+                PreviewGrh.DrawWidth = 2
+                PreviewGrh.Line (iX, iY)-(iX, Y)
+                PreviewGrh.Line (iX, Y)-(X, Y)
+                PreviewGrh.Line (X, iY)-(X, Y)
+                PreviewGrh.Line (iX, iY)-(X, iY)
+                PreviewGrh.ForeColor = vbBlack
+                PreviewGrh.DrawWidth = 1
+            End If
+        End If
+End If
+End Sub
+
 Private Sub PreviewGrh_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
 Dim kx As Integer
 Dim ky As Integer
-If SelTexWe = 0 Then Exit Sub
-kx = X / Screen.TwipsPerPixelX
-ky = Y / Screen.TwipsPerPixelY
-If Button = vbLeftButton Then
 
+If SelTexWe = 0 Then Exit Sub
+
+Dim i As Integer
+Dim j As Integer
+Dim dx As Integer
+Dim dy As Integer
+Dim tilesW As Integer
+Dim tilesH As Integer
+Dim offX As Integer
+Dim offY As Integer
+Dim index As Integer
+Dim jj As Integer
+
+
+dx = X - iX
+dy = Y - iY
+offX = iX / 32
+offY = iY / 32
+tilesW = (dx / 32) + 1
+tilesH = (dy / 32) + 1
+
+
+If dx > 0 And dy > 0 Then
+With TexWE(NumTexWe)
+    .Ancho = tilesW * 32
+    .Largo = tilesH * 32
+    .tw = tilesW
+    .th = tilesH
+    .NumIndex = (tilesH * tilesW)
+
+ReDim .index(1 To .NumIndex + 1)
+jj = 0
+For i = 1 To tilesW
+    For j = 1 To tilesH
+
+        .index(i + jj).Num = PoneIndexEnTex(SelTexWe, offX + i, offY + j, 1, 1)
+        .index(i + jj).X = (i - 1) * 32
+        .index(i + jj).Y = (j - 1) * 32
+        jj = jj + 1
+    Next j
+    jj = jj - 1
+Next i
+
+End With
+
+SelTexWe = NumTexWe
+AnalizeTexture SelTexWe
+
+
+'calculo el ancho/alto del cuadrado
+'creo una textura temporal con el cuadrado
+'PoneIndexEnTex(ByVal Tex As Integer, ByVal aX As Integer, ByVal aY As Integer, ByVal oX As Integer, ByVal oY As Integer) As Integer
+Else
+
+kx = X
+ky = Y
+If Button = vbLeftButton Then
 
 
 Dim P As Long
@@ -6362,13 +6524,18 @@ SelTexFrame = 0
 
 End If
 
+End If
+
+iX = 0
+iY = 0
+
 VistaPreviaDeSup
+
 End Sub
 
 Private Sub PreviewGrh_Paint()
 Call modPaneles.VistaPreviaDeSup
 End Sub
-
 Private Sub QUITARSPOT_Click()
 If QUITARSPOT Then
     PONERSPOT.value = False

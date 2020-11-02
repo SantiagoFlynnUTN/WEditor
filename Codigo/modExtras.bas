@@ -92,11 +92,11 @@ Dim j As Long
 Dim P As Long
 Dim s As String
 s = App.PATH & "\Resources\INIT\TexWe.dat"
-    NumTexWe = Val(GetVar(s, "INIT", "NUM"))
+    NumTexWe = Val(GetVar(s, "INIT", "NUM")) + 1
     
     If NumTexWe > 0 Then
     ReDim TexWE(1 To NumTexWe)
-        For P = 1 To NumTexWe
+        For P = 1 To NumTexWe - 1
         
             With TexWE(P)
             
@@ -121,6 +121,12 @@ s = App.PATH & "\Resources\INIT\TexWe.dat"
     
 
         Next P
+        
+        'Creo una textura extra para usar durante la seleccion de superficie en preview
+        TexWE(NumTexWe) = TexWE(NumTexWe - 1)
+        TexWE(NumTexWe).Name = "ZZZ Seleccion"
+        'frmMain.lListado(0).AddItem TexWE(NumTexWe).Name & " - [" & NumTexWe & "]"
+        
     End If
     
 End Sub
@@ -1321,7 +1327,7 @@ Next P
 End Sub
 Public Function PoneIndexEnTex(ByVal Tex As Integer, ByVal aX As Integer, ByVal aY As Integer, ByVal oX As Integer, ByVal oY As Integer) As Integer
 Dim P As Long
-Dim dX As Integer
+Dim dx As Integer
 Dim dy As Integer
 Dim j As Integer
 Dim X As Integer
@@ -1334,15 +1340,15 @@ If SelTexWe = 0 Then Exit Function
 X = ((TexWE(Tex).Ancho - 1) \ 32) + 1
 Y = ((TexWE(Tex).Largo - 1) \ 32) + 1
 
-dX = aX - oX
+dx = aX - oX
 dy = aY - oY
 
 If Not frmConfigSup.DespMosaic.value = vbChecked Then
 
-X = dX Mod X
+X = dx Mod X
 Y = dy Mod Y
 Else
-X = (dX + Val(frmConfigSup.DMAncho.Text)) Mod X
+X = (dx + Val(frmConfigSup.DMAncho.Text)) Mod X
 Y = (dy + Val(frmConfigSup.DMLargo.Text)) Mod Y
 End If
 If X < 0 Then X = (((TexWE(Tex).Ancho - 1) \ 32) + 1) + X
@@ -1355,10 +1361,10 @@ If j > 0 Then
         lx = (SelInicialX(j) \ 32)
         ly = (SelInicialY(j) \ 32)
         
-        dX = lx - X
+        dx = lx - X
         dy = ly - Y
         
-        If (aX + dX) <= 0 Or (aX + dX) > 100 Then Exit Function
+        If (aX + dx) <= 0 Or (aX + dx) > 100 Then Exit Function
         If (aY + dy) <= 0 Or (aY + dy) > 100 Then Exit Function
         
         PoneIndexEnTex = TexWE(Tex).index(SelTexIndex(j)).Num 'return this value
@@ -1370,7 +1376,7 @@ End If
 End Function
 Public Function DameIndexEnTex(ByVal Tex As Integer, ByVal aX As Integer, ByVal aY As Integer, ByVal oX As Integer, ByVal oY As Integer) As Integer
 Dim P As Long
-Dim dX As Integer
+Dim dx As Integer
 Dim dy As Integer
 Dim j As Integer
 Dim X As Integer
@@ -1383,14 +1389,14 @@ If SelTexWe = 0 Then Exit Function
 X = ((TexWE(Tex).Ancho - 1) \ 32) + 1
 Y = ((TexWE(Tex).Largo - 1) \ 32) + 1
 
-dX = aX - oX
+dx = aX - oX
 dy = aY - oY
 
 If frmConfigSup.DespMosaic.value = vbChecked Then
-X = (dX + Val(frmConfigSup.DMAncho.Text)) Mod X
+X = (dx + Val(frmConfigSup.DMAncho.Text)) Mod X
 Y = (dy + Val(frmConfigSup.DMLargo.Text)) Mod Y
 Else
-X = dX Mod X
+X = dx Mod X
 Y = dy Mod Y
 End If
 
@@ -1404,10 +1410,10 @@ If SelTexIndex(j) > 0 Then
     lx = (SelInicialX(j) \ 32)
     ly = (SelInicialY(j) \ 32)
     
-    dX = lx - X
+    dx = lx - X
     dy = ly - Y
     
-    If (aX + dX) <= 0 Or (aX + dX) > 100 Then Exit Function
+    If (aX + dx) <= 0 Or (aX + dx) > 100 Then Exit Function
     If (aY + dy) <= 0 Or (aY + dy) > 100 Then Exit Function
     
     DameIndexEnTex = TexWE(Tex).index(SelTexIndex(j)).Num

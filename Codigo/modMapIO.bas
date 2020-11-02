@@ -243,7 +243,7 @@ For LoopC = 1 To LastChar
     If CharList(LoopC).Active = 1 Then Call EraseChar(LoopC)
 Next LoopC
 Dim X As Long
-Dim Y As Long
+Dim y As Long
 Dim nc As Integer
 Dim nf As Integer
 Dim z As Single
@@ -268,14 +268,14 @@ If NuevoTex > 0 Then
        nc = 100 \ tw
        If z > nc Then nc = nc + 1
        
-       For Y = 1 To nf
-            TempY = (Y - 1) * th
+       For y = 1 To nf
+            TempY = (y - 1) * th
             For X = 1 To nc
                 TempX = (X - 1) * tw
                 For k = 1 To .NumIndex
-                    If (.index(k).X + (TempX * 32)) < 3200 And (.index(k).Y + (TempY * 32)) < 3200 Then
-                        If (.index(k).X + (TempX * 32) + EstaticData(NewIndexData(.index(k).Num).Estatic).W) <= 3200 And (.index(k).Y + (TempY * 32) + EstaticData(NewIndexData(.index(k).Num).Estatic).H) <= 3200 Then
-                            MapData((TempX + (.index(k).X \ 32) + 1), (TempY + (.index(k).Y \ 32)) + 1).Graphic(1).index = .index(k).Num
+                    If (.index(k).X + (TempX * 32)) < 3200 And (.index(k).y + (TempY * 32)) < 3200 Then
+                        If (.index(k).X + (TempX * 32) + EstaticData(NewIndexData(.index(k).Num).Estatic).W) <= 3200 And (.index(k).y + (TempY * 32) + EstaticData(NewIndexData(.index(k).Num).Estatic).H) <= 3200 Then
+                            MapData((TempX + (.index(k).X \ 32) + 1), (TempY + (.index(k).y \ 32)) + 1).Graphic(1).index = .index(k).Num
                             
                             
                         End If
@@ -285,7 +285,7 @@ If NuevoTex > 0 Then
 
 
             Next X
-      Next Y
+      Next y
 End With
 End If
 MapaTemporal = False
@@ -318,7 +318,7 @@ frmMain.SetFocus
 
 Exit Sub
 
-erh: MsgBox Err.Description & ":" & Y & ":" & X & ":" & k
+erh: MsgBox Err.Description & ":" & y & ":" & X & ":" & k
 End Sub
 
 
@@ -333,7 +333,7 @@ Dim FreeFileMap As Long
 Dim freefileinf As Long
 Dim LoopC As Long
 Dim TempInt As Integer
-Dim Y As Long
+Dim y As Long
 Dim X As Long
 Dim ByFlags As Byte
 Dim Interiores_Number As Integer
@@ -354,13 +354,13 @@ End If
 frmMain.MousePointer = 11
 
     'Precalculamos interiores.
-    For Y = YMinMapSize To YMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
-            If MapData(X, Y).InteriorVal > 0 Then
+            If MapData(X, y).InteriorVal > 0 Then
                 Interiores_Number = Interiores_Number + 1
             End If
         Next X
-    Next Y
+    Next y
 
 ' y borramos el .inf tambien
 If General_File_Exist(left$(SaveAs, Len(SaveAs) - 4) & ".inf", vbNormal) = True Then
@@ -402,73 +402,73 @@ Open SaveAs For Binary As freefileinf
             
     
     'Write .map file
-    For Y = YMinMapSize To YMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
             
                 ByFlags = 0
                 
-                If MapData(X, Y).Blocked = 1 Then ByFlags = ByFlags Or 1
-                If MapData(X, Y).Graphic(2).index Then ByFlags = ByFlags Or 2
-                If MapData(X, Y).Graphic(3).index Then ByFlags = ByFlags Or 4
-                If MapData(X, Y).Graphic(4).index Then ByFlags = ByFlags Or 8
-                If MapData(X, Y).Trigger Then ByFlags = ByFlags Or 16
-                If MapData(X, Y).Luz > 0 Then ByFlags = ByFlags Or 32
-                If MapData(X, Y).particle_group Or MapData(X, Y).SPOTLIGHT.index > 0 Then ByFlags = ByFlags Or 64
-                If MapData(X, Y).InteriorVal > 0 Then ByFlags = ByFlags Or 128
+                If MapData(X, y).Blocked = 1 Then ByFlags = ByFlags Or 1
+                If MapData(X, y).Graphic(2).index <> 0 Then ByFlags = ByFlags Or 2
+                If MapData(X, y).Graphic(3).index Then ByFlags = ByFlags Or 4
+                If MapData(X, y).Graphic(4).index Then ByFlags = ByFlags Or 8
+                If MapData(X, y).Trigger Then ByFlags = ByFlags Or 16
+                If MapData(X, y).Luz > 0 Then ByFlags = ByFlags Or 32
+                If MapData(X, y).particle_group Or MapData(X, y).SPOTLIGHT.index > 0 Then ByFlags = ByFlags Or 64
+                If MapData(X, y).InteriorVal > 0 Then ByFlags = ByFlags Or 128
                 
                 'If MapData(X, Y).light_index Then ByFlags = ByFlags Or 64
                 'If MapData(X, Y).AlturaPoligonos(0) Or MapData(X, Y).AlturaPoligonos(1) _
                 '    Or MapData(X, Y).AlturaPoligonos(2) Or MapData(X, Y).AlturaPoligonos(3) Then ByFlags = ByFlags Or 128
                 Put FreeFileMap, , ByFlags
                 
-                Put FreeFileMap, , MapData(X, Y).Graphic(1).index
+                Put FreeFileMap, , MapData(X, y).Graphic(1).index
                 
                 For LoopC = 2 To 4
-                    If MapData(X, Y).Graphic(LoopC).index Then _
-                        Put FreeFileMap, , MapData(X, Y).Graphic(LoopC).index
+                    If MapData(X, y).Graphic(LoopC).index Then _
+                        Put FreeFileMap, , MapData(X, y).Graphic(LoopC).index
                 Next LoopC
                 
-                If MapData(X, Y).Trigger Then _
-                    Put FreeFileMap, , MapData(X, Y).Trigger
+                If MapData(X, y).Trigger Then _
+                    Put FreeFileMap, , MapData(X, y).Trigger
                 
                 
-                If MapData(X, Y).Luz > 100 Then
-                    Put FreeFileMap, , MapData(X, Y).Luz
-                    Put FreeFileMap, , MapData(X, Y).LV
-                ElseIf MapData(X, Y).Luz > 0 Then
-                    Put FreeFileMap, , MapData(X, Y).Luz
+                If MapData(X, y).Luz > 100 Then
+                    Put FreeFileMap, , MapData(X, y).Luz
+                    Put FreeFileMap, , MapData(X, y).LV
+                ElseIf MapData(X, y).Luz > 0 Then
+                    Put FreeFileMap, , MapData(X, y).Luz
                 End If
                     
-                If MapData(X, Y).SPOTLIGHT.index > 0 Then
-                    If MapData(X, Y).particle_group Then
+                If MapData(X, y).SPOTLIGHT.index > 0 Then
+                    If MapData(X, y).particle_group Then
                         Put FreeFileMap, , CByte(k + 1)
-                        Put FreeFileMap, , MapData(X, Y).parti_index
+                        Put FreeFileMap, , MapData(X, y).parti_index
                         
                     Else
                         Put FreeFileMap, , k
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.SPOT_TIPO
-                    If MapData(X, Y).SPOTLIGHT.SPOT_TIPO = 0 Then
-                        Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.Grafico
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.SPOT_TIPO
+                    If MapData(X, y).SPOTLIGHT.SPOT_TIPO = 0 Then
+                        Put FreeFileMap, , MapData(X, y).SPOTLIGHT.Grafico
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.SPOT_COLOR_BASE
-                    If MapData(X, Y).SPOTLIGHT.SPOT_COLOR_BASE = 99 Then
-                        Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.Color
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.SPOT_COLOR_BASE
+                    If MapData(X, y).SPOTLIGHT.SPOT_COLOR_BASE = 99 Then
+                        Put FreeFileMap, , MapData(X, y).SPOTLIGHT.Color
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.INTENSITY
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.OffsetX
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.OffsetY
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.SPOT_COLOR_EXTRA
-                    If MapData(X, Y).SPOTLIGHT.SPOT_COLOR_EXTRA = 99 Then
-                        Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.COLOR_EXTRA
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.INTENSITY
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.OffsetX
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.OffsetY
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.SPOT_COLOR_EXTRA
+                    If MapData(X, y).SPOTLIGHT.SPOT_COLOR_EXTRA = 99 Then
+                        Put FreeFileMap, , MapData(X, y).SPOTLIGHT.COLOR_EXTRA
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.EXTRA_GRAFICO
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.EXTRA_GRAFICO
                 Else
-                If MapData(X, Y).particle_group Then _
-                    Put FreeFileMap, , MapData(X, Y).parti_index
+                If MapData(X, y).particle_group Then _
+                    Put FreeFileMap, , MapData(X, y).parti_index
                 End If
                 
-                If MapData(X, Y).InteriorVal > 0 Then Put FreeFileMap, , MapData(X, Y).InteriorVal
+                If MapData(X, y).InteriorVal > 0 Then Put FreeFileMap, , MapData(X, y).InteriorVal
                 
                 'If MapData(X, Y).light_index Then
                 '    Put FreeFileMap, , Lights(MapData(X, Y).light_index).Range
@@ -501,32 +501,32 @@ Open SaveAs For Binary As freefileinf
                 
                 ByFlags = 0
                 
-                If MapData(X, Y).TileExit.Map Then ByFlags = ByFlags Or 1
-                If MapData(X, Y).NPCIndex Then ByFlags = ByFlags Or 2
-                If MapData(X, Y).OBJInfo.objindex Then ByFlags = ByFlags Or 4
+                If MapData(X, y).TileExit.Map Then ByFlags = ByFlags Or 1
+                If MapData(X, y).NPCIndex Then ByFlags = ByFlags Or 2
+                If MapData(X, y).OBJInfo.objindex Then ByFlags = ByFlags Or 4
                 
                 Put freefileinf, , ByFlags
                 
-                If MapData(X, Y).TileExit.Map Then
-                    Put freefileinf, , MapData(X, Y).TileExit.Map
-                    Put freefileinf, , MapData(X, Y).TileExit.X
-                    Put freefileinf, , MapData(X, Y).TileExit.Y
+                If MapData(X, y).TileExit.Map Then
+                    Put freefileinf, , MapData(X, y).TileExit.Map
+                    Put freefileinf, , MapData(X, y).TileExit.X
+                    Put freefileinf, , MapData(X, y).TileExit.y
                 End If
                 
-                If MapData(X, Y).NPCIndex Then
+                If MapData(X, y).NPCIndex Then
                 
-                    Put freefileinf, , CInt(MapData(X, Y).NPCIndex)
+                    Put freefileinf, , CInt(MapData(X, y).NPCIndex)
                 End If
                 
-                If MapData(X, Y).OBJInfo.objindex Then
-                    Put freefileinf, , MapData(X, Y).OBJInfo.objindex
-                    Put freefileinf, , MapData(X, Y).OBJInfo.Amount
+                If MapData(X, y).OBJInfo.objindex Then
+                    Put freefileinf, , MapData(X, y).OBJInfo.objindex
+                    Put freefileinf, , MapData(X, y).OBJInfo.Amount
                 End If
             
             
             
         Next X
-    Next Y
+    Next y
     
     'Close .map file
     Close FreeFileMap
@@ -561,7 +561,7 @@ Dim FreeFileMap As Long
 Dim freefileinf As Long
 Dim LoopC As Long
 Dim TempInt As Integer
-Dim Y As Long
+Dim y As Long
 Dim X As Long
 Dim ByFlags As Byte
 
@@ -595,40 +595,40 @@ Seek FreeFileMap, 1
 
        
     'Write .map file
-    For Y = YMinMapSize To YMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
 
                 ByFlags = 0
                 
-                If MapData(X, Y).Blocked = 1 Then ByFlags = ByFlags Or 1
-                If MapData(X, Y).Graphic(2).index Then ByFlags = ByFlags Or 2
-                If MapData(X, Y).Graphic(3).index Then ByFlags = ByFlags Or 4
-                If MapData(X, Y).Graphic(4).index Then ByFlags = ByFlags Or 8
-                If MapData(X, Y).OBJInfo.objindex Then ByFlags = ByFlags Or 16
-                If MapData(X, Y).Luz > 0 Then ByFlags = ByFlags Or 32
+                If MapData(X, y).Blocked = 1 Then ByFlags = ByFlags Or 1
+                If MapData(X, y).Graphic(2).index <> 0 Then ByFlags = ByFlags Or 2
+                If MapData(X, y).Graphic(3).index Then ByFlags = ByFlags Or 4
+                If MapData(X, y).Graphic(4).index Then ByFlags = ByFlags Or 8
+                If MapData(X, y).OBJInfo.objindex Then ByFlags = ByFlags Or 16
+                If MapData(X, y).Luz > 0 Then ByFlags = ByFlags Or 32
                 Put FreeFileMap, , ByFlags
                 
-                Put FreeFileMap, , MapData(X, Y).Graphic(1).index
+                Put FreeFileMap, , MapData(X, y).Graphic(1).index
                 
                 For LoopC = 2 To 4
-                    If MapData(X, Y).Graphic(LoopC).index Then _
-                        Put FreeFileMap, , MapData(X, Y).Graphic(LoopC).index
+                    If MapData(X, y).Graphic(LoopC).index Then _
+                        Put FreeFileMap, , MapData(X, y).Graphic(LoopC).index
                 Next LoopC
                 
-                If MapData(X, Y).OBJInfo.objindex Then
-                    Put FreeFileMap, , MapData(X, Y).OBJInfo.objindex
+                If MapData(X, y).OBJInfo.objindex Then
+                    Put FreeFileMap, , MapData(X, y).OBJInfo.objindex
                 End If
                 
-                If MapData(X, Y).Luz Then _
-                    Put FreeFileMap, , MapData(X, Y).Luz
-                    If MapData(X, Y).Luz > 100 Then
+                If MapData(X, y).Luz Then _
+                    Put FreeFileMap, , MapData(X, y).Luz
+                    If MapData(X, y).Luz > 100 Then
                     
                     
                     End If
                     
-                If MapData(X, Y).Trigger = 5 Then GoTo terminar
+                If MapData(X, y).Trigger = 5 Then GoTo terminar
         Next X
-    Next Y
+    Next y
 terminar:
     'Close .map file
     Close FreeFileMap
@@ -658,7 +658,7 @@ Dim FreeFileMap As Long
 Dim freefileinf As Long
 Dim LoopC As Long
 Dim TempInt As Integer
-Dim Y As Long
+Dim y As Long
 Dim X As Long
 Dim ByFlags As Byte
 
@@ -691,70 +691,70 @@ Seek FreeFileMap, 1
 
        
     'Write .map file
-    For Y = YMinMapSize To YMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
 
                 ByFlags = 0
                 
-                If MapData(X, Y).Blocked = 1 Then ByFlags = ByFlags Or 1
-                If MapData(X, Y).Graphic(2).index Then ByFlags = ByFlags Or 2
-                If MapData(X, Y).Graphic(3).index Then ByFlags = ByFlags Or 4
-                If MapData(X, Y).Graphic(4).index Then ByFlags = ByFlags Or 8
-                If MapData(X, Y).OBJInfo.objindex Then ByFlags = ByFlags Or 16
-                If MapData(X, Y).Luz > 0 Then ByFlags = ByFlags Or 32
-                If MapData(X, Y).particle_group Or MapData(X, Y).SPOTLIGHT.index > 0 Then ByFlags = ByFlags Or 64
+                If MapData(X, y).Blocked = 1 Then ByFlags = ByFlags Or 1
+                If MapData(X, y).Graphic(2).index <> 0 Then ByFlags = ByFlags Or 2
+                If MapData(X, y).Graphic(3).index Then ByFlags = ByFlags Or 4
+                If MapData(X, y).Graphic(4).index Then ByFlags = ByFlags Or 8
+                If MapData(X, y).OBJInfo.objindex Then ByFlags = ByFlags Or 16
+                If MapData(X, y).Luz > 0 Then ByFlags = ByFlags Or 32
+                If MapData(X, y).particle_group Or MapData(X, y).SPOTLIGHT.index > 0 Then ByFlags = ByFlags Or 64
                 Put FreeFileMap, , ByFlags
                 
-                Put FreeFileMap, , MapData(X, Y).Graphic(1).index
+                Put FreeFileMap, , MapData(X, y).Graphic(1).index
                 
                 For LoopC = 2 To 4
-                    If MapData(X, Y).Graphic(LoopC).index Then _
-                        Put FreeFileMap, , MapData(X, Y).Graphic(LoopC).index
+                    If MapData(X, y).Graphic(LoopC).index Then _
+                        Put FreeFileMap, , MapData(X, y).Graphic(LoopC).index
                 Next LoopC
                 
-                If MapData(X, Y).OBJInfo.objindex Then
-                    Put FreeFileMap, , MapData(X, Y).OBJInfo.objindex
+                If MapData(X, y).OBJInfo.objindex Then
+                    Put FreeFileMap, , MapData(X, y).OBJInfo.objindex
                 End If
 
-                If MapData(X, Y).Luz > 100 Then
-                    Put FreeFileMap, , MapData(X, Y).Luz
-                    Put FreeFileMap, , MapData(X, Y).LV
-                ElseIf MapData(X, Y).Luz > 0 Then
-                    Put FreeFileMap, , MapData(X, Y).Luz
+                If MapData(X, y).Luz > 100 Then
+                    Put FreeFileMap, , MapData(X, y).Luz
+                    Put FreeFileMap, , MapData(X, y).LV
+                ElseIf MapData(X, y).Luz > 0 Then
+                    Put FreeFileMap, , MapData(X, y).Luz
                 End If
                     
-                If MapData(X, Y).SPOTLIGHT.index > 0 Then
-                    If MapData(X, Y).particle_group Then
+                If MapData(X, y).SPOTLIGHT.index > 0 Then
+                    If MapData(X, y).particle_group Then
                         Put FreeFileMap, , CByte(k + 1)
-                        Put FreeFileMap, , MapData(X, Y).parti_index
+                        Put FreeFileMap, , MapData(X, y).parti_index
                         
                     Else
                         Put FreeFileMap, , k
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.SPOT_TIPO
-                    If MapData(X, Y).SPOTLIGHT.SPOT_TIPO = 0 Then
-                        Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.Grafico
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.SPOT_TIPO
+                    If MapData(X, y).SPOTLIGHT.SPOT_TIPO = 0 Then
+                        Put FreeFileMap, , MapData(X, y).SPOTLIGHT.Grafico
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.SPOT_COLOR_BASE
-                    If MapData(X, Y).SPOTLIGHT.SPOT_COLOR_BASE = 99 Then
-                        Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.Color
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.SPOT_COLOR_BASE
+                    If MapData(X, y).SPOTLIGHT.SPOT_COLOR_BASE = 99 Then
+                        Put FreeFileMap, , MapData(X, y).SPOTLIGHT.Color
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.INTENSITY
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.OffsetX
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.OffsetY
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.SPOT_COLOR_EXTRA
-                    If MapData(X, Y).SPOTLIGHT.SPOT_COLOR_EXTRA = 99 Then
-                        Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.COLOR_EXTRA
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.INTENSITY
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.OffsetX
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.OffsetY
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.SPOT_COLOR_EXTRA
+                    If MapData(X, y).SPOTLIGHT.SPOT_COLOR_EXTRA = 99 Then
+                        Put FreeFileMap, , MapData(X, y).SPOTLIGHT.COLOR_EXTRA
                     End If
-                    Put FreeFileMap, , MapData(X, Y).SPOTLIGHT.EXTRA_GRAFICO
+                    Put FreeFileMap, , MapData(X, y).SPOTLIGHT.EXTRA_GRAFICO
                 Else
-                If MapData(X, Y).particle_group Then _
-                    Put FreeFileMap, , MapData(X, Y).parti_index
+                If MapData(X, y).particle_group Then _
+                    Put FreeFileMap, , MapData(X, y).parti_index
                 End If
                     
-                If MapData(X, Y).Trigger And 16 Then GoTo terminar
+                If MapData(X, y).Trigger And 16 Then GoTo terminar
         Next X
-    Next Y
+    Next y
 terminar:
     'Close .map file
     Close FreeFileMap
@@ -791,7 +791,7 @@ On Error GoTo ErrorSave
     Dim LoopC As Long
     Dim TempInt As Integer
     Dim t As String
-    Dim Y As Long
+    Dim y As Long
     Dim X As Long
     
     If General_File_Exist(SaveAs, vbNormal) = True Then
@@ -838,43 +838,43 @@ On Error GoTo ErrorSave
     Put freefileinf, , TempInt
     
     'Write .map file
-    For Y = YMinMapSize To YMaxMapSize
+    For y = YMinMapSize To YMaxMapSize
         For X = XMinMapSize To XMaxMapSize
             
             '.map file
             
             ' Bloqueos
-            Put FreeFileMap, , MapData(X, Y).Blocked
+            Put FreeFileMap, , MapData(X, y).Blocked
             
             ' Capas
             For LoopC = 1 To 4
                 'If LoopC = 2 Then Call FixCoasts(MapData(X, Y).Graphic(LoopC).grh_index, X, Y)
-                Put FreeFileMap, , MapData(X, Y).Graphic(LoopC).index
+                Put FreeFileMap, , MapData(X, y).Graphic(LoopC).index
             Next LoopC
             
             ' Triggers
-            Put FreeFileMap, , MapData(X, Y).Trigger
+            Put FreeFileMap, , MapData(X, y).Trigger
             Put FreeFileMap, , TempInt
             
             '.inf file
             'Tile exit
-            Put freefileinf, , MapData(X, Y).TileExit.Map
-            Put freefileinf, , MapData(X, Y).TileExit.X
-            Put freefileinf, , MapData(X, Y).TileExit.Y
+            Put freefileinf, , MapData(X, y).TileExit.Map
+            Put freefileinf, , MapData(X, y).TileExit.X
+            Put freefileinf, , MapData(X, y).TileExit.y
             
             'NPC
-            Put freefileinf, , MapData(X, Y).NPCIndex
+            Put freefileinf, , MapData(X, y).NPCIndex
             
             'Object
-            Put freefileinf, , MapData(X, Y).OBJInfo.objindex
-            Put freefileinf, , MapData(X, Y).OBJInfo.Amount
+            Put freefileinf, , MapData(X, y).OBJInfo.objindex
+            Put freefileinf, , MapData(X, y).OBJInfo.Amount
             
             'Empty place holders for future expansion
             Put freefileinf, , TempInt
             Put freefileinf, , TempInt
             
         Next X
-    Next Y
+    Next y
     
     'Close .map file
     Close FreeFileMap
@@ -1000,20 +1000,20 @@ CopyMemory MapB(1, 1), data(0), 280000
     If nSpot > 0 Then
         For P = 1 To nSpot
             SPOTLIGHTS_CREAR SPOT(P).SPOT.SPOT_TIPO, SPOT(P).SPOT.SPOT_COLOR_BASE, SPOT(P).SPOT.SPOT_COLOR_EXTRA _
-            , SPOT(P).SPOT.INTENSITY, 1, SPOT(P).SPOT.Grafico, SPOT(P).posi.X, SPOT(P).posi.Y, 0, SPOT(P).SPOT.Color, SPOT(P).SPOT.COLOR_EXTRA, SPOT(P).SPOT.EXTRA_GRAFICO
+            , SPOT(P).SPOT.INTENSITY, 1, SPOT(P).SPOT.Grafico, SPOT(P).posi.X, SPOT(P).posi.y, 0, SPOT(P).SPOT.Color, SPOT(P).SPOT.COLOR_EXTRA, SPOT(P).SPOT.EXTRA_GRAFICO
         Next P
     End If
     If nPart > 0 Then
         For P = 1 To nPart
-            If PART(P).PARTI > 0 Then General_Particle_Create PART(P).PARTI, PART(P).posi.X, PART(P).posi.Y
-            MapData(PART(P).posi.X, PART(P).posi.Y).parti_index = PART(P).PARTI
+            If PART(P).PARTI > 0 Then General_Particle_Create PART(P).PARTI, PART(P).posi.X, PART(P).posi.y
+            MapData(PART(P).posi.X, PART(P).posi.y).parti_index = PART(P).PARTI
         Next P
     End If
     If nDecs > 0 Then
         For P = 1 To nDecs
-            MapData(DECS(P).posi.X, DECS(P).posi.Y).DecorI = DECS(P).DecorI
-            MapData(DECS(P).posi.X, DECS(P).posi.Y).DecorGrh.index = DecorData(DECS(P).DecorI).DecorGrh(1)
-            MapData(DECS(P).posi.X, DECS(P).posi.Y).DecorInfo.EstadoDefault = DECS(P).EstadoDefault
+            MapData(DECS(P).posi.X, DECS(P).posi.y).DecorI = DECS(P).DecorI
+            MapData(DECS(P).posi.X, DECS(P).posi.y).DecorGrh.index = DecorData(DECS(P).DecorI).DecorGrh(1)
+            MapData(DECS(P).posi.X, DECS(P).posi.y).DecorInfo.EstadoDefault = DECS(P).EstadoDefault
         Next P
     End If
 
@@ -1100,7 +1100,7 @@ Dim ByFlags As Byte
                 If ByFlags And 1 Then
                     Get FI, , MapData(P, j).TileExit.Map
                     Get FI, , MapData(P, j).TileExit.X
-                    Get FI, , MapData(P, j).TileExit.Y
+                    Get FI, , MapData(P, j).TileExit.y
                 End If
         
                 If ByFlags And 2 Then
@@ -1376,7 +1376,7 @@ End Function
 Public Sub Guardar_Nuevo_Mapa(ByVal PATH As String)
 Dim f As Integer
 Dim X As Long
-Dim Y As Long
+Dim y As Long
 Dim NI As Integer
 Dim INn As Integer
 Dim IL() As tcardinal
@@ -1415,93 +1415,99 @@ Else
     Open PATH For Binary Access Write Lock Write As #f
 
 End If
-For Y = 1 To 100
+For y = 1 To 100
     For X = 1 To 100
 
-        If MapData(X, Y).SPOTLIGHT.index > 0 Then
+        If MapData(X, y).SPOTLIGHT.index > 0 Then
             nSPL = nSPL + 1
             ReDim Preserve SPL(1 To nSPL)
             SPL(nSPL).X = X
-            SPL(nSPL).Y = Y
+            SPL(nSPL).y = y
         End If
-        If MapData(X, Y).particle_group > 0 Then
+        If MapData(X, y).particle_group > 0 Then
             nPRL = nPRL + 1
             ReDim Preserve PRL(1 To nPRL)
             PRL(nPRL).X = X
-            PRL(nPRL).Y = Y
+            PRL(nPRL).y = y
         End If
-        If MapData(X, Y).DecorI > 0 Then
+        If MapData(X, y).DecorI > 0 Then
             nDecs = nDecs + 1
             ReDim Preserve DEC(1 To nDecs)
             DEC(nDecs).X = X
-            DEC(nDecs).Y = Y
+            DEC(nDecs).y = y
         End If
 
-        MapB(X, Y).Layer(1) = TempFromReal(MapData(X, Y).Graphic(1).index)
-        MapB(X, Y).Layer(2) = TempFromReal(MapData(X, Y).Graphic(2).index)
-        MapB(X, Y).Layer(3) = TempFromReal(MapData(X, Y).Graphic(3).index)
-        MapB(X, Y).Layer(4) = TempFromReal(MapData(X, Y).Graphic(4).index)
-        MapB(X, Y).Layer(5) = TempFromReal(MapData(X, Y).Graphic(5).index)
+        MapB(X, y).Layer(1) = TempFromReal(MapData(X, y).Graphic(1).index)
+        If MapData(X, y).Graphic(2).index < 0 Then
+            MapB(X, y).Layer(2) = -TempFromReal(-MapData(X, y).Graphic(2).index)
+        Else
+            MapB(X, y).Layer(2) = TempFromReal(MapData(X, y).Graphic(2).index)
+        End If
+        MapB(X, y).Layer(3) = TempFromReal(MapData(X, y).Graphic(3).index)
+        MapB(X, y).Layer(4) = TempFromReal(MapData(X, y).Graphic(4).index)
+        MapB(X, y).Layer(5) = TempFromReal(MapData(X, y).Graphic(5).index)
         
         If MapaTemporal Then
-            Usados(MapData(X, Y).Graphic(1).index) = 1
-            Usados(MapData(X, Y).Graphic(2).index) = 1
-            Usados(MapData(X, Y).Graphic(3).index) = 1
-            Usados(MapData(X, Y).Graphic(4).index) = 1
-            Usados(MapData(X, Y).Graphic(5).index) = 1
+            Usados(MapData(X, y).Graphic(1).index) = 1
+            Usados(MapData(X, y).Graphic(2).index) = 1
+            Usados(MapData(X, y).Graphic(3).index) = 1
+            Usados(MapData(X, y).Graphic(4).index) = 1
+            Usados(MapData(X, y).Graphic(5).index) = 1
         End If
         
         '/////En un mapa no grafico esto lo que hace es avisar si el indice es un indice temporal
         'o efectivamente esta indexado.
         'En un mapa grafico efectivamente es el indice dentro del grafico.
-        If MapData(X, Y).IndexB(1) > 0 Then MapB(X, Y).IndexB(1) = MapData(X, Y).IndexB(1) - 1
-        If MapData(X, Y).IndexB(2) > 1 Then
-            MapB(X, Y).IndexB(2) = MapData(X, Y).IndexB(2) - 1
+        If MapData(X, y).IndexB(1) > 0 Then MapB(X, y).IndexB(1) = MapData(X, y).IndexB(1) - 1
+        If MapData(X, y).IndexB(2) > 1 Then
+            MapB(X, y).IndexB(2) = MapData(X, y).IndexB(2) - 1
+        ElseIf MapData(X, y).IndexB(2) < -1 Then
+            MapB(X, y).IndexB(2) = MapData(X, y).IndexB(2) + 1
         End If
-        If MapData(X, Y).IndexB(3) > 0 Then MapB(X, Y).IndexB(3) = MapData(X, Y).IndexB(3) - 1
-        If MapData(X, Y).IndexB(4) > 0 Then MapB(X, Y).IndexB(4) = MapData(X, Y).IndexB(4) - 1
-        If MapData(X, Y).IndexB(5) > 0 Then MapB(X, Y).IndexB(5) = MapData(X, Y).IndexB(5) - 1
+        If MapData(X, y).IndexB(3) > 0 Then MapB(X, y).IndexB(3) = MapData(X, y).IndexB(3) - 1
+        If MapData(X, y).IndexB(4) > 0 Then MapB(X, y).IndexB(4) = MapData(X, y).IndexB(4) - 1
+        If MapData(X, y).IndexB(5) > 0 Then MapB(X, y).IndexB(5) = MapData(X, y).IndexB(5) - 1
         '///////////////////////////////////////////////////////////////////////////////
 
-        MapB(X, Y).TipoTerreno = MapData(X, Y).TipoTerreno
+        MapB(X, y).TipoTerreno = MapData(X, y).TipoTerreno
         
-        MapB(X, Y).Trigger = MergeTriggerBlock(MapData(X, Y).Trigger, MapData(X, Y).Blocked)
-        MapB(X, Y).InteriorVal = MapData(X, Y).InteriorVal
-            If MapData(X, Y).InteriorVal > 0 Then
+        MapB(X, y).Trigger = MergeTriggerBlock(MapData(X, y).Trigger, MapData(X, y).Blocked)
+        MapB(X, y).InteriorVal = MapData(X, y).InteriorVal
+            If MapData(X, y).InteriorVal > 0 Then
                 NI = NI + 1
                 lx = NI
                 INn = NI
                 ReDim Preserve IL(1 To NI)
                 IL(NI).X = X
-                IL(NI).Y = Y
-                If Y <> ly Then
+                IL(NI).y = y
+                If y <> ly Then
                     If ly > 0 Then SaltosFila(ly) = NI
-                    ly = Y
+                    ly = y
                 End If
             Else
-                If Y <> ly Then
+                If y <> ly Then
                     lx = 0
                 End If
                 INn = 0
             End If
-        MapB(X, Y).InteriorNum = INn
-        MapB(X, Y).UltimoInteriorX = lx
+        MapB(X, y).InteriorNum = INn
+        MapB(X, y).UltimoInteriorX = lx
         
         
-        If MapData(X, Y).Luz >= 202 And MapData(X, Y).Luz <= 217 Then
-            MapB(X, Y).Luces(0) = CByte(125 + MapData(X, Y).LV(0))
-            MapB(X, Y).Luces(1) = CByte(125 + MapData(X, Y).LV(1))
-            MapB(X, Y).Luces(2) = CByte(125 + MapData(X, Y).LV(2))
-            MapB(X, Y).Luces(3) = CByte(125 + MapData(X, Y).LV(3))
+        If MapData(X, y).Luz >= 202 And MapData(X, y).Luz <= 217 Then
+            MapB(X, y).Luces(0) = CByte(125 + MapData(X, y).LV(0))
+            MapB(X, y).Luces(1) = CByte(125 + MapData(X, y).LV(1))
+            MapB(X, y).Luces(2) = CByte(125 + MapData(X, y).LV(2))
+            MapB(X, y).Luces(3) = CByte(125 + MapData(X, y).LV(3))
         Else
-            MapB(X, Y).Luces(0) = CByte(MapData(X, Y).LV(0))
-            MapB(X, Y).Luces(1) = CByte(MapData(X, Y).LV(1))
-            MapB(X, Y).Luces(2) = CByte(MapData(X, Y).LV(2))
-            MapB(X, Y).Luces(3) = CByte(MapData(X, Y).LV(3))
+            MapB(X, y).Luces(0) = CByte(MapData(X, y).LV(0))
+            MapB(X, y).Luces(1) = CByte(MapData(X, y).LV(1))
+            MapB(X, y).Luces(2) = CByte(MapData(X, y).LV(2))
+            MapB(X, y).Luces(3) = CByte(MapData(X, y).LV(3))
         End If
         'LUCES
     Next X
-Next Y
+Next y
 
 CopyMemory data(0), MapB(1, 1), 280000
 
@@ -1524,8 +1530,8 @@ If nSPL > 0 Then
     Size1 = LenB(cSpots(1)) * nSPL
     For P = 1 To nSPL
         cSpots(P).posi.X = SPL(P).X
-        cSpots(P).posi.Y = SPL(P).Y
-        cSpots(P).SPOT = MapData(SPL(P).X, SPL(P).Y).SPOTLIGHT
+        cSpots(P).posi.y = SPL(P).y
+        cSpots(P).SPOT = MapData(SPL(P).X, SPL(P).y).SPOTLIGHT
     Next P
 End If
 
@@ -1535,8 +1541,8 @@ If nPRL > 0 Then
     Size2 = LenB(cParts(1)) * nPRL
     For P = 1 To nPRL
         cParts(P).posi.X = PRL(P).X
-        cParts(P).posi.Y = PRL(P).Y
-        cParts(P).PARTI = MapData(PRL(P).X, PRL(P).Y).parti_index
+        cParts(P).posi.y = PRL(P).y
+        cParts(P).PARTI = MapData(PRL(P).X, PRL(P).y).parti_index
     Next P
 End If
 If nDecs > 0 Then
@@ -1544,9 +1550,9 @@ If nDecs > 0 Then
     Size3 = LenB(cDecs(1)) * nDecs
     For P = 1 To nDecs
         cDecs(P).posi.X = DEC(P).X
-        cDecs(P).posi.Y = DEC(P).Y
-        cDecs(P).DecorI = MapData(DEC(P).X, DEC(P).Y).DecorI
-        cDecs(P).EstadoDefault = MapData(DEC(P).X, DEC(P).Y).DecorInfo.EstadoDefault
+        cDecs(P).posi.y = DEC(P).y
+        cDecs(P).DecorI = MapData(DEC(P).X, DEC(P).y).DecorI
+        cDecs(P).EstadoDefault = MapData(DEC(P).X, DEC(P).y).DecorInfo.EstadoDefault
     Next P
 End If
 'If nLy5 > 0 Then
@@ -1608,47 +1614,47 @@ Open left$(PATH, Len(PATH) - 3) & "inf" For Binary Access Write Lock Write As #f
     Put #f, , TempInt
     Put #f, , TempInt
     Put #f, , TempInt
-For Y = 1 To 100
+For y = 1 To 100
 For X = 1 To 100
                 ByFlags = 0
                 
-                If MapData(X, Y).TileExit.Map Then ByFlags = ByFlags Or 1
-                If MapData(X, Y).NPCIndex Then ByFlags = ByFlags Or 2
+                If MapData(X, y).TileExit.Map Then ByFlags = ByFlags Or 1
+                If MapData(X, y).NPCIndex Then ByFlags = ByFlags Or 2
 
-                If MapData(X, Y).OBJInfo.objindex Then ByFlags = ByFlags Or 4
-                If MapData(X, Y).DecorI > 0 Then ByFlags = ByFlags Or 8
+                If MapData(X, y).OBJInfo.objindex Then ByFlags = ByFlags Or 4
+                If MapData(X, y).DecorI > 0 Then ByFlags = ByFlags Or 8
                 
                 Put f, , ByFlags
                 
-                If MapData(X, Y).TileExit.Map Then
-                    Put f, , MapData(X, Y).TileExit.Map
-                    Put f, , MapData(X, Y).TileExit.X
-                    Put f, , MapData(X, Y).TileExit.Y
+                If MapData(X, y).TileExit.Map Then
+                    Put f, , MapData(X, y).TileExit.Map
+                    Put f, , MapData(X, y).TileExit.X
+                    Put f, , MapData(X, y).TileExit.y
                 End If
                 
-                If MapData(X, Y).NPCIndex Then
+                If MapData(X, y).NPCIndex Then
                 
-                        Put f, , CInt(MapData(X, Y).NPCIndex)
-                        Put f, , MapData(X, Y).NpcInfo.Heading
-                        Put f, , MapData(X, Y).NpcInfo.Nivel
-                        Put f, , MapData(X, Y).NpcInfo.Respawn
-                        If MapData(X, Y).NpcInfo.Respawn = 1 Then
-                            Put f, , MapData(X, Y).NpcInfo.RespawnSamePos
-                            Put f, , MapData(X, Y).NpcInfo.RespawnTime
+                        Put f, , CInt(MapData(X, y).NPCIndex)
+                        Put f, , MapData(X, y).NpcInfo.Heading
+                        Put f, , MapData(X, y).NpcInfo.Nivel
+                        Put f, , MapData(X, y).NpcInfo.Respawn
+                        If MapData(X, y).NpcInfo.Respawn = 1 Then
+                            Put f, , MapData(X, y).NpcInfo.RespawnSamePos
+                            Put f, , MapData(X, y).NpcInfo.RespawnTime
                         End If
                 End If
                 
-                If MapData(X, Y).OBJInfo.objindex Then
-                    Put f, , MapData(X, Y).OBJInfo.objindex
-                    Put f, , MapData(X, Y).OBJInfo.Amount
+                If MapData(X, y).OBJInfo.objindex Then
+                    Put f, , MapData(X, y).OBJInfo.objindex
+                    Put f, , MapData(X, y).OBJInfo.Amount
                 End If
                 
-                If MapData(X, Y).DecorI > 0 Then
-                    Put f, , MapData(X, Y).DecorInfo.Clave
+                If MapData(X, y).DecorI > 0 Then
+                    Put f, , MapData(X, y).DecorInfo.Clave
                 End If
 
 Next X
-Next Y
+Next y
         
 Close #f
 
@@ -1703,10 +1709,10 @@ frmMain.Caption = "Guardado " & PATH
 MapInfo.Changed = 0
 Exit Sub
 errx:
-Debug.Print X & "_" & Y & "_" & Err.Description
+Debug.Print X & "_" & y & "_" & Err.Description
 
     Close #f
-MsgBox "Error al guardar el mapa en posicion " & X & "_" & Y
+MsgBox "Error al guardar el mapa en posicion " & X & "_" & y
 
 End Sub
 
@@ -1719,23 +1725,23 @@ Public Function MergeTriggerBlock(ByVal Trigger As Integer, ByVal Blocked As Byt
     End If
 End Function
 
-Function HayAguaGrh(ByVal X As Integer, ByVal Y As Integer) As Byte
+Function HayAguaGrh(ByVal X As Integer, ByVal y As Integer) As Byte
     
       
 End Function
-Function HayLavaGrh(ByVal X As Integer, ByVal Y As Integer) As Byte
-      If MapData(X, Y).Graphic(1).index > 0 Then
-        If NewIndexData(MapData(X, Y).Graphic(1).index).OverWriteGrafico = 9510 Then
+Function HayLavaGrh(ByVal X As Integer, ByVal y As Integer) As Byte
+      If MapData(X, y).Graphic(1).index > 0 Then
+        If NewIndexData(MapData(X, y).Graphic(1).index).OverWriteGrafico = 9510 Then
       
                     HayLavaGrh = 1
 
         End If
         End If
 End Function
-Public Sub InsertarSurface(ByVal X As Integer, ByVal Y As Integer)
+Public Sub InsertarSurface(ByVal X As Integer, ByVal y As Integer)
 Dim P As Long
 Dim t As Long
-If X >= 1 And Y >= 1 And X <= 99 And Y <= 99 Then
+If X >= 1 And y >= 1 And X <= 99 And y <= 99 Then
     For t = 0 To (Val(frmMain.SizeC.List(frmMain.SizeC.ListIndex)) / 32) - 1
         If SobreY + t > 100 Then Exit For
         For P = 0 To (Val(frmMain.SizeC.List(frmMain.SizeC.ListIndex)) / 32) - 1
@@ -1750,7 +1756,7 @@ If X >= 1 And Y >= 1 And X <= 99 And Y <= 99 Then
 End If
 
 End Sub
-Public Sub BorrarSurface(ByVal X As Integer, ByVal Y As Integer)
+Public Sub BorrarSurface(ByVal X As Integer, ByVal y As Integer)
 
 Dim P As Long
 Dim t As Long
@@ -1759,18 +1765,18 @@ Dim iY As Integer
 Dim tY As Integer
 Dim tX As Integer
 Dim s As Integer
-If X >= 1 And Y >= 1 And X <= 99 And Y <= 99 Then
+If X >= 1 And y >= 1 And X <= 99 And y <= 99 Then
 
-    If MapData(X, Y).IndexB(frmMain.LayerC.ListIndex + 1) = 1 Then
+    If MapData(X, y).IndexB(frmMain.LayerC.ListIndex + 1) = 1 Then
         iX = X
-        iY = Y
+        iY = y
     Else
-        tY = Int((MapData(X, Y).IndexB(frmMain.LayerC.ListIndex + 1) - 1) / 16)
-        iY = Y - tY
-        tX = (MapData(X, Y).IndexB(frmMain.LayerC.ListIndex + 1) - 1) Mod 16
+        tY = Int((MapData(X, y).IndexB(frmMain.LayerC.ListIndex + 1) - 1) / 16)
+        iY = y - tY
+        tX = (MapData(X, y).IndexB(frmMain.LayerC.ListIndex + 1) - 1) Mod 16
         iX = X - tX
     End If
-    s = MapData(X, Y).SizeC
+    s = MapData(X, y).SizeC
     For t = iY To iY + (Val(frmMain.SizeC.List(s)) / 32)
         If t > 100 Then Exit For
         For P = iX To iX + (Val(frmMain.SizeC.List(s)) / 32)
@@ -1875,17 +1881,17 @@ CopyMemory MapB(1, 1), data(0), 280000
     If nSpot > 0 Then
         For P = 1 To nSpot
             SPOTLIGHTS_CREAR SPOT(P).SPOT.SPOT_TIPO, SPOT(P).SPOT.SPOT_COLOR_BASE, SPOT(P).SPOT.SPOT_COLOR_EXTRA _
-            , SPOT(P).SPOT.INTENSITY, 1, SPOT(P).SPOT.Grafico, SPOT(P).posi.X, SPOT(P).posi.Y, 0, SPOT(P).SPOT.Color, SPOT(P).SPOT.COLOR_EXTRA, SPOT(P).SPOT.EXTRA_GRAFICO
+            , SPOT(P).SPOT.INTENSITY, 1, SPOT(P).SPOT.Grafico, SPOT(P).posi.X, SPOT(P).posi.y, 0, SPOT(P).SPOT.Color, SPOT(P).SPOT.COLOR_EXTRA, SPOT(P).SPOT.EXTRA_GRAFICO
         Next P
     End If
     If nPart > 0 Then
         For P = 1 To nPart
-                If PART(P).PARTI > 0 Then General_Particle_Create PART(P).PARTI, PART(P).posi.X, PART(P).posi.Y
+                If PART(P).PARTI > 0 Then General_Particle_Create PART(P).PARTI, PART(P).posi.X, PART(P).posi.y
         Next P
     End If
     If nDecs > 0 Then
         For P = 1 To nDecs
-            MapData(DECS(P).posi.X, DECS(P).posi.Y).DecorI = DECS(P).DecorI
+            MapData(DECS(P).posi.X, DECS(P).posi.y).DecorI = DECS(P).DecorI
         Next P
     End If
 
@@ -1950,7 +1956,7 @@ End Sub
 Sub RecalcularLuces(ByRef MapBu() As tnwMapBlock)
 On Error GoTo errl
 Dim X As Long
-Dim Y As Long
+Dim y As Long
 
 Dim Luz As Byte
 Dim pcLuz As Byte
@@ -1959,112 +1965,112 @@ Luz = 14
 pcLuz = Luz * 9
 
 For X = 1 To 100
-    For Y = 1 To 100
+    For y = 1 To 100
 
-        With MapBu(X, Y)
+        With MapBu(X, y)
                 If .Luces(0) >= INITIAL_INVERT_MAPLIGHT Then
-                    MapData(X, Y).LV(0) = .Luces(0) - INITIAL_INVERT_MAPLIGHT
+                    MapData(X, y).LV(0) = .Luces(0) - INITIAL_INVERT_MAPLIGHT
                 Else
-                    MapData(X, Y).LV(0) = .Luces(0)
+                    MapData(X, y).LV(0) = .Luces(0)
                 End If
                 If .Luces(1) >= INITIAL_INVERT_MAPLIGHT Then
-                    MapData(X, Y).LV(1) = .Luces(1) - INITIAL_INVERT_MAPLIGHT
+                    MapData(X, y).LV(1) = .Luces(1) - INITIAL_INVERT_MAPLIGHT
                 Else
-                    MapData(X, Y).LV(1) = .Luces(1)
+                    MapData(X, y).LV(1) = .Luces(1)
                 End If
                 If .Luces(2) >= INITIAL_INVERT_MAPLIGHT Then
-                    MapData(X, Y).LV(2) = .Luces(2) - INITIAL_INVERT_MAPLIGHT
+                    MapData(X, y).LV(2) = .Luces(2) - INITIAL_INVERT_MAPLIGHT
                 Else
-                    MapData(X, Y).LV(2) = .Luces(2)
+                    MapData(X, y).LV(2) = .Luces(2)
                 End If
                 If .Luces(3) >= INITIAL_INVERT_MAPLIGHT Then
-                    MapData(X, Y).LV(3) = .Luces(3) - INITIAL_INVERT_MAPLIGHT
+                    MapData(X, y).LV(3) = .Luces(3) - INITIAL_INVERT_MAPLIGHT
                 Else
-                    MapData(X, Y).LV(3) = .Luces(3)
+                    MapData(X, y).LV(3) = .Luces(3)
                 End If
             
             If .Luces(0) >= INITIAL_INVERT_MAPLIGHT Then
-                MapData(X, Y).Luz = 203
+                MapData(X, y).Luz = 203
             ElseIf .Luces(0) <> 0 Or .Luces(1) <> 0 Or .Luces(2) <> 0 Or .Luces(3) <> 0 Then
-                MapData(X, Y).Luz = 20
+                MapData(X, y).Luz = 20
             End If
             
                     If .Luces(0) > 0 Then
                         If .Luces(0) < 9 Then
-                            MapData(X, Y).light_value(0) = ambient_light(pcLuz + .Luces(0) + 1)
+                            MapData(X, y).light_value(0) = ambient_light(pcLuz + .Luces(0) + 1)
                         ElseIf .Luces(0) < INITIAL_INVERT_MAPLIGHT Then
-                            MapData(X, Y).light_value(0) = extra_light(.Luces(0) - 8)
+                            MapData(X, y).light_value(0) = extra_light(.Luces(0) - 8)
                         ElseIf .Luces(0) > INITIAL_INVERT_MAPLIGHT Then
                             If .Luces(0) < INITIAL_INVERT_MAPLIGHT + 9 Then
-                                MapData(X, Y).light_value(0) = ambient_light(pcLuz + (.Luces(0) - INITIAL_INVERT_MAPLIGHT + 1))
+                                MapData(X, y).light_value(0) = ambient_light(pcLuz + (.Luces(0) - INITIAL_INVERT_MAPLIGHT + 1))
                             Else
-                                MapData(X, Y).light_value(0) = extra_light(.Luces(0) - INITIAL_INVERT_MAPLIGHT - 8)
+                                MapData(X, y).light_value(0) = extra_light(.Luces(0) - INITIAL_INVERT_MAPLIGHT - 8)
                             End If
                         End If
                     Else
-                        MapData(X, Y).light_value(0) = 0
+                        MapData(X, y).light_value(0) = 0
                     End If
                     If .Luces(1) > 0 Then
 
                         If .Luces(1) < 9 Then
-                            MapData(X, Y).light_value(1) = ambient_light(pcLuz + .Luces(1) + 1)
+                            MapData(X, y).light_value(1) = ambient_light(pcLuz + .Luces(1) + 1)
                         ElseIf .Luces(1) < INITIAL_INVERT_MAPLIGHT Then
-                            MapData(X, Y).light_value(1) = extra_light(.Luces(1) - 8)
+                            MapData(X, y).light_value(1) = extra_light(.Luces(1) - 8)
                         ElseIf .Luces(1) > INITIAL_INVERT_MAPLIGHT Then
                             If .Luces(1) < INITIAL_INVERT_MAPLIGHT + 9 Then
-                                MapData(X, Y).light_value(1) = ambient_light(pcLuz + (.Luces(1) - INITIAL_INVERT_MAPLIGHT + 1))
+                                MapData(X, y).light_value(1) = ambient_light(pcLuz + (.Luces(1) - INITIAL_INVERT_MAPLIGHT + 1))
                             Else
-                                MapData(X, Y).light_value(1) = extra_light(.Luces(1) - INITIAL_INVERT_MAPLIGHT - 8)
+                                MapData(X, y).light_value(1) = extra_light(.Luces(1) - INITIAL_INVERT_MAPLIGHT - 8)
                             End If
                         End If
                     Else
-                        MapData(X, Y).light_value(1) = 0
+                        MapData(X, y).light_value(1) = 0
                     End If
                     If .Luces(2) > 0 Then
                         If .Luces(2) < 9 Then
-                            MapData(X, Y).light_value(2) = ambient_light(pcLuz + .Luces(2) + 1)
+                            MapData(X, y).light_value(2) = ambient_light(pcLuz + .Luces(2) + 1)
                         ElseIf .Luces(2) < INITIAL_INVERT_MAPLIGHT Then
-                            MapData(X, Y).light_value(2) = extra_light(.Luces(2) - 8)
+                            MapData(X, y).light_value(2) = extra_light(.Luces(2) - 8)
                         ElseIf .Luces(2) > INITIAL_INVERT_MAPLIGHT Then
                             If .Luces(2) < INITIAL_INVERT_MAPLIGHT + 9 Then
-                                MapData(X, Y).light_value(2) = ambient_light(pcLuz + (.Luces(2) - INITIAL_INVERT_MAPLIGHT + 1))
+                                MapData(X, y).light_value(2) = ambient_light(pcLuz + (.Luces(2) - INITIAL_INVERT_MAPLIGHT + 1))
                             Else
-                                MapData(X, Y).light_value(2) = extra_light(.Luces(2) - INITIAL_INVERT_MAPLIGHT - 8)
+                                MapData(X, y).light_value(2) = extra_light(.Luces(2) - INITIAL_INVERT_MAPLIGHT - 8)
                             End If
                         End If
                     Else
-                        MapData(X, Y).light_value(2) = 0
+                        MapData(X, y).light_value(2) = 0
                     End If
                     If .Luces(3) > 0 Then
                         If .Luces(3) < 9 Then
-                            MapData(X, Y).light_value(3) = ambient_light(pcLuz + .Luces(3) + 1)
+                            MapData(X, y).light_value(3) = ambient_light(pcLuz + .Luces(3) + 1)
                         ElseIf .Luces(3) < INITIAL_INVERT_MAPLIGHT Then
-                            MapData(X, Y).light_value(3) = extra_light(.Luces(3) - 8)
+                            MapData(X, y).light_value(3) = extra_light(.Luces(3) - 8)
                         ElseIf .Luces(3) > INITIAL_INVERT_MAPLIGHT Then
                             If .Luces(3) < INITIAL_INVERT_MAPLIGHT + 9 Then
-                                MapData(X, Y).light_value(3) = ambient_light(pcLuz + (.Luces(3) - INITIAL_INVERT_MAPLIGHT + 1))
+                                MapData(X, y).light_value(3) = ambient_light(pcLuz + (.Luces(3) - INITIAL_INVERT_MAPLIGHT + 1))
                             Else
-                                MapData(X, Y).light_value(3) = extra_light(.Luces(3) - INITIAL_INVERT_MAPLIGHT - 8)
+                                MapData(X, y).light_value(3) = extra_light(.Luces(3) - INITIAL_INVERT_MAPLIGHT - 8)
                             End If
                         End If
                     Else
-                        MapData(X, Y).light_value(3) = 0
+                        MapData(X, y).light_value(3) = 0
                     End If
                 End With
-    Next Y
+    Next y
 Next X
 
 base_light = ambient_light((pcLuz) + 1)
 Exit Sub
 errl:
-Debug.Print X & "_" & Y
+Debug.Print X & "_" & y
 MsgBox "ERROR RECALCULARLUCES: " & Err.Description
 End Sub
-Public Sub BorrarSobrante(ByVal X As Integer, ByVal Y As Integer)
+Public Sub BorrarSobrante(ByVal X As Integer, ByVal y As Integer)
 Dim P As Long
 Dim j As Long
 
-For j = Y To Y + (Val(frmMain.SizeC.List(frmMain.SizeC.ListIndex)) / 32) - 1
+For j = y To y + (Val(frmMain.SizeC.List(frmMain.SizeC.ListIndex)) / 32) - 1
     If j > 100 Then Exit For
     For P = X To X + (Val(frmMain.SizeC.List(frmMain.SizeC.ListIndex)) / 32) - 1
         If P > 100 Then Exit For
@@ -2075,11 +2081,11 @@ For j = Y To Y + (Val(frmMain.SizeC.List(frmMain.SizeC.ListIndex)) / 32) - 1
 Next j
 
 End Sub
-Public Sub EditarIndice(ByVal X As Integer, ByVal Y As Integer)
+Public Sub EditarIndice(ByVal X As Integer, ByVal y As Integer)
 If Val(frmMain.txtNumIndice) > 0 And Val(frmMain.txtNumSurface) > 0 And Val(frmMain.txtNumIndice) <= 256 Then
-    MapData(X, Y).IndexB(frmMain.LayerC.ListIndex + 1) = Val(frmMain.txtNumIndice)
-    MapData(X, Y).Graphic(frmMain.LayerC.ListIndex + 1).index = Val(frmMain.txtNumSurface)
-    MapData(X, Y).SizeC = 4
+    MapData(X, y).IndexB(frmMain.LayerC.ListIndex + 1) = Val(frmMain.txtNumIndice)
+    MapData(X, y).Graphic(frmMain.LayerC.ListIndex + 1).index = Val(frmMain.txtNumSurface)
+    MapData(X, y).SizeC = 4
 
 End If
 End Sub

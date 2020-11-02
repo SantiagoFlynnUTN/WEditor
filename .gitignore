@@ -1,1 +1,5 @@
 ﻿*.db
+
+*.vbw
+
+WorldEditor.ini
