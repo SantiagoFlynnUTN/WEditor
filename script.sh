@@ -7,14 +7,9 @@ git checkout develop
 git update-index --assume-unchanged WorldEditor.ini
 git update-index --assume-unchanged WorldEditor.csi
 git update-index --assume-unchanged WorldEditor.vbw
-echo "WorldEditor.ini" >> .gitignore
-echo "WorldEditor.csi" >> .gitignore  
-echo "WorldEditor.vbw" >> .gitignore  
 git rm --cached WorldEditor.ini
 git rm --cached WorldEditor.csi
 git rm --cached WorldEditor.vbw
-
-cat .gitignore
 
 echo "[CONFIGURACION]
 GuardarConfig=1
