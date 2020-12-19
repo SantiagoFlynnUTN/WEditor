@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form frmMain 
    Appearance      =   0  'Flat
    BackColor       =   &H00000000&
@@ -94,6 +94,22 @@ Begin VB.Form frmMain
       TabIndex        =   3
       Top             =   1920
       Width           =   4395
+      Begin VB.CommandButton RemoveInteriorGroupButton 
+         Caption         =   "Quitar Interior Group"
+         Height          =   375
+         Left            =   2280
+         TabIndex        =   178
+         Top             =   2520
+         Width           =   1455
+      End
+      Begin VB.CommandButton InsertInteriorGroupButton 
+         Caption         =   "Insertar Interior Group"
+         Height          =   375
+         Left            =   2280
+         TabIndex        =   177
+         Top             =   2040
+         Width           =   1455
+      End
       Begin VB.CheckBox chkDecorBloq 
          BackColor       =   &H00808080&
          Caption         =   "Bloquear Decor"
@@ -2862,6 +2878,7 @@ Begin VB.Form frmMain
       ScaleWidth      =   1024
       TabIndex        =   75
       Top             =   1440
+      Visible         =   0   'False
       Width           =   15360
    End
    Begin WorldEditor.lvButtons_H SelectPanel 
@@ -3445,7 +3462,7 @@ Begin VB.Form frmMain
       Alignment       =   2  'Center
       BackColor       =   &H80000007&
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   15.75
          Charset         =   0
          Weight          =   400
@@ -3464,7 +3481,7 @@ Begin VB.Form frmMain
       Alignment       =   2  'Center
       BackColor       =   &H80000007&
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   15.75
          Charset         =   0
          Weight          =   400
@@ -4323,10 +4340,14 @@ Private Sub cInsertarParticula_Click()
         cQuitarParticula.Enabled = False
         CmdInteriorI.Enabled = False
         CmdInteriorQ.Enabled = False
+        RemoveInteriorGroupButton.Enabled = False
+        InsertInteriorGroupButton.Enabled = False
     Else
         cQuitarParticula.Enabled = True
         CmdInteriorI.Enabled = True
         CmdInteriorQ.Enabled = True
+        RemoveInteriorGroupButton.Enabled = True
+        InsertInteriorGroupButton.Enabled = True
     End If
 End Sub
 
@@ -4396,10 +4417,14 @@ Private Sub CmdInteriorI_Click()
         cInsertarParticula.Enabled = False
         CmdInteriorQ.Enabled = False
         cQuitarParticula.Enabled = False
+        RemoveInteriorGroupButton.Enabled = False
+        InsertInteriorGroupButton.Enabled = False
     Else
         cInsertarParticula.Enabled = True
         CmdInteriorQ.Enabled = True
         cQuitarParticula.Enabled = True
+        RemoveInteriorGroupButton.Enabled = True
+        InsertInteriorGroupButton.Enabled = True
     End If
 End Sub
 
@@ -4408,14 +4433,48 @@ Private Sub CmdInteriorQ_Click()
         cInsertarParticula.Enabled = False
         CmdInteriorI.Enabled = False
         cQuitarParticula.Enabled = False
+        RemoveInteriorGroupButton.Enabled = False
+        InsertInteriorGroupButton.Enabled = False
     Else
         cInsertarParticula.Enabled = True
         CmdInteriorI.Enabled = True
         cQuitarParticula.Enabled = True
+        RemoveInteriorGroupButton.Enabled = True
+        InsertInteriorGroupButton.Enabled = True
     End If
 End Sub
 
+Private Sub RemoveInteriorGroupButton_Click()
+    If RemoveInteriorGroupButton.value Then
+        cInsertarParticula.Enabled = False
+        CmdInteriorI.Enabled = False
+        CmdInteriorQ.Enabled = False
+        cQuitarParticula.Enabled = False
+        InsertInteriorGroupButton.Enabled = False
+    Else
+        cInsertarParticula.Enabled = True
+        CmdInteriorI.Enabled = True
+        CmdInteriorQ.Enabled = True
+        cQuitarParticula.Enabled = True
+        InsertInteriorGroupButton.Enabled = True
+    End If
+End Sub
 
+Private Sub InsertInteriorGroupButton_Click()
+    If InsertInteriorGroupButton.value Then
+        cInsertarParticula.Enabled = False
+        CmdInteriorI.Enabled = False
+        CmdInteriorQ.Enabled = False
+        cQuitarParticula.Enabled = False
+        RemoveInteriorGroupButton.Enabled = False
+    Else
+        cInsertarParticula.Enabled = True
+        CmdInteriorI.Enabled = True
+        CmdInteriorQ.Enabled = True
+        cQuitarParticula.Enabled = True
+        RemoveInteriorGroupButton.Enabled = True
+    End If
+End Sub
 
 Private Sub cNotBL_Click()
 If cNotBL.value Then
@@ -4673,10 +4732,15 @@ Private Sub cQuitarParticula_Click()
         cInsertarParticula.Enabled = False
         CmdInteriorI.Enabled = False
         CmdInteriorQ.Enabled = False
+        RemoveInteriorGroupButton.Enabled = False
+        InsertInteriorGroupButton.Enabled = False
+        
     Else
         cInsertarParticula.Enabled = True
         CmdInteriorI.Enabled = True
         CmdInteriorQ.Enabled = True
+        RemoveInteriorGroupButton.Enabled = True
+        InsertInteriorGroupButton.Enabled = True
     End If
 End Sub
 
@@ -5945,6 +6009,10 @@ CmdInteriorI.value = False
 CmdInteriorI_Click
 CmdInteriorQ.value = False
 CmdInteriorQ_Click
+RemoveInteriorGroupButton.value = False
+RemoveInteriorGroupButton_Click
+InsertInteriorGroupButton.value = False
+InsertInteriorGroupButton_Click
 
 
 End Sub

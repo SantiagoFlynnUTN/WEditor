@@ -46,9 +46,12 @@ B=20
 Nombre=Mate
 
 [ANIMACIONES]
-Num_Anim=1
+Num_Anim=2
 
 [ANIM1]
 Indice=2
 Nombre=Circle 256(256x256)
 
+[ANIM2]
+Indice=77
+Nombre=Circle 256 x 4
