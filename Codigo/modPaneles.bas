@@ -463,22 +463,3 @@ End If
 End With
 End Sub
 
-Private Sub Actual_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
-    If fSelecter Then
-        If agraficow > 0 And agraficoh > 0 Then
-            If (X / Screen.TwipsPerPixelX) <= agraficow And (Y / Screen.TwipsPerPixelY) <= agraficoh Then
-                modDXEngine.DibujareEnHwnd3 Actual.hWnd, aGrafico, 0, 0, True
-                If bGrilla Then AplicarGrilla 0, 0, agraficow, agraficoh, Actual, vbGreen
-                Actual.ForeColor = vbWhite
-                Actual.DrawWidth = 2
-                Actual.Line (iiFx, iiFy)-(iiFx, Y)
-                Actual.Line (iiFx, Y)-(X, Y)
-                Actual.Line (X, iiFy)-(X, Y)
-                Actual.Line (iiFx, iiFy)-(X, iiFy)
-                Actual.ForeColor = vbBlack
-                Actual.DrawWidth = 1
-            End If
-        End If
-    End If
-    
-End Sub

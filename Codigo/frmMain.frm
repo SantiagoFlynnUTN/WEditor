@@ -100,6 +100,7 @@ Begin VB.Form frmMain
          Left            =   2280
          TabIndex        =   178
          Top             =   2520
+         Visible         =   0   'False
          Width           =   1455
       End
       Begin VB.CommandButton InsertInteriorGroupButton 
@@ -108,6 +109,7 @@ Begin VB.Form frmMain
          Left            =   2280
          TabIndex        =   177
          Top             =   2040
+         Visible         =   0   'False
          Width           =   1455
       End
       Begin VB.CheckBox chkDecorBloq 
@@ -2878,7 +2880,6 @@ Begin VB.Form frmMain
       ScaleWidth      =   1024
       TabIndex        =   75
       Top             =   1440
-      Visible         =   0   'False
       Width           =   15360
    End
    Begin WorldEditor.lvButtons_H SelectPanel 
@@ -6432,7 +6433,7 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
 
 ' Guardar configuración
 WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "GuardarConfig", IIf(frmMain.mnuGuardarUltimaConfig.Checked = True, "1", "0")
-If frmMain.mnuGuardarUltimaConfig.Checked = True Then
+'If frmMain.mnuGuardarUltimaConfig.Checked = True Then
     WriteVar inipath & "WorldEditor.ini", "PATH", "UltimoMapa", Dialog.FileName
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "ControlAutomatico", IIf(frmMain.mnuVerAutomatico.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "MOSTRAR", "Capa2", IIf(frmMain.mnuVerCapa2.Checked = True, "1", "0")
@@ -6452,7 +6453,7 @@ If frmMain.mnuGuardarUltimaConfig.Checked = True Then
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "AutoCapturarTrans", IIf(frmMain.mnuAutoCapturarTranslados.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "AutoCapturarSup", IIf(frmMain.mnuAutoCapturarSuperficie.Checked = True, "1", "0")
     WriteVar inipath & "WorldEditor.ini", "CONFIGURACION", "ObjTranslado", Val(Cfg_TrOBJ)
-End If
+'End If
 
 'Allow MainLoop to close program
 If prgRun = True Then
